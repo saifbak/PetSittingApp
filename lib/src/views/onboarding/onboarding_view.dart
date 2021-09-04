@@ -9,7 +9,7 @@ import 'package:whiskers_away_app/src/base/utils/utils.dart';
 class OnBoardingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<OnBoardingViewModel>.reactive(
+    return ViewModelBuilder<OnBoardingViewModel>.nonReactive(
       viewModelBuilder: () => OnBoardingViewModel(),
       builder: (_, model, __) {
         return Scaffold(
@@ -104,17 +104,7 @@ class _Body extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
             itemBuilder: (_, index) {
-              return AnimatedContainer(
-                decoration: BoxDecoration(
-                  color: index == model.pageIndex
-                      ? AppColors.primaryColor
-                      : AppColors.whisper,
-                  shape: BoxShape.circle,
-                ),
-                duration: Duration(milliseconds: 200),
-                width: model.pageIndicatorSize,
-                height: model.pageIndicatorSize,
-              );
+              return _IndicatorCircle(index);
             },
             separatorBuilder: (_, __) => HorizontalSpacing(),
             itemCount: model.onBoardingContent.length,
@@ -122,6 +112,26 @@ class _Body extends StatelessWidget {
         ),
         VerticalSpacing(screenSize.height * .05),
       ],
+    );
+  }
+}
+
+class _IndicatorCircle extends ViewModelWidget<OnBoardingViewModel> {
+  final int index;
+  _IndicatorCircle(this.index);
+
+  @override
+  Widget build(BuildContext context, OnBoardingViewModel model) {
+    return AnimatedContainer(
+      decoration: BoxDecoration(
+        color: index == model.pageIndex
+            ? AppColors.primaryColor
+            : AppColors.whisper,
+        shape: BoxShape.circle,
+      ),
+      duration: Duration(milliseconds: 200),
+      width: model.pageIndicatorSize,
+      height: model.pageIndicatorSize,
     );
   }
 }
