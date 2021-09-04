@@ -1,4 +1,4 @@
-package com.example.flutter_starter_app
+package com.example.whiskers_away_app
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,4 +1,4 @@
-# flutter_starter_app
+# whiskers_away_app
 
 A new Flutter project.
 
