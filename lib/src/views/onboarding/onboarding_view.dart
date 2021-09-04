@@ -68,19 +68,34 @@ class _Body extends StatelessWidget {
                     padding: EdgeInsets.all(22),
                     child: Column(
                       children: [
-                        // TODO: styling of below text widgets
+                        // TODO: proper styling of below text widgets using theme
                         Text(
                           pageContent['card_heading'],
                           textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Airbnb Cereal',
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                         VerticalSpacing(10),
                         Text(
                           pageContent['card_about_app_text'],
                           textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: 'Airbnb Cereal',
+                          ),
                         ),
+                        // TODO: Divider implementation
+                        VerticalSpacing(10),
                         Text(
                           pageContent['card_desc'],
                           textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: 'Airbnb Cereal',
+                          ),
                         )
                       ],
                     ),

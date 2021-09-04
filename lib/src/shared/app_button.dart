@@ -19,9 +19,18 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: styling of below text widget
+    final buttonTypeSolid = type == AppButtonType.solid ? true : false;
+
+    // TODO: proper styling of below text widget using theme
     final buttonText = Center(
-      child: Text('$text'),
+      child: Text(
+        '$text',
+        style: TextStyle(
+          fontSize: 16,
+          fontFamily: 'Airbnb Cereal',
+          color: buttonTypeSolid ? Colors.white : AppColors.primaryColor,
+        ),
+      ),
     );
     final padding = const EdgeInsets.symmetric(
       vertical: 10,
@@ -59,7 +68,7 @@ class AppButton extends StatelessWidget {
       ),
     );
 
-    final button = type == AppButtonType.solid ? solidButton : outlineButton;
+    final button = buttonTypeSolid ? solidButton : outlineButton;
 
     if (fullWidth) return Expanded(child: button);
     return button;
