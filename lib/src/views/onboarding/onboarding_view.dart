@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/shared/base_view.dart';
+import 'package:whiskers_away_app/src/shared/spacing.dart';
+import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/views/onboarding/onboarding_view_model.dart';
+import 'package:whiskers_away_app/src/base/utils/utils.dart';
 
 class OnBoardingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<OnBoardingViewModel>.nonReactive(
+    return ViewModelBuilder<OnBoardingViewModel>.reactive(
       viewModelBuilder: () => OnBoardingViewModel(),
       builder: (_, model, __) {
         return Scaffold(
@@ -26,6 +29,99 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    final screenSize = context.screenSize();
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        VerticalSpacing(context.topSpace() + screenSize.height * .05),
+        Container(
+            width: screenSize.width / 2.25,
+            child: Hero(
+              tag: 'logo_text',
+              child: Image.asset(
+                'assets/images/logo_text.png',
+              ),
+            )),
+        Expanded(
+          child: PageView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: model.onBoardingContent.length,
+            onPageChanged: (currentIndex) {
+              model.pageIndex = currentIndex;
+            },
+            itemBuilder: (_, index) {
+              final pageContent = model.onBoardingContent[index];
+
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: screenSize.width / 1.25,
+                    child: Image.asset(
+                      pageContent['imgUrl'],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.all(22),
+                    child: Column(
+                      children: [
+                        Text(
+                          pageContent['card_heading'],
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          pageContent['card_about_app_text'],
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          pageContent['card_desc'],
+                          textAlign: TextAlign.center,
+                        )
+                      ],
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          offset: Offset(0, 4),
+                          blurRadius: 30,
+                          color: Colors.black.withOpacity(.08),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              );
+            },
+          ),
+        ),
+        SizedBox(
+          height: model.pageIndicatorSize,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            itemBuilder: (_, index) {
+              return AnimatedContainer(
+                decoration: BoxDecoration(
+                  color: index == model.pageIndex
+                      ? AppColors.primaryColor
+                      : AppColors.whisper,
+                  shape: BoxShape.circle,
+                ),
+                duration: Duration(milliseconds: 200),
+                width: model.pageIndicatorSize,
+                height: model.pageIndicatorSize,
+              );
+            },
+            separatorBuilder: (_, __) => HorizontalSpacing(),
+            itemCount: model.onBoardingContent.length,
+          ),
+        ),
+        VerticalSpacing(screenSize.height * .05),
+      ],
+    );
   }
 }
