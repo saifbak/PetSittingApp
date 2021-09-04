@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/shared/base_view.dart';
+import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/views/onboarding/onboarding_view_model.dart';
@@ -67,10 +68,12 @@ class _Body extends StatelessWidget {
                     padding: EdgeInsets.all(22),
                     child: Column(
                       children: [
+                        // TODO: styling of below text widgets
                         Text(
                           pageContent['card_heading'],
                           textAlign: TextAlign.center,
                         ),
+                        VerticalSpacing(10),
                         Text(
                           pageContent['card_about_app_text'],
                           textAlign: TextAlign.center,
@@ -98,6 +101,24 @@ class _Body extends StatelessWidget {
             },
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 36),
+          child: Row(
+            children: [
+              AppButton(
+                text: 'Sign Up',
+                fullWidth: true,
+              ),
+              HorizontalSpacing(18),
+              AppButton(
+                text: 'Log In',
+                type: AppButtonType.outline,
+                fullWidth: true,
+              ),
+            ],
+          ),
+        ),
+        VerticalSpacing(screenSize.height * .04),
         SizedBox(
           height: model.pageIndicatorSize,
           child: ListView.separated(
@@ -110,7 +131,7 @@ class _Body extends StatelessWidget {
             itemCount: model.onBoardingContent.length,
           ),
         ),
-        VerticalSpacing(screenSize.height * .05),
+        VerticalSpacing(screenSize.height * .04),
       ],
     );
   }
