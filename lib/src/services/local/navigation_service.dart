@@ -15,4 +15,6 @@ class NavService {
       StackedRouter().onGenerateRoute;
 
   // routes with args
+  static Future<dynamic>? home({dynamic arguments}) => _navigationService!
+      .replaceWith(Routes.onBoardingView, arguments: arguments);
 }
