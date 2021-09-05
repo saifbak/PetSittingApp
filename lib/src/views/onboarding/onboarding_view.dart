@@ -124,6 +124,7 @@ class _Body extends StatelessWidget {
               AppButton(
                 text: 'Sign Up',
                 fullWidth: true,
+                onPressed: NavService.signup,
               ),
               HorizontalSpacing(18),
               AppButton(

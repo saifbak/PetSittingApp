@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
+import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_logo.dart';
 import 'package:whiskers_away_app/src/shared/app_textfield.dart';
@@ -87,7 +88,8 @@ class _Body extends StatelessWidget {
                   ),
                   children: <TextSpan>[
                     TextSpan(
-                      recognizer: TapGestureRecognizer(),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = NavService.signupReplace,
                       text: 'Sign Up',
                       style: TextStyle(
                         fontSize: 14,
