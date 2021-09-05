@@ -9,15 +9,18 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+import '../views/auth/login/login_view.dart';
 import '../views/onboarding/onboarding_view.dart';
 import '../views/splash/splash_view.dart';
 
 class Routes {
   static const String splashView = '/';
   static const String onBoardingView = '/on-boarding-view';
+  static const String loginView = '/login-view';
   static const all = <String>{
     splashView,
     onBoardingView,
+    loginView,
   };
 }
 
@@ -27,6 +30,7 @@ class StackedRouter extends RouterBase {
   final _routes = <RouteDef>[
     RouteDef(Routes.splashView, page: SplashView),
     RouteDef(Routes.onBoardingView, page: OnBoardingView),
+    RouteDef(Routes.loginView, page: LoginView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -40,6 +44,12 @@ class StackedRouter extends RouterBase {
     OnBoardingView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => OnBoardingView(),
+        settings: data,
+      );
+    },
+    LoginView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => LoginView(),
         settings: data,
       );
     },

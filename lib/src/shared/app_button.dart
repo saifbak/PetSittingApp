@@ -11,11 +11,13 @@ class AppButton extends StatelessWidget {
     this.type = AppButtonType.solid,
     required this.text,
     this.fullWidth = false,
+    this.onPressed,
   });
 
   final AppButtonType type;
   final String text;
   final bool fullWidth;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -38,32 +40,32 @@ class AppButton extends StatelessWidget {
     );
     final borderRadius = BorderRadius.circular(10);
 
-    final solidButton = Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: () {},
-        child: Container(
-          child: buttonText,
-          padding: padding,
-          decoration: BoxDecoration(
-            borderRadius: borderRadius,
-            gradient: LinearGradient(colors: [
-              Color(0xFF4ECEAF),
-              Color(0xFF63DFC1),
-            ]),
-          ),
+    final solidButton = GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        child: buttonText,
+        padding: padding,
+        decoration: BoxDecoration(
+          borderRadius: borderRadius,
+          gradient: LinearGradient(colors: [
+            Color(0xFF4ECEAF),
+            Color(0xFF63DFC1),
+          ]),
         ),
       ),
     );
 
-    final outlineButton = Container(
-      child: buttonText,
-      padding: padding,
-      decoration: BoxDecoration(
-        borderRadius: borderRadius,
-        border: Border.all(
-          color: AppColors.primaryColor,
-          width: 1,
+    final outlineButton = GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        child: buttonText,
+        padding: padding,
+        decoration: BoxDecoration(
+          borderRadius: borderRadius,
+          border: Border.all(
+            color: AppColors.primaryColor,
+            width: 1,
+          ),
         ),
       ),
     );
