@@ -3,6 +3,7 @@ import 'package:stacked/stacked.dart';
 class OnBoardingViewModel extends BaseViewModel {
   List<Map<String, dynamic>> get onBoardingContent => [
         {
+          'bg_imgUrl': 'assets/images/bg_img_2.png',
           'imgUrl': 'assets/images/bg_illustration_1.png',
           'card_heading': "Morris County's Exclusive Pet Sitting App",
           'card_about_app_text': "The Pet Sitting App created by Pet Sitters",
@@ -10,6 +11,7 @@ class OnBoardingViewModel extends BaseViewModel {
               "Earn \$1 in Whiskers Rewards for use on your own future pet sitting needs every time you book a gig through Whiskers Away",
         },
         {
+          'bg_imgUrl': 'assets/images/bg_img_3.png',
           'imgUrl': 'assets/images/bg_illustration_2.png',
           'card_heading':
               "Post Your Pet Sitting need, Pet Sitters Come to You!",

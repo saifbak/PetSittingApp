@@ -11,12 +11,12 @@ import 'package:whiskers_away_app/src/base/utils/utils.dart';
 class OnBoardingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<OnBoardingViewModel>.nonReactive(
+    return ViewModelBuilder<OnBoardingViewModel>.reactive(
       viewModelBuilder: () => OnBoardingViewModel(),
       builder: (_, model, __) {
         return Scaffold(
           body: BaseView(
-            bgImageUrl: 'assets/images/bg_img_2.png',
+            bgImageUrl: model.onBoardingContent[model.pageIndex]['bg_imgUrl'],
             child: _Body(model),
           ),
         );
