@@ -8,12 +8,14 @@ class AppTextField extends StatelessWidget {
     required this.label,
     this.prefixIconName,
     this.hasPasswordEye = false,
+    this.textInputType = TextInputType.text,
   });
 
   final String hintText;
   final String label;
   final String? prefixIconName;
   final bool? hasPasswordEye;
+  final TextInputType? textInputType;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,7 @@ class AppTextField extends StatelessWidget {
                     fontFamily: 'Airbnb Cereal',
                     color: AppColors.primaryColor,
                   ),
+                  keyboardType: textInputType,
                   obscureText: hasPasswordEye! ? true : false,
                   decoration: InputDecoration(
                     filled: true,

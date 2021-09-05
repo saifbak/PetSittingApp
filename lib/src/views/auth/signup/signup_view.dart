@@ -56,11 +56,13 @@ class _Body extends StatelessWidget {
                 hintText: 'Enter your email address',
                 label: 'Email',
                 prefixIconName: 'mail',
+                textInputType: TextInputType.emailAddress,
               ),
               AppTextField(
                 hintText: 'Enter your phone number',
                 label: 'Phone Number',
                 prefixIconName: 'phone',
+                textInputType: TextInputType.phone,
               ),
               AppTextField(
                 hintText: 'Enter your address',
