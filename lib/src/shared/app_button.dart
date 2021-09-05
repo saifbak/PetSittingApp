@@ -12,12 +12,14 @@ class AppButton extends StatelessWidget {
     required this.text,
     this.fullWidth = false,
     this.onPressed,
+    this.horizontalPadding = 20,
   });
 
   final AppButtonType type;
   final String text;
   final bool fullWidth;
   final VoidCallback? onPressed;
+  final double? horizontalPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +36,9 @@ class AppButton extends StatelessWidget {
         ),
       ),
     );
-    final padding = const EdgeInsets.symmetric(
+    final padding = EdgeInsets.symmetric(
       vertical: 10,
-      horizontal: 20,
+      horizontal: horizontalPadding!,
     );
     final borderRadius = BorderRadius.circular(10);
 
