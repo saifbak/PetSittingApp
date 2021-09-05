@@ -38,13 +38,15 @@ class _Body extends StatelessWidget {
       children: [
         VerticalSpacing(context.topSpace() + screenSize.height * .05),
         Container(
-            width: screenSize.width / 2.25,
-            child: Hero(
-              tag: 'logo_text',
-              child: Image.asset(
-                'assets/images/logo_text.png',
-              ),
-            )),
+          width: screenSize.width / 2.25,
+          child: Hero(
+            tag: 'logo_text',
+            child: Image.asset(
+              'assets/images/logo_text.png',
+            ),
+          ),
+        ),
+        VerticalSpacing(screenSize.height * .025),
         Expanded(
           child: PageView.builder(
             scrollDirection: Axis.horizontal,
@@ -59,13 +61,16 @@ class _Body extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    width: screenSize.width / 1.25,
+                    width: screenSize.width / 1.35,
                     child: Image.asset(
                       pageContent['imgUrl'],
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    margin: EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: screenSize.height * .025,
+                    ),
                     padding: EdgeInsets.all(22),
                     child: Column(
                       children: [
@@ -87,7 +92,11 @@ class _Body extends StatelessWidget {
                             fontFamily: 'Airbnb Cereal',
                           ),
                         ),
-                        // TODO: Divider implementation
+                        VerticalSpacing(10),
+                        Image.asset(
+                          'assets/images/divider.png',
+                          fit: BoxFit.cover,
+                        ),
                         VerticalSpacing(10),
                         Text(
                           pageContent['card_desc'],
