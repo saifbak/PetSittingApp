@@ -7,6 +7,7 @@ import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_logo.dart';
 import 'package:whiskers_away_app/src/shared/app_textfield.dart';
+import 'package:whiskers_away_app/src/shared/multi_style_text.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/views/auth/login/login_view_model.dart';
@@ -78,28 +79,10 @@ class _Body extends StatelessWidget {
                 ],
               ),
               VerticalSpacing(24),
-              RichText(
-                text: new TextSpan(
-                  text: 'Don\'t have an account? ',
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontFamily: 'Airbnb Cereal',
-                    color: Color(0xFFB8B8B8),
-                  ),
-                  children: <TextSpan>[
-                    TextSpan(
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = NavService.signupReplace,
-                      text: 'Sign Up',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Airbnb Cereal',
-                        color: AppColors.primaryColor,
-                      ),
-                    )
-                  ],
-                ),
+              MultiStyleText(
+                firstText: 'Don\'t have an account? ',
+                secondText: 'Sign Up',
+                onPressed: NavService.signupReplace,
               ),
             ],
           ),
