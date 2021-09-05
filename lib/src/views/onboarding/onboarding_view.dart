@@ -69,7 +69,6 @@ class _Body extends StatelessWidget {
                     padding: EdgeInsets.all(22),
                     child: Column(
                       children: [
-                        // TODO: proper styling of below text widgets using theme
                         Text(
                           pageContent['card_heading'],
                           textAlign: TextAlign.center,

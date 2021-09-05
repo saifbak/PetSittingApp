@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
@@ -9,8 +8,6 @@ import 'package:whiskers_away_app/src/shared/app_logo.dart';
 import 'package:whiskers_away_app/src/shared/app_textfield.dart';
 import 'package:whiskers_away_app/src/shared/multi_style_text.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
-import 'package:whiskers_away_app/src/styles/app_colors.dart';
-import 'package:whiskers_away_app/src/views/auth/login/login_view_model.dart';
 import 'package:whiskers_away_app/src/views/auth/signup/signup_view_model.dart';
 
 class SignUpView extends StatelessWidget {

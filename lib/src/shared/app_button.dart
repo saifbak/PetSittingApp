@@ -25,7 +25,6 @@ class AppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final buttonTypeSolid = type == AppButtonType.solid ? true : false;
 
-    // TODO: proper styling of below text widget using theme
     final buttonText = Center(
       child: Text(
         '$text',
