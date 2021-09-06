@@ -5,6 +5,7 @@ import 'package:whiskers_away_app/src/shared/base_view.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
+import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/onboarding/onboarding_view_model.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 
@@ -77,20 +78,13 @@ class _Body extends StatelessWidget {
                         Text(
                           pageContent['card_heading'],
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: 'Airbnb Cereal',
-                            fontWeight: FontWeight.w700,
-                          ),
+                          style: AppTextStyles.xxLarge(weight: FontWeight.w700),
                         ),
                         VerticalSpacing(10),
                         Text(
                           pageContent['card_about_app_text'],
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'Airbnb Cereal',
-                          ),
+                          style: AppTextStyles.xxMedium(),
                         ),
                         VerticalSpacing(10),
                         Image.asset(
@@ -101,10 +95,7 @@ class _Body extends StatelessWidget {
                         Text(
                           pageContent['card_desc'],
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'Airbnb Cereal',
-                          ),
+                          style: AppTextStyles.xxMedium(),
                         )
                       ],
                     ),

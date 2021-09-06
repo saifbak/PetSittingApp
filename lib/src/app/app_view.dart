@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whiskers_away_app/src/base/utils/constants.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
+import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/views/splash/splash_view.dart';
 
 class AppView extends StatelessWidget {
@@ -15,6 +16,12 @@ class AppView extends StatelessWidget {
       onGenerateRoute: NavService.onGenerateRoute,
       navigatorKey: NavService.key,
       home: SplashView(),
+      theme: ThemeData(
+        fontFamily: 'Airbnb Cereal',
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: AppColors.primaryColor,
+        ),
+      ),
       builder: (context, child) {
         return Stack(
           children: [

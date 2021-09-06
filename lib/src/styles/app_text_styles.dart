@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 
-class AppTextStyles {
-  AppTextStyles._();
+class AppTextStyles extends TextStyle {
+  AppTextStyles._([String fontFamily = 'Airbnb Cereal'])
+      : super(fontFamily: fontFamily);
 
   static TextStyle heading({Color? color}) {
     final fontColor = color ?? AppColors.primaryColor;

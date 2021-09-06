@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
+import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 
 class MultiStyleText extends StatelessWidget {
   const MultiStyleText({
@@ -19,28 +20,23 @@ class MultiStyleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: new TextSpan(
-        text: firstText,
-        style: firstTextStyle ??
-            TextStyle(
-              fontSize: 13,
-              fontFamily: 'Airbnb Cereal',
-              color: Color(0xFFB8B8B8),
-            ),
-        children: <TextSpan>[
-          if (secondText != null)
-            TextSpan(
-              recognizer: TapGestureRecognizer()..onTap = onPressed,
-              text: secondText,
-              style: secondTextStyle ??
-                  TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Airbnb Cereal',
-                    color: AppColors.primaryColor,
-                  ),
-            )
+    return Text.rich(
+      TextSpan(
+        children: [
+          TextSpan(
+            text: firstText,
+            style: firstTextStyle ??
+                AppTextStyles.xMedium(color: Color(0xFFB8B8B8)),
+          ),
+          TextSpan(
+            recognizer: TapGestureRecognizer()..onTap = onPressed,
+            text: secondText,
+            style: secondTextStyle ??
+                AppTextStyles.xxLarge(
+                  color: AppColors.primaryColor,
+                  weight: FontWeight.w500,
+                ),
+          ),
         ],
       ),
     );

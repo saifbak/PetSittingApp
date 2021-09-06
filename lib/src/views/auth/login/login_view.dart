@@ -9,6 +9,7 @@ import 'package:whiskers_away_app/src/shared/app_textfield.dart';
 import 'package:whiskers_away_app/src/shared/multi_style_text.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
+import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/auth/login/login_view_model.dart';
 
 class LoginView extends StatelessWidget {
@@ -58,9 +59,7 @@ class _Body extends StatelessWidget {
                   children: [
                     Text(
                       'Forgot Password ?',
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontFamily: 'Airbnb Cereal',
+                      style: AppTextStyles.xMedium(
                         color: AppColors.primaryColor,
                       ),
                     ),

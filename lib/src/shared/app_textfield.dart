@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
+import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 
 class AppTextField extends StatelessWidget {
   const AppTextField({
@@ -26,10 +27,8 @@ class AppTextField extends StatelessWidget {
         children: [
           Text(
             label,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              fontFamily: 'Airbnb Cereal',
+            style: AppTextStyles.xxLarge(
+              weight: FontWeight.w500,
               color: Color(0xFF3D3D3D),
             ),
           ),
@@ -40,22 +39,14 @@ class AppTextField extends StatelessWidget {
               Container(
                 height: 45,
                 child: TextFormField(
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: 'Airbnb Cereal',
-                    color: AppColors.primaryColor,
-                  ),
+                  style: AppTextStyles.xxLarge(color: AppColors.primaryColor),
                   keyboardType: textInputType,
                   obscureText: hasPasswordEye! ? true : false,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
                     hintText: hintText,
-                    hintStyle: TextStyle(
-                      fontSize: 13,
-                      fontFamily: 'Airbnb Cereal',
-                      color: Color(0xFF888888),
-                    ),
+                    hintStyle: AppTextStyles.xMedium(color: Color(0xFF888888)),
                     prefixIcon: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

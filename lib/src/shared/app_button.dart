@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
+import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 
 enum AppButtonType {
   solid,
@@ -27,10 +28,8 @@ class AppButton extends StatelessWidget {
 
     final buttonText = Center(
       child: Text(
-        '$text',
-        style: TextStyle(
-          fontSize: 16,
-          fontFamily: 'Airbnb Cereal',
+        text,
+        style: AppTextStyles.xLarge(
           color: buttonTypeSolid ? Colors.white : AppColors.primaryColor,
         ),
       ),
