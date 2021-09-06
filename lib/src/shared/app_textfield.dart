@@ -7,16 +7,18 @@ class AppTextField extends StatelessWidget {
   const AppTextField({
     required this.hintText,
     required this.label,
-    this.prefixIconName,
+    this.prefixIcon,
+    this.suffixIcon,
     this.hasPasswordEye = false,
     this.textInputType = TextInputType.text,
   });
 
   final String hintText;
   final String label;
-  final String? prefixIconName;
   final bool? hasPasswordEye;
   final TextInputType? textInputType;
+  final IconData? prefixIcon;
+  final IconData? suffixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -47,18 +49,20 @@ class AppTextField extends StatelessWidget {
                     fillColor: Colors.white,
                     hintText: hintText,
                     hintStyle: AppTextStyles.xMedium(color: Color(0xFF888888)),
-                    prefixIcon: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 20,
-                          height: 20,
-                          child: Image.asset(
-                            'assets/images/icons/$prefixIconName.png',
-                          ),
-                        ),
-                      ],
-                    ),
+                    prefixIcon: prefixIcon != null
+                        ? Icon(
+                            prefixIcon,
+                            color: AppColors.primaryColor,
+                            size: 22,
+                          )
+                        : null,
+                    suffixIcon: suffixIcon != null
+                        ? Icon(
+                            suffixIcon,
+                            color: AppColors.primaryColor,
+                            size: 22,
+                          )
+                        : null,
                     contentPadding: EdgeInsets.only(
                       top: 15,
                       left: 15,

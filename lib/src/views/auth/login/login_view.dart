@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
@@ -44,12 +45,12 @@ class _Body extends StatelessWidget {
               AppTextField(
                 hintText: 'Enter your username / email',
                 label: 'Username / Email',
-                prefixIconName: 'profile',
+                prefixIcon: IconlyLight.profile,
               ),
               AppTextField(
                 hintText: 'Enter your password',
                 label: 'Password',
-                prefixIconName: 'lock',
+                prefixIcon: IconlyLight.lock,
                 hasPasswordEye: true,
               ),
               Padding(
