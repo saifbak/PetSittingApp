@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 
-class AppTextField extends StatelessWidget {
+class AppTextField extends StatefulWidget {
   const AppTextField({
     required this.hintText,
     required this.label,
@@ -21,6 +22,15 @@ class AppTextField extends StatelessWidget {
   final IconData? suffixIcon;
 
   @override
+  _AppTextFieldState createState() => _AppTextFieldState();
+}
+
+class _AppTextFieldState extends State<AppTextField> {
+  bool visible = true;
+
+  void togglePasswordVisibility() => setState(() => visible = !visible);
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -28,7 +38,7 @@ class AppTextField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            label,
+            widget.label,
             style: AppTextStyles.xxLarge(
               weight: FontWeight.w500,
               color: Color(0xFF3D3D3D),
@@ -42,23 +52,23 @@ class AppTextField extends StatelessWidget {
                 height: 45,
                 child: TextFormField(
                   style: AppTextStyles.xxLarge(color: AppColors.primaryColor),
-                  keyboardType: textInputType,
-                  obscureText: hasPasswordEye! ? true : false,
+                  keyboardType: widget.textInputType,
+                  obscureText: widget.hasPasswordEye! ? visible : false,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
-                    hintText: hintText,
+                    hintText: widget.hintText,
                     hintStyle: AppTextStyles.xMedium(color: Color(0xFF888888)),
-                    prefixIcon: prefixIcon != null
+                    prefixIcon: widget.prefixIcon != null
                         ? Icon(
-                            prefixIcon,
+                            widget.prefixIcon,
                             color: AppColors.primaryColor,
                             size: 22,
                           )
                         : null,
-                    suffixIcon: suffixIcon != null
+                    suffixIcon: widget.suffixIcon != null
                         ? Icon(
-                            suffixIcon,
+                            widget.suffixIcon,
                             color: AppColors.primaryColor,
                             size: 22,
                           )
@@ -66,7 +76,7 @@ class AppTextField extends StatelessWidget {
                     contentPadding: EdgeInsets.only(
                       top: 15,
                       left: 15,
-                      right: hasPasswordEye! ? 30 : 10,
+                      right: widget.hasPasswordEye! ? 30 : 10,
                       bottom: 10,
                     ),
                     enabledBorder: OutlineInputBorder(
@@ -82,14 +92,18 @@ class AppTextField extends StatelessWidget {
                   ),
                 ),
               ),
-              if (hasPasswordEye!)
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Image.asset(
-                    'assets/images/icons/eye.png',
-                    width: 18,
+              if (widget.hasPasswordEye!)
+                GestureDetector(
+                  onTap: togglePasswordVisibility,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16.0),
+                    child: Icon(
+                      visible ? IconlyLight.show : IconlyLight.hide,
+                      color: AppColors.primaryColor,
+                      size: 22,
+                    ),
                   ),
-                ),
+                )
             ],
           ),
           VerticalSpacing(16),
