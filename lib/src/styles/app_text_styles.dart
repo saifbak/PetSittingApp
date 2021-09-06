@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 
-class TextStyles {
-  TextStyles._();
+class AppTextStyles {
+  AppTextStyles._();
 
   static TextStyle heading({Color? color}) {
     final fontColor = color ?? AppColors.primaryColor;
