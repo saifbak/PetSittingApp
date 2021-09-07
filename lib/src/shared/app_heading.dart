@@ -13,7 +13,7 @@ class WelcomeHeading extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: MultiStyleText(
         firstText: 'Welcome,',
-        firstTextStyle: AppTextStyles.xxLarge(),
+        firstTextStyle: AppTextStyles.xLarge(),
         secondText: '\n$name',
         secondTextStyle: AppTextStyles.heading(),
       ),
