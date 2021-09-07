@@ -4,6 +4,7 @@ import 'package:whiskers_away_app/src/services/local/keyboard_service.dart';
 import 'package:whiskers_away_app/src/services/remote/api_service.dart';
 import 'package:whiskers_away_app/src/views/auth/login/login_view.dart';
 import 'package:whiskers_away_app/src/views/auth/signup/signup_view.dart';
+import 'package:whiskers_away_app/src/views/home/home_view.dart';
 import 'package:whiskers_away_app/src/views/onboarding/onboarding_view.dart';
 import 'package:whiskers_away_app/src/views/options_select/options_select_view.dart';
 import 'package:whiskers_away_app/src/views/splash/splash_view.dart';
@@ -17,6 +18,7 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: LoginView),
     MaterialRoute(page: SignUpView),
     MaterialRoute(page: OptionsSelectView),
+    MaterialRoute(page: HomeView),
   ],
   dependencies: [
     // Lazy singletons

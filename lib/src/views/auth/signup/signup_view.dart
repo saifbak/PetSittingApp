@@ -80,6 +80,7 @@ class _Body extends StatelessWidget {
                   AppButton(
                     text: 'Sign Up',
                     horizontalPadding: 50,
+                    onPressed: NavService.optionsSelect,
                   ),
                 ],
               ),

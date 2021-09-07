@@ -4,8 +4,8 @@ import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
+import 'package:whiskers_away_app/src/shared/app_heading.dart';
 import 'package:whiskers_away_app/src/shared/base_view.dart';
-import 'package:whiskers_away_app/src/shared/multi_style_text.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
@@ -44,15 +44,7 @@ class _Body extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           VerticalSpacing(context.topSpace() + screenSize.height * .05),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: MultiStyleText(
-              firstText: 'Welcome,',
-              firstTextStyle: AppTextStyles.xxLarge(),
-              secondText: '\nJohn Carter',
-              secondTextStyle: AppTextStyles.heading(),
-            ),
-          ),
+          WelcomeHeading(name: 'John Carter'),
           VerticalSpacing(screenSize.height * .04),
           Text(
             'Choose from the options below',
@@ -82,7 +74,7 @@ class _Body extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AppButton(
-                onPressed: NavService.onBoarding,
+                onPressed: NavService.home,
                 text: 'Continue',
                 horizontalPadding: 50,
               ),
@@ -109,7 +101,7 @@ class Option extends ViewModelWidget<OptionsSelectViewModel> {
       isSelected: petSitter ? model.isSelected : !model.isSelected,
       onSelected: (val) {
         model.isSelected = petSitter ? val['is_selected'] : !val['is_selected'];
-        debugPrint(val['role']);
+        debugPrint(val['role'].toString());
       },
     );
   }

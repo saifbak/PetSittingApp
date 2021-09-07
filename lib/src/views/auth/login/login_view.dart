@@ -74,6 +74,7 @@ class _Body extends StatelessWidget {
                   AppButton(
                     text: 'Log In',
                     horizontalPadding: 50,
+                    onPressed: NavService.optionsSelect,
                   ),
                 ],
               ),
