@@ -17,6 +17,7 @@ class AppView extends StatelessWidget {
       navigatorKey: NavService.key,
       home: SplashView(),
       theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Airbnb Cereal',
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: AppColors.primaryColor,
