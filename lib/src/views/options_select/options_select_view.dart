@@ -10,6 +10,7 @@ import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/options_select/options_select_view_model.dart';
+import 'package:whiskers_away_app/src/views/options_select/widgets/divider_line.dart';
 import 'package:whiskers_away_app/src/views/options_select/widgets/option_card.dart';
 
 class OptionsSelectView extends StatelessWidget {
@@ -63,13 +64,7 @@ class _Body extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 24.0),
             child: Row(
               children: [
-                Expanded(
-                  child: Divider(
-                    thickness: 2,
-                    color: AppColors.primaryColor.withOpacity(.16),
-                    endIndent: 18,
-                  ),
-                ),
+                DividerLine(),
                 Text(
                   'OR',
                   style: AppTextStyles.xLarge(
@@ -77,13 +72,7 @@ class _Body extends StatelessWidget {
                     weight: FontWeight.w500,
                   ),
                 ),
-                Expanded(
-                  child: Divider(
-                    thickness: 2,
-                    color: AppColors.primaryColor.withOpacity(.16),
-                    indent: 18,
-                  ),
-                )
+                DividerLine(rightSide: false),
               ],
             ),
           ),
