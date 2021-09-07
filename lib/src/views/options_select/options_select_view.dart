@@ -58,7 +58,7 @@ class _Body extends StatelessWidget {
             style: AppTextStyles.xLarge(),
           ),
           VerticalSpacing(16),
-          OptionCard(),
+          Option(),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 24.0),
             child: Row(
@@ -87,9 +87,7 @@ class _Body extends StatelessWidget {
               ],
             ),
           ),
-          OptionCard(
-            textRight: false,
-          ),
+          Option(textRight: false),
           Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -104,6 +102,23 @@ class _Body extends StatelessWidget {
           VerticalSpacing(screenSize.height * .04),
         ],
       ),
+    );
+  }
+}
+
+class Option extends ViewModelWidget<OptionsSelectViewModel> {
+  final bool? textRight;
+
+  Option({
+    this.textRight = true,
+  });
+
+  @override
+  Widget build(BuildContext context, OptionsSelectViewModel model) {
+    return OptionCard(
+      textRight: this.textRight,
+      isSelected: this.textRight! ? model.isSelected : !model.isSelected,
+      onSelected: (val) => model.isSelected = this.textRight! ? val : !val,
     );
   }
 }
