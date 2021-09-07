@@ -74,6 +74,7 @@ class _Body extends StatelessWidget {
                   'OR',
                   style: AppTextStyles.xLarge(
                     color: AppColors.primaryColor,
+                    weight: FontWeight.w500,
                   ),
                 ),
                 Expanded(

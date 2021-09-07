@@ -23,9 +23,23 @@ class OptionCard extends StatelessWidget {
       ),
     );
 
-    final image = Image.asset(
-      'assets/images/illustration_${textRight! ? '1' : '2'}.png',
-      width: 100,
+    final image = Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Image.asset(
+          'assets/images/illustration_${textRight! ? '3' : '4'}.png',
+          width: 90,
+        ),
+        Positioned(
+          bottom: 0,
+          top: 0,
+          left: textRight! ? 12 : 0,
+          child: Image.asset(
+            'assets/images/illustration_${textRight! ? '2' : '1'}.png',
+            width: 90,
+          ),
+        ),
+      ],
     );
 
     return Container(
