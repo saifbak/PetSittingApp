@@ -5,12 +5,13 @@ class AppTextStyles extends TextStyle {
   AppTextStyles._([String fontFamily = 'Airbnb Cereal'])
       : super(fontFamily: fontFamily);
 
-  static TextStyle heading({Color? color}) {
+  static TextStyle heading({Color? color, FontWeight? weight}) {
     final fontColor = color ?? AppColors.primaryColor;
+    final fontWeight = weight ?? FontWeight.w700;
 
     return TextStyle(
       fontSize: 20,
-      fontWeight: FontWeight.w700,
+      fontWeight: fontWeight,
       color: fontColor,
     );
   }
