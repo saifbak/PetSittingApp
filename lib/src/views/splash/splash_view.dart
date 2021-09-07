@@ -15,7 +15,7 @@ class SplashView extends StatelessWidget {
       onModelReady: (_) {
         Future.delayed(
           Duration(seconds: 2),
-          NavService.onBoarding,
+          NavService.optionsSelect,
         );
       },
       builder: (_, __, ___) {
