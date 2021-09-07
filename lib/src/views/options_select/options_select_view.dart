@@ -109,7 +109,7 @@ class Option extends ViewModelWidget<OptionsSelectViewModel> {
       isSelected: petSitter ? model.isSelected : !model.isSelected,
       onSelected: (val) {
         model.isSelected = petSitter ? val['is_selected'] : !val['is_selected'];
-        print(val['role']);
+        debugPrint(val['role']);
       },
     );
   }

@@ -58,7 +58,8 @@ class OptionCard extends StatelessWidget {
           'role': role,
         });
       },
-      child: Container(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(vertical: 16),
         child: Row(
           children: [
