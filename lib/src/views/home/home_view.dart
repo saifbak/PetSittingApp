@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
+import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_heading.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
+import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 
@@ -48,9 +51,53 @@ class _Body extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-              )
+              ),
             ],
           ),
+          VerticalSpacing(14),
+          Container(
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(0, 4),
+                  blurRadius: 20,
+                  color: Colors.black.withOpacity(.08),
+                ),
+              ],
+            ),
+            child: TextField(
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(left: 16),
+                suffixIcon: Icon(
+                  IconlyLight.filter,
+                  color: AppColors.primaryColor,
+                ),
+                hintText: 'Search ...',
+                hintStyle: AppTextStyles.xMedium(color: Color(0xFF858585)),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: Color(0xFFE7E7E7)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: Color(0xFFE7E7E7)),
+                ),
+              ),
+            ),
+          ),
+          Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AppButton(
+                text: 'Submit a request',
+                horizontalPadding: 30,
+              ),
+            ],
+          ),
+          VerticalSpacing(screenSize.height * .04),
         ],
       ),
     );
