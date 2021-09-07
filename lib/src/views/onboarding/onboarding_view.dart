@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
+import 'package:whiskers_away_app/src/shared/app_divider.dart';
 import 'package:whiskers_away_app/src/shared/base_view.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
@@ -87,10 +88,7 @@ class _Body extends StatelessWidget {
                           style: AppTextStyles.xxMedium(),
                         ),
                         VerticalSpacing(10),
-                        Image.asset(
-                          'assets/images/divider.png',
-                          fit: BoxFit.cover,
-                        ),
+                        AppDivider(),
                         VerticalSpacing(10),
                         Text(
                           pageContent['card_desc'],
