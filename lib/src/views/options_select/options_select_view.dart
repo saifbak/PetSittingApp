@@ -59,7 +59,7 @@ class _Body extends StatelessWidget {
             style: AppTextStyles.xLarge(),
           ),
           VerticalSpacing(16),
-          Option(),
+          Option(role: Roles.petSitter),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 24.0),
             child: Row(
@@ -76,7 +76,7 @@ class _Body extends StatelessWidget {
               ],
             ),
           ),
-          Option(textRight: false),
+          Option(role: Roles.petOwner),
           Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -96,18 +96,21 @@ class _Body extends StatelessWidget {
 }
 
 class Option extends ViewModelWidget<OptionsSelectViewModel> {
-  final bool? textRight;
+  final Roles role;
 
-  Option({
-    this.textRight = true,
-  });
+  Option({required this.role});
 
   @override
   Widget build(BuildContext context, OptionsSelectViewModel model) {
+    final petSitter = role == Roles.petSitter;
+
     return OptionCard(
-      textRight: this.textRight,
-      isSelected: this.textRight! ? model.isSelected : !model.isSelected,
-      onSelected: (val) => model.isSelected = this.textRight! ? val : !val,
+      role: this.role,
+      isSelected: petSitter ? model.isSelected : !model.isSelected,
+      onSelected: (val) {
+        model.isSelected = petSitter ? val['is_selected'] : !val['is_selected'];
+        print(val['role']);
+      },
     );
   }
 }

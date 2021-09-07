@@ -1,5 +1,7 @@
 import 'package:stacked/stacked.dart';
 
+enum Roles { petOwner, petSitter }
+
 class OptionsSelectViewModel extends BaseViewModel {
   bool _isSelected = true;
   bool get isSelected => _isSelected;

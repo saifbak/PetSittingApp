@@ -2,25 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:whiskers_away_app/src/shared/multi_style_text.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
+import 'package:whiskers_away_app/src/views/options_select/options_select_view_model.dart';
 
 class OptionCard extends StatelessWidget {
   const OptionCard({
-    this.textRight = true,
+    required this.role,
     required this.isSelected,
     required this.onSelected,
   });
-  final bool? textRight;
+  final Roles role;
   final bool isSelected;
-  final ValueChanged<bool> onSelected;
+  final ValueChanged<Map<String, dynamic>> onSelected;
 
   @override
   Widget build(BuildContext context) {
-    bool check = isSelected;
+    final petSitter = role == Roles.petSitter;
+    bool selected = isSelected;
 
     final textColor = isSelected ? Colors.white : AppColors.primaryColor;
 
     final text = MultiStyleText(
-      firstText: textRight! ? 'I am' : 'I need',
+      firstText: petSitter ? 'I am' : 'I need',
       firstTextStyle: AppTextStyles.heading(color: textColor),
       secondText: '\na pet sitter',
       secondTextStyle: AppTextStyles.heading(
@@ -39,9 +41,9 @@ class OptionCard extends StatelessWidget {
         Positioned(
           bottom: 0,
           top: 0,
-          left: textRight! ? 9 : 0,
+          left: petSitter ? 9 : 0,
           child: Image.asset(
-            'assets/images/illustration_${textRight! ? '2' : '1'}.png',
+            'assets/images/illustration_${petSitter ? '2' : '1'}.png',
             width: 90,
           ),
         ),
@@ -50,21 +52,24 @@ class OptionCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        check = !check;
-        onSelected(check);
+        selected = !selected;
+        onSelected({
+          'is_selected': selected,
+          'role': role,
+        });
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16),
         child: Row(
           children: [
             Spacer(),
-            if (textRight!) image else text,
+            if (petSitter) image else text,
             Spacer(
-              flex: textRight! ? 1 : 2,
+              flex: petSitter ? 1 : 2,
             ),
-            if (textRight!) text else image,
+            if (petSitter) text else image,
             Spacer(
-              flex: textRight! ? 2 : 1,
+              flex: petSitter ? 2 : 1,
             ),
           ],
         ),
