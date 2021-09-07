@@ -14,6 +14,7 @@ import '../views/auth/signup/signup_view.dart';
 import '../views/home/home_view.dart';
 import '../views/onboarding/onboarding_view.dart';
 import '../views/options_select/options_select_view.dart';
+import '../views/request_submit/request_submit_view.dart';
 import '../views/splash/splash_view.dart';
 
 class Routes {
@@ -23,6 +24,7 @@ class Routes {
   static const String signUpView = '/sign-up-view';
   static const String optionsSelectView = '/options-select-view';
   static const String homeView = '/home-view';
+  static const String requestSubmitView = '/request-submit-view';
   static const all = <String>{
     splashView,
     onBoardingView,
@@ -30,6 +32,7 @@ class Routes {
     signUpView,
     optionsSelectView,
     homeView,
+    requestSubmitView,
   };
 }
 
@@ -43,6 +46,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.signUpView, page: SignUpView),
     RouteDef(Routes.optionsSelectView, page: OptionsSelectView),
     RouteDef(Routes.homeView, page: HomeView),
+    RouteDef(Routes.requestSubmitView, page: RequestSubmitView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -80,6 +84,12 @@ class StackedRouter extends RouterBase {
     HomeView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => HomeView(),
+        settings: data,
+      );
+    },
+    RequestSubmitView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => RequestSubmitView(),
         settings: data,
       );
     },
