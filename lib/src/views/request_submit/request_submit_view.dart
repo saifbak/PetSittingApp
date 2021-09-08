@@ -72,6 +72,83 @@ class _Body extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
+            VerticalSpacing(30),
+            Text(
+              'Pet sitting at',
+              style: AppTextStyles.xxLarge(
+                weight: FontWeight.w500,
+                color: AppColors.darkGray,
+              ),
+            ),
+            VerticalSpacing(),
+            Container(
+              padding: EdgeInsets.all(6),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Center(
+                        child: Text(
+                          'Own home',
+                          style: AppTextStyles.xxLarge(
+                            weight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(0, 3),
+                            blurRadius: 16,
+                            color: Colors.black.withOpacity(.08),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Center(
+                        child: Text(
+                          "Sitter's home",
+                          style: AppTextStyles.xxLarge(
+                            weight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(0, 3),
+                            blurRadius: 16,
+                            color: Colors.black.withOpacity(.08),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    offset: Offset(0, 4),
+                    blurRadius: 30,
+                    color: Colors.black.withOpacity(.08),
+                  ),
+                ],
+              ),
             )
           ],
         ),

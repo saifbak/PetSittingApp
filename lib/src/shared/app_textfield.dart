@@ -41,7 +41,7 @@ class _AppTextFieldState extends State<AppTextField> {
             widget.label,
             style: AppTextStyles.xxLarge(
               weight: FontWeight.w500,
-              color: Color(0xFF3D3D3D),
+              color: AppColors.darkGray,
             ),
           ),
           VerticalSpacing(),
