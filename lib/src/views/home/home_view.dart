@@ -7,6 +7,7 @@ import 'package:whiskers_away_app/src/shared/app_heading.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
+import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 
@@ -33,7 +34,7 @@ class _Body extends StatelessWidget {
     final screenSize = context.screenSize();
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: AppBaseStyles.horizontalPadding,
       child: Column(
         children: [
           VerticalSpacing(context.topSpace() + screenSize.height * .05),
