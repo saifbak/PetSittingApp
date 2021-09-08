@@ -1,7 +1,13 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:whiskers_away_app/src/views/request_submit/request_submit_view_model.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
+import 'package:whiskers_away_app/src/shared/app_top_bar.dart';
+import 'package:whiskers_away_app/src/shared/spacing.dart';
+import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
+import 'package:whiskers_away_app/src/styles/app_colors.dart';
+import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
+import 'package:whiskers_away_app/src/views/request_submit/request_submit_view_model.dart';
 
 class RequestSubmitView extends StatelessWidget {
   @override
@@ -26,7 +32,50 @@ class _Body extends StatelessWidget {
     final screenSize = context.screenSize();
 
     return Column(
-      children: [],
+      children: [
+        AppTopBar(text: 'Submit a Request'),
+        ListView(
+          shrinkWrap: true,
+          padding: AppBaseStyles.horizontalPadding,
+          children: [
+            VerticalSpacing(16),
+            Text(
+              'Pet sitting services offered in yor own home are sales tax exempt, whereas pet sitting services offered in the sitter’s home are subject to standard sales tax rates',
+              style: AppTextStyles.xxMedium(color: AppColors.gray),
+            ),
+            VerticalSpacing(16),
+            DottedBorder(
+              dashPattern: [6],
+              borderType: BorderType.RRect,
+              strokeWidth: 1.5,
+              radius: Radius.circular(16),
+              color: AppColors.primaryColor,
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  width: double.infinity,
+                  color: AppColors.primaryColor.withOpacity(.15),
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        'assets/images/icons/add_img.png',
+                        width: 50,
+                      ),
+                      VerticalSpacing(),
+                      Text(
+                        'Add image',
+                        style: AppTextStyles.xxLarge(
+                            color: AppColors.primaryColor),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ],
     );
   }
 }
