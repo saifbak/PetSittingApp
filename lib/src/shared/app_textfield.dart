@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
+import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 
@@ -12,6 +13,10 @@ class AppTextField extends StatefulWidget {
     this.suffixIcon,
     this.hasPasswordEye = false,
     this.textInputType = TextInputType.text,
+    this.padding,
+    this.maxLines = 1,
+    this.readOnlyField = false,
+    this.onTap,
   });
 
   final String hintText;
@@ -20,6 +25,10 @@ class AppTextField extends StatefulWidget {
   final TextInputType? textInputType;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
+  final EdgeInsets? padding;
+  final int? maxLines;
+  final bool? readOnlyField;
+  final VoidCallback? onTap;
 
   @override
   _AppTextFieldState createState() => _AppTextFieldState();
@@ -33,7 +42,7 @@ class _AppTextFieldState extends State<AppTextField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: widget.padding ?? AppBaseStyles.horizontalPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -49,11 +58,14 @@ class _AppTextFieldState extends State<AppTextField> {
             alignment: Alignment.centerRight,
             children: [
               Container(
-                height: 45,
+                height: widget.maxLines != null ? null : 45,
                 child: TextFormField(
                   style: AppTextStyles.xxLarge(color: AppColors.primaryColor),
                   keyboardType: widget.textInputType,
                   obscureText: widget.hasPasswordEye! ? visible : false,
+                  maxLines: widget.maxLines,
+                  readOnly: widget.readOnlyField!,
+                  onTap: widget.onTap,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
