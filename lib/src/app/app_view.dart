@@ -22,6 +22,13 @@ class AppView extends StatelessWidget {
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: AppColors.primaryColor,
         ),
+        scrollbarTheme: ScrollbarThemeData(
+          isAlwaysShown: true,
+          mainAxisMargin: -6,
+          thickness: MaterialStateProperty.all(3.5),
+          radius: Radius.circular(10),
+          thumbColor: MaterialStateProperty.all(AppColors.primaryColor),
+        ),
       ),
       builder: (context, child) {
         return Stack(

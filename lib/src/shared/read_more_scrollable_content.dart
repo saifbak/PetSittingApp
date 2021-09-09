@@ -38,7 +38,7 @@ class _ReadMoreScrollableContentState extends State<ReadMoreScrollableContent> {
   Widget build(BuildContext context) {
     final list = ListView.separated(
       physics: scrollPhysics,
-      padding: EdgeInsets.zero,
+      padding: EdgeInsets.only(right: 8),
       controller: scrollCtrl,
       itemBuilder: widget.contentItemBuilder,
       separatorBuilder: (_, __) => widget.contentSeparator ?? VerticalSpacing(),
@@ -49,7 +49,10 @@ class _ReadMoreScrollableContentState extends State<ReadMoreScrollableContent> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(child: readMoreContent ? Scrollbar(child: list) : list),
+          Expanded(
+              child: readMoreContent
+                  ? Scrollbar(controller: scrollCtrl, child: list)
+                  : list),
           if (showMoreDisplay) ...[
             VerticalSpacing(16),
             GestureDetector(
