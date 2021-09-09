@@ -3,10 +3,12 @@ import 'package:stacked/stacked.dart';
 enum Roles { petOwner, petSitter }
 
 class OptionsSelectViewModel extends BaseViewModel {
-  bool _isSelected = true;
-  bool get isSelected => _isSelected;
-  set isSelected(bool val) {
-    _isSelected = val;
+  List<Roles> get petSittingOptions => [Roles.petSitter, Roles.petOwner];
+
+  Roles _selectedRole = Roles.petSitter;
+  Roles get selectedRole => _selectedRole;
+  set selectedRole(Roles val) {
+    _selectedRole = val;
     notifyListeners();
   }
 }

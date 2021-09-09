@@ -8,16 +8,13 @@ class OptionCard extends StatelessWidget {
   const OptionCard({
     required this.role,
     required this.isSelected,
-    required this.onSelected,
   });
   final Roles role;
   final bool isSelected;
-  final ValueChanged<Map<String, dynamic>> onSelected;
 
   @override
   Widget build(BuildContext context) {
     final petSitter = role == Roles.petSitter;
-    bool selected = isSelected;
 
     final textColor = isSelected ? Colors.white : AppColors.primaryColor;
 
@@ -50,45 +47,37 @@ class OptionCard extends StatelessWidget {
       ],
     );
 
-    return GestureDetector(
-      onTap: () {
-        selected = !selected;
-        onSelected({
-          'is_selected': selected,
-          'role': role,
-        });
-      },
-      child: AnimatedContainer(
-        duration: Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        child: Row(
-          children: [
-            Spacer(),
-            if (petSitter) image else text,
-            Spacer(
-              flex: petSitter ? 1 : 2,
-            ),
-            if (petSitter) text else image,
-            Spacer(
-              flex: petSitter ? 2 : 1,
-            ),
-          ],
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 200),
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: Row(
+        children: [
+          Spacer(),
+          if (petSitter) image else text,
+          Spacer(
+            flex: petSitter ? 1 : 2,
+          ),
+          if (petSitter) text else image,
+          Spacer(
+            flex: petSitter ? 2 : 1,
+          ),
+        ],
+      ),
+      decoration: BoxDecoration(
+        color: isSelected ? AppColors.primaryColor : Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(
+          color: isSelected ? Colors.transparent : AppColors.primaryColor,
         ),
-        decoration: BoxDecoration(
-            color: isSelected ? AppColors.primaryColor : Colors.white,
-            borderRadius: BorderRadius.circular(18),
-            border: Border.all(
-              color: isSelected ? Colors.transparent : AppColors.primaryColor,
-            ),
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(0, 4),
-                blurRadius: 20,
-                color: isSelected
-                    ? AppColors.primaryColor.withOpacity(.2)
-                    : Colors.transparent,
-              ),
-            ]),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 4),
+            blurRadius: 20,
+            color: isSelected
+                ? AppColors.primaryColor.withOpacity(.2)
+                : Colors.transparent,
+          ),
+        ],
       ),
     );
   }

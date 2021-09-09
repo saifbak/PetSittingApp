@@ -52,25 +52,36 @@ class _Body extends StatelessWidget {
             style: AppTextStyles.xLarge(),
           ),
           VerticalSpacing(16),
-          Option(role: Roles.petSitter),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 24.0),
-            child: Row(
-              children: [
-                DividerLine(),
-                Text(
-                  'OR',
-                  style: AppTextStyles.xLarge(
-                    color: AppColors.primaryColor,
-                    weight: FontWeight.w500,
+          Expanded(
+            child: ListView.separated(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (_, index) {
+                final role = model.petSittingOptions[index];
+                return Option(role: role);
+              },
+              separatorBuilder: (_, __) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24.0),
+                  child: Row(
+                    children: [
+                      DividerLine(),
+                      Text(
+                        'OR',
+                        style: AppTextStyles.xLarge(
+                          color: AppColors.primaryColor,
+                          weight: FontWeight.w500,
+                        ),
+                      ),
+                      DividerLine(rightSide: false),
+                    ],
                   ),
-                ),
-                DividerLine(rightSide: false),
-              ],
+                );
+              },
+              itemCount: model.petSittingOptions.length,
             ),
           ),
-          Option(role: Roles.petOwner),
-          Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -95,15 +106,12 @@ class Option extends ViewModelWidget<OptionsSelectViewModel> {
 
   @override
   Widget build(BuildContext context, OptionsSelectViewModel model) {
-    final petSitter = role == Roles.petSitter;
-
-    return OptionCard(
-      role: this.role,
-      isSelected: petSitter ? model.isSelected : !model.isSelected,
-      onSelected: (val) {
-        model.isSelected = petSitter ? val['is_selected'] : !val['is_selected'];
-        debugPrint(val['role'].toString());
-      },
+    return GestureDetector(
+      onTap: () => model.selectedRole = role,
+      child: OptionCard(
+        role: this.role,
+        isSelected: model.selectedRole == role ? true : false,
+      ),
     );
   }
 }
