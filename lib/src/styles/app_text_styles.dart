@@ -81,4 +81,15 @@ class AppTextStyles extends TextStyle {
       color: fontColor,
     );
   }
+
+  static TextStyle large({Color? color, FontWeight? weight}) {
+    final fontColor = color ?? Colors.black;
+    final fontWeight = weight ?? FontWeight.w400;
+
+    return TextStyle(
+      fontSize: 18,
+      fontWeight: fontWeight,
+      color: fontColor,
+    );
+  }
 }
