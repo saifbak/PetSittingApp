@@ -11,6 +11,7 @@ import 'package:whiskers_away_app/src/views/request_submit/request_submit_view.d
 import 'package:whiskers_away_app/src/views/splash/splash_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:whiskers_away_app/src/views/terms_conditions/terms_conditions_view.dart';
 
 @StackedApp(
   routes: [
@@ -21,6 +22,7 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: OptionsSelectView),
     MaterialRoute(page: HomeView),
     MaterialRoute(page: RequestSubmitView),
+    MaterialRoute(page: TermsConditionsView),
   ],
   dependencies: [
     // Lazy singletons
