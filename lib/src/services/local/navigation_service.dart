@@ -34,8 +34,12 @@ class NavService {
       _navigationService!
           .navigateTo(Routes.requestSubmitView, arguments: arguments);
   static Future<dynamic>? termsConditions({dynamic arguments}) =>
-      _navigationService!
-          .navigateTo(Routes.termsConditionsView, arguments: arguments);
+      _navigationService!.navigateTo(
+        Routes.termsConditionsView,
+        arguments: arguments,
+      );
+  static Future<dynamic>? payment({dynamic arguments}) =>
+      _navigationService!.navigateTo(Routes.paymentView, arguments: arguments);
 
   // back route
   static bool get popOut => _navigationService!.back();

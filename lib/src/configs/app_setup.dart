@@ -7,6 +7,7 @@ import 'package:whiskers_away_app/src/views/auth/signup/signup_view.dart';
 import 'package:whiskers_away_app/src/views/home/home_view.dart';
 import 'package:whiskers_away_app/src/views/onboarding/onboarding_view.dart';
 import 'package:whiskers_away_app/src/views/options_select/options_select_view.dart';
+import 'package:whiskers_away_app/src/views/payment/payment_view.dart';
 import 'package:whiskers_away_app/src/views/request_submit/request_submit_view.dart';
 import 'package:whiskers_away_app/src/views/splash/splash_view.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -23,6 +24,7 @@ import 'package:whiskers_away_app/src/views/terms_conditions/terms_conditions_vi
     MaterialRoute(page: HomeView),
     MaterialRoute(page: RequestSubmitView),
     MaterialRoute(page: TermsConditionsView),
+    MaterialRoute(page: PaymentView),
   ],
   dependencies: [
     // Lazy singletons
