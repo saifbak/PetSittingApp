@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:whiskers_away_app/src/shared/app_label_text.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
@@ -46,13 +47,7 @@ class _AppTextFieldState extends State<AppTextField> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            widget.label,
-            style: AppTextStyles.xxLarge(
-              weight: FontWeight.w500,
-              color: AppColors.darkGray,
-            ),
-          ),
+          AppLabelText(text: widget.label),
           VerticalSpacing(),
           Stack(
             alignment: Alignment.centerRight,
