@@ -43,6 +43,7 @@ class BaseProfileView extends StatelessWidget {
                 AppTopBar(
                   text: appTopBarText,
                   color: Colors.white,
+                  centerText: true,
                 ),
                 VerticalSpacing(16),
                 Stack(

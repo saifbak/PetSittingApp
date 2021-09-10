@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_heading.dart';
+import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 
@@ -44,6 +45,7 @@ class AppTopBar extends StatelessWidget {
             text: this.text,
             color: color,
           ),
+          if (centerText!) HorizontalSpacing(30),
           Spacer(flex: centerText! ? 1 : 2),
         ],
       ),
