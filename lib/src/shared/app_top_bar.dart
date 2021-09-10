@@ -9,10 +9,12 @@ class AppTopBar extends StatelessWidget {
   const AppTopBar({
     required this.text,
     this.color,
+    this.centerText = false,
   });
 
   final String text;
   final Color? color;
+  final bool? centerText;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class AppTopBar extends StatelessWidget {
             text: this.text,
             color: color,
           ),
-          Spacer(flex: 2),
+          Spacer(flex: centerText! ? 1 : 2),
         ],
       ),
     );
