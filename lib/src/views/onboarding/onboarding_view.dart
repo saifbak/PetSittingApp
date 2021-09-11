@@ -39,14 +39,29 @@ class _Body extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         VerticalSpacing(context.topSpace() + screenSize.height * .05),
-        Container(
-          width: screenSize.width / 2.25,
-          child: Hero(
-            tag: 'logo_text',
-            child: Image.asset(
-              'assets/images/logo_text.png',
+        Row(
+          children: [
+            IconButton(
+              onPressed: () => NavService.popOut,
+              splashRadius: 24,
+              padding: EdgeInsets.only(left: 30),
+              constraints: BoxConstraints(),
+              icon: Icon(Icons.arrow_back_ios),
+              color: AppColors.primaryColor,
             ),
-          ),
+            Spacer(),
+            Container(
+              width: screenSize.width / 2.25,
+              child: Hero(
+                tag: 'logo_text',
+                child: Image.asset(
+                  'assets/images/logo_text.png',
+                ),
+              ),
+            ),
+            HorizontalSpacing(50),
+            Spacer(),
+          ],
         ),
         VerticalSpacing(screenSize.height * .025),
         Expanded(
@@ -73,7 +88,7 @@ class _Body extends StatelessWidget {
                       horizontal: 20,
                       vertical: screenSize.height * .025,
                     ),
-                    padding: EdgeInsets.all(22),
+                    padding: EdgeInsets.all(20),
                     child: Column(
                       children: [
                         Text(

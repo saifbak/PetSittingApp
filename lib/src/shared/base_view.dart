@@ -18,6 +18,8 @@ class BaseView extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
+                colorFilter: new ColorFilter.mode(
+                    Colors.white.withOpacity(.35), BlendMode.screen),
                 image: AssetImage(
                   bgImageUrl!,
                 ),

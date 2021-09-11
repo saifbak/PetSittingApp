@@ -86,7 +86,7 @@ class _Body extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AppButton(
-                onPressed: NavService.home,
+                onPressed: NavService.onBoarding,
                 text: 'Continue',
                 horizontalPadding: 50,
               ),

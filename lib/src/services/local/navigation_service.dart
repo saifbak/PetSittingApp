@@ -19,7 +19,7 @@ class NavService {
       _navigationService!
           .replaceWith(Routes.optionsSelectView, arguments: arguments);
   static Future<dynamic>? onBoarding({dynamic arguments}) => _navigationService!
-      .replaceWith(Routes.onBoardingView, arguments: arguments);
+      .navigateTo(Routes.onBoardingView, arguments: arguments);
   static Future<dynamic>? login({dynamic arguments}) =>
       _navigationService!.navigateTo(Routes.loginView, arguments: arguments);
   static Future<dynamic>? loginReplace({dynamic arguments}) =>
