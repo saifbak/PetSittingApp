@@ -40,7 +40,14 @@ class _Body extends StatelessWidget {
       bottomContent: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Center(child: AppButton(text: 'Make Payment')),
+          Center(
+            child: AppButton(
+              text: 'Make Payment',
+              onPressed: () {
+                model.dialogService.showCustomDialog(variant: 'payment');
+              },
+            ),
+          ),
         ],
       ),
       centerContent: Column(
