@@ -60,7 +60,7 @@ class BaseProfileView extends StatelessWidget {
                       child: ListView(
                         padding: EdgeInsets.all(16),
                         children: [
-                          VerticalSpacing((profileAvatarSize / 2) - 12),
+                          VerticalSpacing((profileAvatarSize / 2) - 6),
                           Center(
                             child: Text(
                               'Ralph Edwards',
