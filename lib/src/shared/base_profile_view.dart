@@ -49,18 +49,25 @@ class BaseProfileView extends StatelessWidget {
                 Stack(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(20),
                       width: double.infinity,
+                      height: screenSize.height -
+                          (profileAvatarSize +
+                              context.topSpace() +
+                              screenSize.height * .09 +
+                              40),
                       margin: EdgeInsets.only(
                           top: profileAvatarSize / 2, left: 20, right: 20),
-                      child: Column(
+                      child: ListView(
+                        padding: EdgeInsets.all(16),
                         children: [
                           VerticalSpacing((profileAvatarSize / 2) - 12),
-                          Text(
-                            'Ralph Edwards',
-                            style: AppTextStyles.xLarge(
-                              color: AppColors.darkGray,
-                              weight: FontWeight.w500,
+                          Center(
+                            child: Text(
+                              'Ralph Edwards',
+                              style: AppTextStyles.xLarge(
+                                color: AppColors.darkGray,
+                                weight: FontWeight.w500,
+                              ),
                             ),
                           ),
                           VerticalSpacing(4),
@@ -103,7 +110,7 @@ class BaseProfileView extends StatelessWidget {
                         width: profileAvatarSize,
                         height: profileAvatarSize,
                         decoration: BoxDecoration(
-                          color: AppColors.whisper,
+                          color: Colors.white,
                           border: Border.all(
                             color: AppColors.primaryColor,
                             width: 3,
@@ -114,12 +121,12 @@ class BaseProfileView extends StatelessWidget {
                     ),
                   ],
                 ),
-                VerticalSpacing(18),
+                VerticalSpacing(20),
                 Padding(
                   padding: AppBaseStyles.horizontalPadding,
                   child: bottomContent,
                 ),
-                VerticalSpacing(screenSize.height * .04),
+                VerticalSpacing(screenSize.height * .03),
               ],
             ),
           ],

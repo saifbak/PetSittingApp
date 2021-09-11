@@ -4,6 +4,7 @@ import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_divider.dart';
+import 'package:whiskers_away_app/src/shared/app_textfield.dart';
 import 'package:whiskers_away_app/src/shared/base_profile_view.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
@@ -18,6 +19,7 @@ class PaymentView extends StatelessWidget {
       viewModelBuilder: () => PaymentViewModel(),
       builder: (_, model, __) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           body: _Body(model),
         );
       },
@@ -150,6 +152,21 @@ class _Body extends StatelessWidget {
                     labelText: 'Rewards',
                     content: '\$10.00',
                   ),
+                  VerticalSpacing(12),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryColor.withOpacity(.1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      'Apply Rewards',
+                      style: AppTextStyles.xxLarge(
+                        color: AppColors.primaryColor,
+                        weight: FontWeight.w500,
+                      ),
+                    ),
+                  )
                 ],
               ),
             ],
@@ -157,6 +174,61 @@ class _Body extends StatelessWidget {
           VerticalSpacing(20),
           AppDivider(),
           VerticalSpacing(20),
+          Form(
+            child: Column(
+              children: [
+                AppTextField(
+                  hintText: 'Enter name',
+                  label: 'Card Holder Name',
+                  padding: EdgeInsets.zero,
+                  labelIcon: IconlyLight.profile,
+                  endLabel: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Powered by',
+                        style: AppTextStyles.xxSmall(),
+                      ),
+                      HorizontalSpacing(4),
+                      Image.asset(
+                        'assets/images/stripe_logo.png',
+                        width: 35,
+                      ),
+                    ],
+                  ),
+                ),
+                AppTextField(
+                  hintText: 'Enter number',
+                  label: 'Card Number',
+                  padding: EdgeInsets.zero,
+                  labelIcon: IconlyLight.wallet,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: AppTextField(
+                        hintText: 'XX/XX',
+                        label: 'Exp. Date',
+                        padding: EdgeInsets.zero,
+                        labelIcon: IconlyLight.calendar,
+                        bottomSpacing: false,
+                      ),
+                    ),
+                    HorizontalSpacing(16),
+                    Expanded(
+                      child: AppTextField(
+                        hintText: 'XXX',
+                        label: 'CVV',
+                        padding: EdgeInsets.zero,
+                        labelIcon: IconlyLight.wallet,
+                        bottomSpacing: false,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ],
       ),
       appTopBarText: 'Payment',

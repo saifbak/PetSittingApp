@@ -18,6 +18,9 @@ class AppTextField extends StatefulWidget {
     this.maxLines = 1,
     this.readOnlyField = false,
     this.onTap,
+    this.labelIcon,
+    this.endLabel,
+    this.bottomSpacing = true,
   });
 
   final String hintText;
@@ -30,6 +33,9 @@ class AppTextField extends StatefulWidget {
   final int? maxLines;
   final bool? readOnlyField;
   final VoidCallback? onTap;
+  final IconData? labelIcon;
+  final Widget? endLabel;
+  final bool? bottomSpacing;
 
   @override
   _AppTextFieldState createState() => _AppTextFieldState();
@@ -47,13 +53,29 @@ class _AppTextFieldState extends State<AppTextField> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          AppLabelText(text: widget.label),
+          Row(
+            children: [
+              if (widget.labelIcon != null) ...[
+                Icon(
+                  widget.labelIcon,
+                  color: AppColors.primaryColor,
+                  size: 22,
+                ),
+                HorizontalSpacing(4),
+              ],
+              AppLabelText(text: widget.label),
+              if (widget.endLabel != null) ...[
+                Spacer(),
+                widget.endLabel!,
+              ]
+            ],
+          ),
           VerticalSpacing(),
           Stack(
             alignment: Alignment.centerRight,
             children: [
               Container(
-                height: widget.maxLines != null ? null : 45,
+                height: widget.maxLines! > 1 ? null : 45,
                 child: TextFormField(
                   style: AppTextStyles.xxLarge(color: AppColors.primaryColor),
                   keyboardType: widget.textInputType,
@@ -113,7 +135,7 @@ class _AppTextFieldState extends State<AppTextField> {
                 )
             ],
           ),
-          VerticalSpacing(16),
+          if (widget.bottomSpacing!) VerticalSpacing(16),
         ],
       ),
     );
