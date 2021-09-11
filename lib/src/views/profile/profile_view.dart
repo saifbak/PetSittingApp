@@ -6,6 +6,7 @@ import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_divider.dart';
 import 'package:whiskers_away_app/src/shared/base_profile_view.dart';
+import 'package:whiskers_away_app/src/shared/expanded_section.dart';
 import 'package:whiskers_away_app/src/shared/multi_style_text.dart';
 import 'package:whiskers_away_app/src/shared/read_more_scrollable_content.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
@@ -39,13 +40,18 @@ class _Body extends StatelessWidget {
     return BaseProfileView(
         centerContent: Column(
           children: [
-            if (!model.fullReviewsDisplay) ...[
-              Text(
-                  "Dogs are my life. I have been doing this for 10 years now and I would not choose anything else. I love taking the dogs to the park and having them run around."),
-              VerticalSpacing(12),
-              AppDivider(),
-              VerticalSpacing(12),
-            ],
+            ExpandedSection(
+              expand: !model.fullReviewsDisplay,
+              child: Column(
+                children: [
+                  Text(
+                      "Dogs are my life. I have been doing this for 10 years now and I would not choose anything else. I love taking the dogs to the park and having them run around."),
+                  VerticalSpacing(12),
+                  AppDivider(),
+                  VerticalSpacing(12),
+                ],
+              ),
+            ),
             Row(
               children: [
                 MultiStyleText(
@@ -74,12 +80,14 @@ class _Body extends StatelessWidget {
               ],
             ),
             VerticalSpacing(),
-            Container(
+            AnimatedContainer(
+              duration: Duration(milliseconds: 500),
               padding: EdgeInsets.all(12),
               height: model.fullReviewsDisplay ? 175 * 1.75 : 175,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: AppColors.whisper)),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: AppColors.whisper),
+              ),
               child: ReadMoreScrollableContent(
                 contentSeparator: VerticalSpacing(12),
                 readMoreCallback: (val) => model.fullReviewsDisplay = val,
@@ -151,25 +159,30 @@ class _Body extends StatelessWidget {
                 },
               ),
             ),
-            if (!model.fullReviewsDisplay) ...[
-              VerticalSpacing(16),
-              Row(
+            ExpandedSection(
+              expand: !model.fullReviewsDisplay,
+              child: Column(
                 children: [
-                  LabelWithContent(
-                    labelText: 'Experience',
-                    content: '10 years',
-                    contentIcon: IconlyLight.work,
+                  VerticalSpacing(16),
+                  Row(
+                    children: [
+                      LabelWithContent(
+                        labelText: 'Experience',
+                        content: '10 years',
+                        contentIcon: IconlyLight.work,
+                      ),
+                      Spacer(),
+                      LabelWithContent(
+                        labelText: 'Prefers',
+                        content: 'Dogs 10-24',
+                        contentIcon: IconlyLight.category,
+                      ),
+                      Spacer(),
+                    ],
                   ),
-                  Spacer(),
-                  LabelWithContent(
-                    labelText: 'Prefers',
-                    content: 'Dogs 10-24',
-                    contentIcon: IconlyLight.category,
-                  ),
-                  Spacer(),
                 ],
               ),
-            ],
+            ),
           ],
         ),
         bottomContent: Row(
