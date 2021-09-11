@@ -7,9 +7,10 @@ class Request {
   final String location;
   final String dogBreed;
   final String dogImgUrl;
+  final int dogAge;
 
   Request(this.dogName, this.status, this.date, this.location, this.dogBreed,
-      this.dogImgUrl);
+      this.dogImgUrl, this.dogAge);
 }
 
 class HomeViewModel extends BaseViewModel {
@@ -21,6 +22,7 @@ class HomeViewModel extends BaseViewModel {
           'Houston',
           'Golden Retriever',
           'assets/images/profile_pic.jpg',
+          14,
         ),
         Request(
           'Sasha',
@@ -29,6 +31,7 @@ class HomeViewModel extends BaseViewModel {
           'Houston',
           'Husky',
           'assets/images/profile_pic.jpg',
+          8,
         ),
         Request(
           'Sully',
@@ -37,6 +40,7 @@ class HomeViewModel extends BaseViewModel {
           'Houston',
           'Golden Retriever',
           'assets/images/profile_pic.jpg',
+          14,
         ),
         Request(
           'Sasha',
@@ -45,6 +49,7 @@ class HomeViewModel extends BaseViewModel {
           'Houston',
           'Husky',
           'assets/images/profile_pic.jpg',
+          8,
         ),
         Request(
           'Sully',
@@ -53,6 +58,7 @@ class HomeViewModel extends BaseViewModel {
           'Houston',
           'Golden Retriever',
           'assets/images/profile_pic.jpg',
+          14,
         ),
         Request(
           'Sasha',
@@ -61,6 +67,7 @@ class HomeViewModel extends BaseViewModel {
           'Houston',
           'Husky',
           'assets/images/profile_pic.jpg',
+          8,
         ),
       ];
 }
