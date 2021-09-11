@@ -98,8 +98,11 @@ class _Body extends StatelessWidget {
             padding: AppBaseStyles.horizontalPadding.copyWith(bottom: 16),
             itemBuilder: (_, index) {
               final request = model.myRequestsList[index];
-              return AppListingCard(
-                request: request,
+              return GestureDetector(
+                onTap: NavService.petDetails,
+                child: AppListingCard(
+                  request: request,
+                ),
               );
             },
             separatorBuilder: (_, __) => VerticalSpacing(16),
