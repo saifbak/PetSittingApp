@@ -15,6 +15,7 @@ import '../views/home/home_view.dart';
 import '../views/onboarding/onboarding_view.dart';
 import '../views/options_select/options_select_view.dart';
 import '../views/payment/payment_view.dart';
+import '../views/profile/profile_view.dart';
 import '../views/request_submit/request_submit_view.dart';
 import '../views/splash/splash_view.dart';
 import '../views/terms_conditions/terms_conditions_view.dart';
@@ -29,6 +30,7 @@ class Routes {
   static const String requestSubmitView = '/request-submit-view';
   static const String termsConditionsView = '/terms-conditions-view';
   static const String paymentView = '/payment-view';
+  static const String profileView = '/profile-view';
   static const all = <String>{
     splashView,
     onBoardingView,
@@ -39,6 +41,7 @@ class Routes {
     requestSubmitView,
     termsConditionsView,
     paymentView,
+    profileView,
   };
 }
 
@@ -55,6 +58,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.requestSubmitView, page: RequestSubmitView),
     RouteDef(Routes.termsConditionsView, page: TermsConditionsView),
     RouteDef(Routes.paymentView, page: PaymentView),
+    RouteDef(Routes.profileView, page: ProfileView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -110,6 +114,12 @@ class StackedRouter extends RouterBase {
     PaymentView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => PaymentView(),
+        settings: data,
+      );
+    },
+    ProfileView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ProfileView(),
         settings: data,
       );
     },

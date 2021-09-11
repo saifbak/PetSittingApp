@@ -40,6 +40,8 @@ class NavService {
       );
   static Future<dynamic>? payment({dynamic arguments}) =>
       _navigationService!.navigateTo(Routes.paymentView, arguments: arguments);
+  static Future<dynamic>? profile({dynamic arguments}) =>
+      _navigationService!.navigateTo(Routes.profileView, arguments: arguments);
 
   // back route
   static bool get popOut => _navigationService!.back();
