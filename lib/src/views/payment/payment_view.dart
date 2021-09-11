@@ -4,6 +4,7 @@ import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_divider.dart';
+import 'package:whiskers_away_app/src/shared/app_status_visibility_tag.dart';
 import 'package:whiskers_away_app/src/shared/app_textfield.dart';
 import 'package:whiskers_away_app/src/shared/base_profile_view.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
@@ -153,20 +154,10 @@ class _Body extends StatelessWidget {
                     content: '\$10.00',
                   ),
                   VerticalSpacing(12),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor.withOpacity(.1),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      'Apply Rewards',
-                      style: AppTextStyles.xxLarge(
-                        color: AppColors.primaryColor,
-                        weight: FontWeight.w500,
-                      ),
-                    ),
-                  )
+                  AppStatusVisibilityTag(
+                    text: 'Apply Rewards',
+                    onPressed: () {},
+                  ),
                 ],
               ),
             ],
