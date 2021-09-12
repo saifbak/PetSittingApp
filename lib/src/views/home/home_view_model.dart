@@ -44,5 +44,25 @@ class HomeViewModel extends BaseViewModel {
           8,
           20,
         ),
+        Request(
+          'Sully',
+          'In progress',
+          'May 20-24',
+          'Houston',
+          'Golden Retriever',
+          'assets/images/dog_pic1.jpg',
+          14,
+          28,
+        ),
+        Request(
+          'Sasha',
+          'Completed',
+          'May 01-04',
+          'Houston',
+          'Husky',
+          'assets/images/dog_pic2.jpg',
+          8,
+          20,
+        ),
       ];
 }
