@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.router.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
@@ -19,6 +18,9 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
       viewModelBuilder: () => HomeViewModel(),
+      onModelReady: (model) {
+        AppUtils.setupCustomBottomSheetBuilders(model.petSittersList);
+      },
       builder: (_, model, __) {
         return Scaffold(
           body: _Body(model),
@@ -151,11 +153,14 @@ class _Body extends StatelessWidget {
                   ? model.requestsList[index]
                   : model.newRequestsList[index];
               return GestureDetector(
-                onTap: () => model.selectedIndex == 0
-                    ? NavService.petDetails(
-                        arguments: PetDetailsViewArguments(request: request),
-                      )
-                    : BottomSheetService().showCustomSheet(variant: 'basic'),
+                onTap: model.selectedIndex == 0
+                    ? () => NavService.petDetails(
+                          arguments: PetDetailsViewArguments(request: request),
+                        )
+                    : () {
+                        model.bottomSheetService
+                            .showCustomSheet(variant: 'listing');
+                      },
                 child: AppListingCard(
                   request: request,
                 ),

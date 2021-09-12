@@ -1,4 +1,6 @@
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
 
 class Request {
   final String dogName;
@@ -22,7 +24,25 @@ class Request {
   );
 }
 
+class PetSitter {
+  final String name;
+  final String location;
+  final String imgUrl;
+
+  PetSitter(this.name, this.location, this.imgUrl);
+}
+
 class HomeViewModel extends BaseViewModel {
+  final bottomSheetService = locator<BottomSheetService>();
+
+  List<PetSitter> get petSittersList => [
+        PetSitter(
+          'Ralph Edwards',
+          'Houston',
+          'assets/images/profile_pic.jpg',
+        )
+      ];
+
   List<Request> get requestsList => [
         Request(
           'Sully',
