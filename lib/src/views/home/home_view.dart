@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.router.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
@@ -16,7 +17,7 @@ import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<HomeViewModel>.nonReactive(
+    return ViewModelBuilder<HomeViewModel>.reactive(
       viewModelBuilder: () => HomeViewModel(),
       builder: (_, model, __) {
         return Scaffold(
@@ -61,6 +62,54 @@ class _Body extends StatelessWidget {
         ),
         VerticalSpacing(14),
         Container(
+          padding: EdgeInsets.all(6),
+          margin: AppBaseStyles.horizontalPadding,
+          child: Row(
+            children: List.generate(
+              model.ownerRequests.length,
+              (index) => Expanded(
+                child: GestureDetector(
+                  onTap: () => model.selectedIndex = index,
+                  child: AnimatedContainer(
+                    duration: Duration(milliseconds: 250),
+                    curve: Curves.fastOutSlowIn,
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: Center(
+                      child: Text(
+                        model.ownerRequests[index],
+                        style: AppTextStyles.xxLarge(
+                          weight: FontWeight.w500,
+                          color: model.selectedIndex == index
+                              ? Colors.white
+                              : AppColors.primaryColor,
+                        ),
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                      color: model.selectedIndex == index
+                          ? AppColors.primaryColor
+                          : Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                offset: Offset(0, 4),
+                blurRadius: 20,
+                color: Colors.black.withOpacity(.06),
+              ),
+            ],
+          ),
+        ),
+        VerticalSpacing(14),
+        Container(
           margin: AppBaseStyles.horizontalPadding,
           height: 40,
           decoration: BoxDecoration(
@@ -98,18 +147,24 @@ class _Body extends StatelessWidget {
           child: ListView.separated(
             padding: AppBaseStyles.horizontalPadding.copyWith(bottom: 16),
             itemBuilder: (_, index) {
-              final request = model.myRequestsList[index];
+              final request = model.selectedIndex == 0
+                  ? model.requestsList[index]
+                  : model.newRequestsList[index];
               return GestureDetector(
-                onTap: () => NavService.petDetails(
-                  arguments: PetDetailsViewArguments(request: request),
-                ),
+                onTap: () => model.selectedIndex == 0
+                    ? NavService.petDetails(
+                        arguments: PetDetailsViewArguments(request: request),
+                      )
+                    : BottomSheetService().showCustomSheet(variant: 'basic'),
                 child: AppListingCard(
                   request: request,
                 ),
               );
             },
             separatorBuilder: (_, __) => VerticalSpacing(16),
-            itemCount: model.myRequestsList.length,
+            itemCount: model.selectedIndex == 0
+                ? model.requestsList.length
+                : model.newRequestsList.length,
           ),
         ),
         VerticalSpacing(12),
