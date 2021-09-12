@@ -197,7 +197,7 @@ class _Body extends StatelessWidget {
               text: 'Reject',
               type: AppButtonType.outline,
               fullWidth: true,
-              onPressed: () {},
+              onPressed: () => NavService.popOut,
             ),
           ],
         ),

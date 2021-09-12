@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_divider.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
@@ -71,7 +72,7 @@ class PaymentDialog extends StatelessWidget {
               children: [
                 AppButton(
                   text: 'Continue',
-                  onPressed: () {},
+                  onPressed: NavService.home,
                   horizontalPadding: 40,
                 ),
               ],

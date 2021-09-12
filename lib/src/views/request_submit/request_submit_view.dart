@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
+import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_textfield.dart';
 import 'package:whiskers_away_app/src/shared/app_top_bar.dart';
@@ -153,6 +154,7 @@ class _Body extends StatelessWidget {
                     AppButton(
                       text: 'Submit',
                       horizontalPadding: 70,
+                      onPressed: () => NavService.popOut,
                     ),
                   ],
                 ),
