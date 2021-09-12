@@ -12,6 +12,7 @@ import 'package:stacked/stacked.dart';
 import '../views/auth/login/login_view.dart';
 import '../views/auth/signup/signup_view.dart';
 import '../views/home/home_view.dart';
+import '../views/home/home_view_model.dart';
 import '../views/onboarding/onboarding_view.dart';
 import '../views/options_select/options_select_view.dart';
 import '../views/payment/payment_view.dart';
@@ -128,10 +129,21 @@ class StackedRouter extends RouterBase {
       );
     },
     PetDetailsView: (data) {
+      var args = data.getArgs<PetDetailsViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => PetDetailsView(),
+        builder: (context) => PetDetailsView(request: args.request),
         settings: data,
       );
     },
   };
+}
+
+/// ************************************************************************
+/// Arguments holder classes
+/// *************************************************************************
+
+/// PetDetailsView arguments holder class
+class PetDetailsViewArguments {
+  final Request request;
+  PetDetailsViewArguments({required this.request});
 }

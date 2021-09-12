@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
+import 'package:whiskers_away_app/src/configs/app_setup.router.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_heading.dart';
@@ -99,7 +100,9 @@ class _Body extends StatelessWidget {
             itemBuilder: (_, index) {
               final request = model.myRequestsList[index];
               return GestureDetector(
-                onTap: NavService.petDetails,
+                onTap: () => NavService.petDetails(
+                  arguments: PetDetailsViewArguments(request: request),
+                ),
                 child: AppListingCard(
                   request: request,
                 ),

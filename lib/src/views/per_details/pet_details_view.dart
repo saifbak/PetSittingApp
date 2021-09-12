@@ -10,9 +10,14 @@ import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
+import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
 import 'package:whiskers_away_app/src/views/per_details/pet_details_view_model.dart';
 
 class PetDetailsView extends StatelessWidget {
+  final Request request;
+
+  const PetDetailsView({required this.request});
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PetDetailsViewModel>.nonReactive(
@@ -24,7 +29,7 @@ class PetDetailsView extends StatelessWidget {
             statusBarColor: Colors.transparent,
           ),
           child: Scaffold(
-            body: _Body(model),
+            body: _Body(model, request),
           ),
         );
       },
@@ -34,7 +39,9 @@ class PetDetailsView extends StatelessWidget {
 
 class _Body extends StatelessWidget {
   final PetDetailsViewModel model;
-  const _Body(this.model);
+  final Request request;
+
+  const _Body(this.model, this.request);
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +101,7 @@ class _Body extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Golden Retriever',
+                            request.dogBreed,
                             style: AppTextStyles.xLarge(
                               color: Colors.white,
                               weight: FontWeight.w700,
@@ -102,7 +109,7 @@ class _Body extends StatelessWidget {
                           ),
                           VerticalSpacing(4),
                           Text(
-                            '25 lbs',
+                            '${request.dogWeight.toInt()} lbs',
                             style: AppTextStyles.xxLarge(
                               color: Colors.white,
                               weight: FontWeight.w500,
@@ -118,7 +125,7 @@ class _Body extends StatelessWidget {
                               ),
                               HorizontalSpacing(4),
                               Text(
-                                'Houston',
+                                request.location,
                                 style: AppTextStyles.xMedium(
                                   color: Colors.white,
                                   weight: FontWeight.w500,
@@ -126,7 +133,7 @@ class _Body extends StatelessWidget {
                               ),
                               Spacer(),
                               Text(
-                                '14 years old',
+                                '${request.dogAge} years old',
                                 style: AppTextStyles.xMedium(
                                   color: Colors.white,
                                   weight: FontWeight.w500,
