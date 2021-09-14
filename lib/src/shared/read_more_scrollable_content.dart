@@ -51,7 +51,7 @@ class _ReadMoreScrollableContentState extends State<ReadMoreScrollableContent> {
   Widget build(BuildContext context) {
     final list = ListView.separated(
       physics: scrollPhysics,
-      padding: EdgeInsets.only(right: 8),
+      padding: const EdgeInsets.only(top: 12, bottom: 12, right: 8),
       controller: scrollCtrl,
       itemBuilder: widget.contentItemBuilder,
       separatorBuilder: (_, __) => widget.contentSeparator ?? VerticalSpacing(),
@@ -66,7 +66,7 @@ class _ReadMoreScrollableContentState extends State<ReadMoreScrollableContent> {
                 ? Scrollbar(controller: scrollCtrl, child: list)
                 : list),
         if (readMoreTextDisplay) ...[
-          VerticalSpacing(16),
+          VerticalSpacing(10),
           GestureDetector(
             onTap: () {
               if (widget.toggleBehaviour!) {
