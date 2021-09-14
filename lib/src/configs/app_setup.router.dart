@@ -14,6 +14,7 @@ import '../views/auth/signup/signup_view.dart';
 import '../views/home/home_view.dart';
 import '../views/home/home_view_model.dart';
 import '../views/landing/landing_view.dart';
+import '../views/my_employees/my_employees_view.dart';
 import '../views/onboarding/onboarding_view.dart';
 import '../views/options_select/options_select_view.dart';
 import '../views/payment/payment_view.dart';
@@ -36,6 +37,7 @@ class Routes {
   static const String profileView = '/profile-view';
   static const String petDetailsView = '/pet-details-view';
   static const String landingView = '/landing-view';
+  static const String myEmployeesView = '/my-employees-view';
   static const all = <String>{
     splashView,
     onBoardingView,
@@ -49,6 +51,7 @@ class Routes {
     profileView,
     petDetailsView,
     landingView,
+    myEmployeesView,
   };
 }
 
@@ -68,6 +71,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.profileView, page: ProfileView),
     RouteDef(Routes.petDetailsView, page: PetDetailsView),
     RouteDef(Routes.landingView, page: LandingView),
+    RouteDef(Routes.myEmployeesView, page: MyEmployeesView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -143,6 +147,12 @@ class StackedRouter extends RouterBase {
       var args = data.getArgs<LandingViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
         builder: (context) => LandingView(navBarItems: args.navBarItems),
+        settings: data,
+      );
+    },
+    MyEmployeesView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => MyEmployeesView(),
         settings: data,
       );
     },
