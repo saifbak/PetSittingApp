@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:whiskers_away_app/src/shared/app_base_card.dart';
 import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
@@ -53,7 +54,7 @@ class _AppTabBarState extends State<AppTabBar> {
     return Expanded(
       child: Column(
         children: [
-          Container(
+          AppBaseCard(
             padding: EdgeInsets.all(6),
             margin: AppBaseStyles.horizontalPadding,
             child: ValueListenableBuilder<String>(
@@ -65,17 +66,6 @@ class _AppTabBarState extends State<AppTabBar> {
                   onSelectTab: (val) => onTabChanged(val, changePage: true),
                 );
               },
-            ),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(0, 4),
-                  blurRadius: 20,
-                  color: Colors.black.withOpacity(.06),
-                ),
-              ],
             ),
           ),
           Expanded(

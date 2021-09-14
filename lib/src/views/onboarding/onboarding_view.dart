@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
+import 'package:whiskers_away_app/src/shared/app_base_card.dart';
 import 'package:whiskers_away_app/src/shared/app_divider.dart';
 import 'package:whiskers_away_app/src/shared/base_view.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
@@ -83,7 +84,7 @@ class _Body extends StatelessWidget {
                       pageContent['imgUrl'],
                     ),
                   ),
-                  Container(
+                  AppBaseCard(
                     margin: EdgeInsets.symmetric(
                       horizontal: 20,
                       vertical: screenSize.height * .025,
@@ -109,17 +110,6 @@ class _Body extends StatelessWidget {
                           pageContent['card_desc'],
                           textAlign: TextAlign.center,
                           style: AppTextStyles.xxMedium(),
-                        )
-                      ],
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(0, 4),
-                          blurRadius: 30,
-                          color: Colors.black.withOpacity(.08),
                         )
                       ],
                     ),

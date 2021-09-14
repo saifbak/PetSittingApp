@@ -10,6 +10,8 @@ class AppBaseCard extends StatelessWidget {
     this.boxShadowOpacity,
     this.margin,
     this.padding,
+    this.height,
+    this.width,
   });
 
   final Widget child;
@@ -19,11 +21,15 @@ class AppBaseCard extends StatelessWidget {
   final double? borderRadius;
   final EdgeInsets? padding;
   final EdgeInsets? margin;
+  final double? height;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(14),
+      width: this.width,
+      height: this.height,
+      padding: this.padding ?? const EdgeInsets.all(14),
       margin: this.margin,
       decoration: BoxDecoration(
         color: Colors.white,

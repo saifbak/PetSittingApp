@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:whiskers_away_app/src/shared/app_base_card.dart';
 import 'package:whiskers_away_app/src/shared/app_top_bar.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
@@ -48,15 +49,18 @@ class BaseProfileView extends StatelessWidget {
                 VerticalSpacing(16),
                 Stack(
                   children: [
-                    Container(
-                      width: double.infinity,
+                    AppBaseCard(
+                      padding: EdgeInsets.zero,
                       height: screenSize.height -
                           (profileAvatarSize +
                               context.topSpace() +
                               screenSize.height * .09 +
                               40),
                       margin: EdgeInsets.only(
-                          top: profileAvatarSize / 2, left: 20, right: 20),
+                        top: profileAvatarSize / 2,
+                        left: 20,
+                        right: 20,
+                      ),
                       child: ListView(
                         padding: EdgeInsets.all(16),
                         children: [
@@ -90,17 +94,6 @@ class BaseProfileView extends StatelessWidget {
                           ),
                           VerticalSpacing(16),
                           centerContent,
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: Offset(0, 4),
-                            blurRadius: 20,
-                            color: Colors.black.withOpacity(.08),
-                          ),
                         ],
                       ),
                     ),

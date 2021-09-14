@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
+import 'package:whiskers_away_app/src/shared/app_base_card.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
@@ -49,19 +50,7 @@ class ListingSheet extends StatelessWidget {
                   NavService.popOut;
                   NavService.profile();
                 },
-                child: Container(
-                  padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(0, 4),
-                        blurRadius: 20,
-                        color: Colors.black.withOpacity(.08),
-                      ),
-                    ],
-                  ),
+                child: AppBaseCard(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

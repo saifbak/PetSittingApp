@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:whiskers_away_app/src/shared/app_base_card.dart';
 import 'package:whiskers_away_app/src/shared/app_status_visibility_tag.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
@@ -12,19 +13,7 @@ class AppListingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0, 4),
-            blurRadius: 20,
-            color: Colors.black.withOpacity(.08),
-          ),
-        ],
-      ),
+    return AppBaseCard(
       child: Column(
         children: [
           Row(
