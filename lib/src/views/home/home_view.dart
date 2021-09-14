@@ -7,6 +7,7 @@ import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_heading.dart';
 import 'package:whiskers_away_app/src/shared/app_listing_card.dart';
+import 'package:whiskers_away_app/src/shared/app_tab_bar.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
@@ -16,7 +17,7 @@ import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<HomeViewModel>.reactive(
+    return ViewModelBuilder<HomeViewModel>.nonReactive(
       viewModelBuilder: () => HomeViewModel(),
       onModelReady: (model) {
         AppUtils.setupCustomBottomSheetBuilders(model.petSittersList);
@@ -63,116 +64,81 @@ class _Body extends StatelessWidget {
           ),
         ),
         VerticalSpacing(14),
-        Container(
-          padding: EdgeInsets.all(6),
-          margin: AppBaseStyles.horizontalPadding,
-          child: Row(
-            children: List.generate(
-              model.ownerRequests.length,
-              (index) => Expanded(
-                child: GestureDetector(
-                  onTap: () => model.selectedIndex = index,
-                  child: AnimatedContainer(
-                    duration: Duration(milliseconds: 250),
-                    curve: Curves.fastOutSlowIn,
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    child: Center(
-                      child: Text(
-                        model.ownerRequests[index],
-                        style: AppTextStyles.xxLarge(
-                          weight: FontWeight.w500,
-                          color: model.selectedIndex == index
-                              ? Colors.white
-                              : AppColors.primaryColor,
-                        ),
+        AppTabBar(
+          onChanged: print,
+          tabs: model.ownerRequests,
+          pagesContent: [
+            Column(
+              children: [
+                VerticalSpacing(12),
+                Container(
+                  margin: AppBaseStyles.horizontalPadding,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.white,
+                  ),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(left: 16),
+                      suffixIcon: Icon(
+                        IconlyLight.filter,
+                        color: AppColors.primaryColor,
                       ),
-                    ),
-                    decoration: BoxDecoration(
-                      color: model.selectedIndex == index
-                          ? AppColors.primaryColor
-                          : Colors.white,
-                      borderRadius: BorderRadius.circular(12),
+                      hintText: 'Search ...',
+                      hintStyle:
+                          AppTextStyles.xMedium(color: Color(0xFF858585)),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(color: Color(0xFFE7E7E7)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(color: Color(0xFFE7E7E7)),
+                      ),
                     ),
                   ),
                 ),
-              ),
+                Expanded(
+                  child: ListView.separated(
+                      padding: AppBaseStyles.horizontalPadding
+                          .copyWith(bottom: 16, top: 16),
+                      itemBuilder: (_, index) {
+                        final request = model.requestsList[index];
+                        return GestureDetector(
+                          onTap: () => NavService.petDetails(
+                            arguments:
+                                PetDetailsViewArguments(request: request),
+                          ),
+                          child: AppListingCard(
+                            request: request,
+                          ),
+                        );
+                      },
+                      separatorBuilder: (_, __) => VerticalSpacing(16),
+                      itemCount: model.requestsList.length),
+                ),
+              ],
             ),
-          ),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(0, 4),
-                blurRadius: 20,
-                color: Colors.black.withOpacity(.06),
-              ),
-            ],
-          ),
-        ),
-        VerticalSpacing(14),
-        Container(
-          margin: AppBaseStyles.horizontalPadding,
-          height: 40,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(0, 4),
-                blurRadius: 20,
-                color: Colors.black.withOpacity(.08),
-              ),
-            ],
-          ),
-          child: TextField(
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.only(left: 16),
-              suffixIcon: Icon(
-                IconlyLight.filter,
-                color: AppColors.primaryColor,
-              ),
-              hintText: 'Search ...',
-              hintStyle: AppTextStyles.xMedium(color: Color(0xFF858585)),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Color(0xFFE7E7E7)),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Color(0xFFE7E7E7)),
-              ),
+            ListView.separated(
+              padding:
+                  AppBaseStyles.horizontalPadding.copyWith(bottom: 16, top: 16),
+              itemBuilder: (_, index) {
+                final request = model.newRequestsList[index];
+                return GestureDetector(
+                  onTap: () => model.bottomSheetService
+                      .showCustomSheet(variant: 'listing'),
+                  child: AppListingCard(
+                    request: request,
+                  ),
+                );
+              },
+              separatorBuilder: (_, __) => VerticalSpacing(16),
+              itemCount: model.newRequestsList.length,
             ),
-          ),
+          ],
         ),
         VerticalSpacing(16),
-        Expanded(
-          child: ListView.separated(
-            padding: AppBaseStyles.horizontalPadding.copyWith(bottom: 16),
-            itemBuilder: (_, index) {
-              final request = model.selectedIndex == 0
-                  ? model.requestsList[index]
-                  : model.newRequestsList[index];
-              return GestureDetector(
-                onTap: model.selectedIndex == 0
-                    ? () => NavService.petDetails(
-                          arguments: PetDetailsViewArguments(request: request),
-                        )
-                    : () {
-                        model.bottomSheetService
-                            .showCustomSheet(variant: 'listing');
-                      },
-                child: AppListingCard(
-                  request: request,
-                ),
-              );
-            },
-            separatorBuilder: (_, __) => VerticalSpacing(16),
-            itemCount: model.selectedIndex == 0
-                ? model.requestsList.length
-                : model.newRequestsList.length,
-          ),
-        ),
-        VerticalSpacing(12),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -183,7 +149,7 @@ class _Body extends StatelessWidget {
             ),
           ],
         ),
-        VerticalSpacing(screenSize.height * .04),
+        VerticalSpacing(screenSize.height * .035),
       ],
     );
   }
