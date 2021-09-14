@@ -89,6 +89,7 @@ class _Body extends StatelessWidget {
                 border: Border.all(color: AppColors.whisper),
               ),
               child: ReadMoreScrollableContent(
+                toggleBehaviour: true,
                 contentSeparator: VerticalSpacing(12),
                 readMoreCallback: (val) => model.fullReviewsDisplay = val,
                 readMoreContent: model.fullReviewsDisplay,

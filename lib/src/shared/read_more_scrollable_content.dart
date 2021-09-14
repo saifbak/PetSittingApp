@@ -10,6 +10,7 @@ class ReadMoreScrollableContent extends StatefulWidget {
     required this.contentItemBuilder,
     this.readMoreCallback,
     this.readMoreContent = false,
+    this.toggleBehaviour = false,
   });
 
   final int contentLength;
@@ -17,6 +18,7 @@ class ReadMoreScrollableContent extends StatefulWidget {
   final Widget Function(BuildContext, int) contentItemBuilder;
   final ValueChanged<bool>? readMoreCallback;
   final bool? readMoreContent;
+  final bool? toggleBehaviour;
 
   @override
   _ReadMoreScrollableContentState createState() =>
@@ -67,16 +69,25 @@ class _ReadMoreScrollableContentState extends State<ReadMoreScrollableContent> {
           VerticalSpacing(16),
           GestureDetector(
             onTap: () {
-              setState(() {
+              if (widget.toggleBehaviour!) {
+                readMoreContent = !readMoreContent;
+              } else {
                 readMoreContent = true;
-                scrollPhysics = ScrollPhysics();
                 readMoreTextDisplay = false;
-              });
+              }
+              if (readMoreContent) {
+                scrollPhysics = ScrollPhysics();
+              } else {
+                scrollPhysics = NeverScrollableScrollPhysics();
+              }
+              setState(() {});
               if (widget.readMoreCallback != null)
                 widget.readMoreCallback!(readMoreContent);
             },
             child: Text(
-              'Read more',
+              widget.toggleBehaviour!
+                  ? 'Read ${!readMoreContent ? 'more' : 'less'}'
+                  : 'Read more',
               style:
                   AppTextStyles.xMedium(color: AppColors.primaryColor).copyWith(
                 decoration: TextDecoration.underline,
