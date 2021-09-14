@@ -10,8 +10,9 @@ import 'package:whiskers_away_app/src/views/landing/landing_view_model.dart';
 class NavBarItem {
   final IconData icon;
   final String title;
+  final Widget view;
 
-  NavBarItem(this.icon, this.title);
+  NavBarItem(this.icon, this.title, this.view);
 }
 
 class LandingView extends StatelessWidget {
@@ -22,7 +23,7 @@ class LandingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<LandingViewModel>.reactive(
-      viewModelBuilder: () => LandingViewModel(),
+      viewModelBuilder: () => LandingViewModel(navBarItems),
       builder: (_, model, __) {
         return Scaffold(
           body: _Body(model, navBarItems),

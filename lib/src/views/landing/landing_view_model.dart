@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:whiskers_away_app/src/views/landing/landing_view.dart';
 
 class LandingViewModel extends BaseViewModel {
+  LandingViewModel(this.navBarItems);
+  final List<NavBarItem> navBarItems;
+
   final Map<int, Widget> _viewCache = Map<int, Widget>();
 
   int _currentTabIndex = 0;
@@ -13,14 +17,9 @@ class LandingViewModel extends BaseViewModel {
 
   Widget getViewForIndex(int index) {
     if (!_viewCache.containsKey(index)) {
-      switch (index) {
-        case 0:
-          _viewCache[index] = SizedBox();
-          break;
-        case 1:
-          _viewCache[index] = SizedBox();
-          break;
-      }
+      _viewCache[index] = navBarItems
+          .firstWhere((element) => navBarItems.indexOf(element) == index)
+          .view;
     }
     return _viewCache[index]!;
   }
