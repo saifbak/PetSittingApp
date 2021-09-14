@@ -29,5 +29,5 @@ class OnBoardingViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  double get pageIndicatorSize => 8;
+  // double get pageIndicatorSize => 8;
 }

@@ -138,41 +138,41 @@ class _Body extends StatelessWidget {
             ],
           ),
         ),
-        VerticalSpacing(screenSize.height * .04),
-        SizedBox(
-          height: model.pageIndicatorSize,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            itemBuilder: (_, index) {
-              return _IndicatorCircle(index);
-            },
-            separatorBuilder: (_, __) => HorizontalSpacing(),
-            itemCount: model.onBoardingContent.length,
-          ),
-        ),
-        VerticalSpacing(screenSize.height * .04),
+        // VerticalSpacing(screenSize.height * .04),
+        // SizedBox(
+        //   height: model.pageIndicatorSize,
+        //   child: ListView.separated(
+        //     scrollDirection: Axis.horizontal,
+        //     shrinkWrap: true,
+        //     itemBuilder: (_, index) {
+        //       return _IndicatorCircle(index);
+        //     },
+        //     separatorBuilder: (_, __) => HorizontalSpacing(),
+        //     itemCount: model.onBoardingContent.length,
+        //   ),
+        // ),
+        AppSpacing(context).bottomSpacing,
       ],
     );
   }
 }
 
-class _IndicatorCircle extends ViewModelWidget<OnBoardingViewModel> {
-  final int index;
-  _IndicatorCircle(this.index);
+// class _IndicatorCircle extends ViewModelWidget<OnBoardingViewModel> {
+//   final int index;
+//   _IndicatorCircle(this.index);
 
-  @override
-  Widget build(BuildContext context, OnBoardingViewModel model) {
-    return AnimatedContainer(
-      decoration: BoxDecoration(
-        color: index == model.pageIndex
-            ? AppColors.primaryColor
-            : AppColors.whisper,
-        shape: BoxShape.circle,
-      ),
-      duration: Duration(milliseconds: 200),
-      width: model.pageIndicatorSize,
-      height: model.pageIndicatorSize,
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context, OnBoardingViewModel model) {
+//     return AnimatedContainer(
+//       decoration: BoxDecoration(
+//         color: index == model.pageIndex
+//             ? AppColors.primaryColor
+//             : AppColors.whisper,
+//         shape: BoxShape.circle,
+//       ),
+//       duration: Duration(milliseconds: 200),
+//       width: model.pageIndicatorSize,
+//       height: model.pageIndicatorSize,
+//     );
+//   }
+// }
