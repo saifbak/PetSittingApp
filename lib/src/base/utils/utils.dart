@@ -44,4 +44,13 @@ class AppUtils {
 
     bottomSheetService.setCustomSheetBuilders(builders);
   }
+
+  static BoxShadow boxShadow1(
+      {Offset? offset, double? blurRadius, double? colorOpacity}) {
+    return BoxShadow(
+      offset: offset ?? Offset(0, 4),
+      blurRadius: blurRadius ?? 20,
+      color: Colors.black.withOpacity(colorOpacity ?? .08),
+    );
+  }
 }
