@@ -92,7 +92,7 @@ class BaseProfileView extends StatelessWidget {
                               ),
                             ],
                           ),
-                          VerticalSpacing(16),
+                          VerticalSpacing(12),
                           centerContent,
                         ],
                       ),
