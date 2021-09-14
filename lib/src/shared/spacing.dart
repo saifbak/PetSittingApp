@@ -15,5 +15,5 @@ class AppSpacing {
   AppSpacing(this._context);
 
   VerticalSpacing get bottomSpacing =>
-      VerticalSpacing(_context.screenSize().height * .04);
+      VerticalSpacing(_context.screenSize().height * .035);
 }

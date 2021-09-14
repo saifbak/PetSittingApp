@@ -55,7 +55,7 @@ class BaseProfileView extends StatelessWidget {
                           (profileAvatarSize +
                               context.topSpace() +
                               screenSize.height * .09 +
-                              40),
+                              42),
                       margin: EdgeInsets.only(
                         top: profileAvatarSize / 2,
                         left: 20,
@@ -119,7 +119,7 @@ class BaseProfileView extends StatelessWidget {
                   padding: AppBaseStyles.horizontalPadding,
                   child: bottomContent,
                 ),
-                VerticalSpacing(screenSize.height * .03),
+                AppSpacing(context).bottomSpacing,
               ],
             ),
           ],

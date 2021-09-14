@@ -149,7 +149,7 @@ class _Body extends StatelessWidget {
             ),
           ],
         ),
-        VerticalSpacing(screenSize.height * .035),
+        AppSpacing(context).bottomSpacing,
       ],
     );
   }
