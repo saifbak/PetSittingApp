@@ -194,7 +194,7 @@ class _Body extends StatelessWidget {
                             ),
                             VerticalSpacing(6),
                             Text(
-                              AppUtils.getRoleStr(role),
+                              'Owner',
                               style: AppTextStyles.xxLarge(
                                 color: AppColors.gray,
                               ),
@@ -235,6 +235,11 @@ class _Body extends StatelessWidget {
                 Expanded(child: AppButton(text: 'Request to pet sit')),
               ],
             ),
+          ),
+          VerticalSpacing(),
+          Padding(
+            padding: AppBaseStyles.horizontalPadding,
+            child: AppButton(text: 'Add to My Calendar'),
           ),
           AppSpacing(context).bottomSpacing,
         ],
