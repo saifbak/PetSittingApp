@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
+import 'package:whiskers_away_app/src/configs/app_setup.router.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_logo.dart';
@@ -10,6 +11,9 @@ import 'package:whiskers_away_app/src/shared/app_textfield.dart';
 import 'package:whiskers_away_app/src/shared/multi_style_text.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/views/auth/signup/signup_view_model.dart';
+import 'package:whiskers_away_app/src/views/explore/explore_view.dart';
+import 'package:whiskers_away_app/src/views/landing/landing_view.dart';
+import 'package:whiskers_away_app/src/views/my_availability/my_availability_view.dart';
 
 class SignUpView extends StatelessWidget {
   @override
@@ -80,7 +84,32 @@ class _Body extends StatelessWidget {
                   AppButton(
                     text: 'Sign Up',
                     horizontalPadding: 50,
-                    onPressed: NavService.home,
+                    onPressed: () => NavService.landing(
+                      arguments: LandingViewArguments(
+                        navBarItems: [
+                          // NavBarItem(
+                          //   IconlyLight.search,
+                          //   'Bookings',
+                          //   HomeView(),
+                          // ),
+                          // NavBarItem(
+                          //   IconlyLight.user2,
+                          //   'My Employees',
+                          //   MyEmployeesView(),
+                          // ),
+                          NavBarItem(
+                            IconlyLight.search,
+                            'Explore',
+                            ExploreView(),
+                          ),
+                          NavBarItem(
+                            IconlyLight.work,
+                            'My Availability',
+                            MyAvailabilityView(),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),
