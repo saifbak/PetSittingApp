@@ -13,6 +13,7 @@ import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
+import 'package:whiskers_away_app/src/views/options_select/options_select_view_model.dart';
 
 class HomeView extends StatelessWidget {
   @override
@@ -107,8 +108,10 @@ class _Body extends StatelessWidget {
                         final request = model.requestsList[index];
                         return GestureDetector(
                           onTap: () => NavService.petDetails(
-                            arguments:
-                                PetDetailsViewArguments(request: request),
+                            arguments: PetDetailsViewArguments(
+                              request: request,
+                              role: Roles.petOwner,
+                            ),
                           ),
                           child: AppListingCard(
                             request: request,

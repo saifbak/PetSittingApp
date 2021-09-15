@@ -18,6 +18,7 @@ import '../views/landing/landing_view.dart';
 import '../views/my_employees/my_employees_view.dart';
 import '../views/onboarding/onboarding_view.dart';
 import '../views/options_select/options_select_view.dart';
+import '../views/options_select/options_select_view_model.dart';
 import '../views/payment/payment_view.dart';
 import '../views/per_details/pet_details_view.dart';
 import '../views/profile/profile_view.dart';
@@ -143,7 +144,10 @@ class StackedRouter extends RouterBase {
     PetDetailsView: (data) {
       var args = data.getArgs<PetDetailsViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => PetDetailsView(request: args.request),
+        builder: (context) => PetDetailsView(
+          request: args.request,
+          role: args.role,
+        ),
         settings: data,
       );
     },
@@ -176,7 +180,8 @@ class StackedRouter extends RouterBase {
 /// PetDetailsView arguments holder class
 class PetDetailsViewArguments {
   final Request request;
-  PetDetailsViewArguments({required this.request});
+  final Roles role;
+  PetDetailsViewArguments({required this.request, required this.role});
 }
 
 /// LandingView arguments holder class

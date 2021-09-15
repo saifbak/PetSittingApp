@@ -11,12 +11,17 @@ import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
+import 'package:whiskers_away_app/src/views/options_select/options_select_view_model.dart';
 import 'package:whiskers_away_app/src/views/per_details/pet_details_view_model.dart';
 
 class PetDetailsView extends StatelessWidget {
   final Request request;
+  final Roles role;
 
-  const PetDetailsView({required this.request});
+  const PetDetailsView({
+    required this.request,
+    required this.role,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +34,7 @@ class PetDetailsView extends StatelessWidget {
             statusBarColor: Colors.transparent,
           ),
           child: Scaffold(
-            body: _Body(model, request),
+            body: _Body(model, request, role),
           ),
         );
       },
@@ -40,8 +45,9 @@ class PetDetailsView extends StatelessWidget {
 class _Body extends StatelessWidget {
   final PetDetailsViewModel model;
   final Request request;
+  final Roles role;
 
-  const _Body(this.model, this.request);
+  const _Body(this.model, this.request, this.role);
 
   @override
   Widget build(BuildContext context) {
@@ -187,7 +193,7 @@ class _Body extends StatelessWidget {
                           ),
                           VerticalSpacing(6),
                           Text(
-                            'Pet Sitter',
+                            AppUtils.getRoleStr(role),
                             style: AppTextStyles.xxLarge(
                               color: AppColors.gray,
                             ),

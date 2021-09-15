@@ -4,6 +4,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
 import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
 import 'package:whiskers_away_app/src/views/home/widgets/listing_sheet.dart';
+import 'package:whiskers_away_app/src/views/options_select/options_select_view_model.dart';
 import 'package:whiskers_away_app/src/views/payment/widgets/payment_dialog.dart';
 
 extension UIExt on BuildContext {
@@ -53,4 +54,7 @@ class AppUtils {
       color: Colors.black.withOpacity(colorOpacity ?? .08),
     );
   }
+
+  static String getRoleStr(Roles role) =>
+      role == Roles.petOwner ? 'Owner' : 'Pet Sitter';
 }
