@@ -115,6 +115,7 @@ class _Body extends StatelessWidget {
                           ),
                           child: AppListingCard(
                             request: request,
+                            role: Roles.petOwner,
                           ),
                         );
                       },
@@ -133,6 +134,7 @@ class _Body extends StatelessWidget {
                       .showCustomSheet(variant: 'listing'),
                   child: AppListingCard(
                     request: request,
+                    role: Roles.petOwner,
                   ),
                 );
               },

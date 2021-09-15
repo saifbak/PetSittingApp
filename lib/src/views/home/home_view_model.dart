@@ -11,6 +11,7 @@ class Request {
   final String dogImgUrl;
   final int dogAge;
   final double dogWeight;
+  final String desc;
 
   Request(
     this.dogName,
@@ -21,6 +22,7 @@ class Request {
     this.dogImgUrl,
     this.dogAge,
     this.dogWeight,
+    this.desc,
   );
 }
 
@@ -46,70 +48,66 @@ class HomeViewModel extends BaseViewModel {
   List<Request> get requestsList => [
         Request(
           'Sully',
-          'In progress',
+          '   Filled   ',
           'May 20-24',
           'Houston',
           'Golden Retriever',
           'assets/images/dog_pic1.jpg',
           14,
           28,
+          "Need someone to take care of my doggy for some days.",
         ),
         Request(
           'Sasha',
-          'Completed',
+          '   Filled   ',
           'May 01-04',
           'Houston',
           'Husky',
           'assets/images/dog_pic2.jpg',
           8,
           20,
+          "Need someone to take care of my doggy for some days.",
         ),
         Request(
           'Sully',
-          'In progress',
+          '   Filled   ',
           'May 20-24',
           'Houston',
           'Golden Retriever',
           'assets/images/dog_pic1.jpg',
           14,
           28,
+          "Need someone to take care of my doggy for some days.",
         ),
         Request(
           'Sasha',
-          'Completed',
+          '   Filled   ',
           'May 01-04',
           'Houston',
           'Husky',
           'assets/images/dog_pic2.jpg',
           8,
           20,
+          "Need someone to take care of my doggy for some days.",
         ),
       ];
 
   List<Request> get newRequestsList => [
         Request(
           'Sully',
-          'New request',
+          '   Open   ',
           'May 20-24',
           'Houston',
           'Golden Retriever',
           'assets/images/dog_pic1.jpg',
           14,
           28,
-        ),
-        Request(
-          'Sasha',
-          'New request',
-          'May 01-04',
-          'Houston',
-          'Husky',
-          'assets/images/dog_pic2.jpg',
-          8,
-          20,
+          "Need someone to take care of my doggy for some days.",
         ),
       ];
 
   List<String> get ownerRequests => ['Requests', "New requests"];
+  List<String> get managerEmployeeJobs => ['Filled jobs', "Open jobs"];
 
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;

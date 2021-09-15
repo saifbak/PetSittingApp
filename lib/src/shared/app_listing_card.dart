@@ -6,13 +6,20 @@ import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
+import 'package:whiskers_away_app/src/views/options_select/options_select_view_model.dart';
 
 class AppListingCard extends StatelessWidget {
-  const AppListingCard({required this.request});
+  const AppListingCard({
+    required this.request,
+    required this.role,
+  });
   final Request request;
+  final Roles role;
 
   @override
   Widget build(BuildContext context) {
+    final petSitterRole = role == Roles.petSitter;
+
     return AppBaseCard(
       child: Column(
         children: [
@@ -55,13 +62,46 @@ class AppListingCard extends StatelessWidget {
                         )
                       ],
                     ),
-                    AppStatusVisibilityTag(text: request.status)
+                    if (petSitterRole) ...[
+                      Row(
+                        children: [
+                          Text(
+                            '${request.dogAge} years old',
+                            style:
+                                AppTextStyles.xxMedium(color: AppColors.gray),
+                          ),
+                          HorizontalSpacing(4),
+                          Container(
+                            width: 4,
+                            height: 4,
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryColor,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          HorizontalSpacing(4),
+                          Text(
+                            '${request.dogWeight.toInt()} lbs',
+                            style:
+                                AppTextStyles.xxMedium(color: AppColors.gray),
+                          ),
+                        ],
+                      ),
+                    ] else
+                      AppStatusVisibilityTag(text: request.status)
                   ],
                 ),
               ),
             ],
           ),
-          VerticalSpacing(12),
+          if (petSitterRole) ...[
+            VerticalSpacing(12),
+            Text(
+              request.desc,
+              style: AppTextStyles.xMedium(color: AppColors.gray),
+            ),
+          ],
+          VerticalSpacing(4),
           Row(
             children: [
               Icon(
