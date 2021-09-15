@@ -30,6 +30,8 @@ class NavService {
       _navigationService!.replaceWith(Routes.signUpView, arguments: arguments);
   static Future<dynamic>? home({dynamic arguments}) => _navigationService!
       .clearStackAndShow(Routes.homeView, arguments: arguments);
+  static Future<dynamic>? landing({dynamic arguments}) => _navigationService!
+      .clearStackAndShow(Routes.landingView, arguments: arguments);
   static Future<dynamic>? requestSubmit({dynamic arguments}) =>
       _navigationService!
           .navigateTo(Routes.requestSubmitView, arguments: arguments);
@@ -44,6 +46,9 @@ class NavService {
       _navigationService!.navigateTo(Routes.profileView, arguments: arguments);
   static Future<dynamic>? petDetails({dynamic arguments}) => _navigationService!
       .navigateTo(Routes.petDetailsView, arguments: arguments);
+  static Future<dynamic>? employeeDetails({dynamic arguments}) =>
+      _navigationService!
+          .navigateTo(Routes.employeeDetailsView, arguments: arguments);
 
   // back route
   static bool get popOut => _navigationService!.back();

@@ -14,6 +14,7 @@ class AppButton extends StatelessWidget {
     this.fullWidth = false,
     this.onPressed,
     this.horizontalPadding = 20,
+    this.child,
   });
 
   final AppButtonType type;
@@ -21,18 +22,20 @@ class AppButton extends StatelessWidget {
   final bool fullWidth;
   final VoidCallback? onPressed;
   final double? horizontalPadding;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
     final buttonTypeSolid = type == AppButtonType.solid ? true : false;
 
     final buttonText = Center(
-      child: Text(
-        text,
-        style: AppTextStyles.xLarge(
-          color: buttonTypeSolid ? Colors.white : AppColors.primaryColor,
-        ),
-      ),
+      child: child ??
+          Text(
+            text,
+            style: AppTextStyles.xLarge(
+              color: buttonTypeSolid ? Colors.white : AppColors.primaryColor,
+            ),
+          ),
     );
     final padding = EdgeInsets.symmetric(
       vertical: 10,

@@ -1,0 +1,51 @@
+import 'package:stacked/stacked.dart';
+import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
+
+class ExploreViewModel extends BaseViewModel {
+  List<Request> get requestsList => [
+        Request(
+          'Sully',
+          '   Filled   ',
+          'May 20-24',
+          'Houston',
+          'Golden Retriever',
+          'assets/images/dog_pic1.jpg',
+          14,
+          28,
+          "Need someone to take care of my doggy for some days.",
+        ),
+        Request(
+          'Sasha',
+          '   Filled   ',
+          'May 01-04',
+          'Houston',
+          'Husky',
+          'assets/images/dog_pic2.jpg',
+          8,
+          20,
+          "Need someone to take care of my doggy for some days.",
+        ),
+        Request(
+          'Sully',
+          '   Filled   ',
+          'May 20-24',
+          'Houston',
+          'Golden Retriever',
+          'assets/images/dog_pic1.jpg',
+          14,
+          28,
+          "Need someone to take care of my doggy for some days.",
+        ),
+        Request(
+          'Sasha',
+          '   Filled   ',
+          'May 01-04',
+          'Houston',
+          'Husky',
+          'assets/images/dog_pic2.jpg',
+          8,
+          20,
+          "Need someone to take care of my doggy for some days.",
+        ),
+      ];
+}

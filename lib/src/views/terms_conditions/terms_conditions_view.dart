@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
+import 'package:whiskers_away_app/src/shared/app_base_card.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_divider.dart';
 import 'package:whiskers_away_app/src/shared/app_top_bar.dart';
@@ -50,20 +51,9 @@ class _Body extends StatelessWidget {
         ),
         VerticalSpacing(16),
         Expanded(
-          child: Container(
+          child: AppBaseCard(
             margin: EdgeInsets.symmetric(horizontal: 20),
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(0, 4),
-                  blurRadius: 20,
-                  color: Colors.black.withOpacity(.08),
-                ),
-              ],
-            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -117,7 +107,7 @@ class _Body extends StatelessWidget {
             ],
           ),
         ),
-        VerticalSpacing(screenSize.height * .04),
+        AppSpacing(context).bottomSpacing,
       ],
     );
   }

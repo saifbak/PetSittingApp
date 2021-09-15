@@ -5,18 +5,24 @@ import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
+import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_top_bar.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
+import 'package:whiskers_away_app/src/views/options_select/options_select_view_model.dart';
 import 'package:whiskers_away_app/src/views/per_details/pet_details_view_model.dart';
 
 class PetDetailsView extends StatelessWidget {
   final Request request;
+  final Roles role;
 
-  const PetDetailsView({required this.request});
+  const PetDetailsView({
+    required this.request,
+    required this.role,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +35,7 @@ class PetDetailsView extends StatelessWidget {
             statusBarColor: Colors.transparent,
           ),
           child: Scaffold(
-            body: _Body(model, request),
+            body: _Body(model, request, role),
           ),
         );
       },
@@ -40,8 +46,9 @@ class PetDetailsView extends StatelessWidget {
 class _Body extends StatelessWidget {
   final PetDetailsViewModel model;
   final Request request;
+  final Roles role;
 
-  const _Body(this.model, this.request);
+  const _Body(this.model, this.request, this.role);
 
   @override
   Widget build(BuildContext context) {
@@ -151,63 +158,91 @@ class _Body extends StatelessWidget {
           ],
         ),
         VerticalSpacing(28),
-        ListView(
-          padding: AppBaseStyles.horizontalPadding,
-          shrinkWrap: true,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: AppColors.whisper,
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/profile_pic.jpg'),
-                      fit: BoxFit.cover,
+        Expanded(
+          child: ListView(
+            padding: AppBaseStyles.horizontalPadding,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: AppColors.whisper,
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/profile_pic.jpg'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                HorizontalSpacing(10),
-                Expanded(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Jessi Smith',
-                            style: AppTextStyles.xLarge(
-                              weight: FontWeight.w500,
+                  HorizontalSpacing(10),
+                  Expanded(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Jessi Smith',
+                              style: AppTextStyles.xLarge(
+                                weight: FontWeight.w500,
+                              ),
                             ),
-                          ),
-                          VerticalSpacing(6),
-                          Text(
-                            'Pet Sitter',
-                            style: AppTextStyles.xxLarge(
-                              color: AppColors.gray,
-                            ),
-                          )
-                        ],
-                      ),
-                      Text(
-                        'May 25, 2021',
-                        style: AppTextStyles.xMedium(),
-                      )
-                    ],
+                            VerticalSpacing(6),
+                            Text(
+                              'Owner',
+                              style: AppTextStyles.xxLarge(
+                                color: AppColors.gray,
+                              ),
+                            )
+                          ],
+                        ),
+                        Text(
+                          'May 25, 2021',
+                          style: AppTextStyles.xMedium(),
+                        )
+                      ],
+                    ),
                   ),
+                ],
+              ),
+              VerticalSpacing(12),
+              Text(
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus et scelerisque risus quam porta aenean sed cursus. Vestibulum aliquet eros, euismod platea felis velit. Consectetur arcu proin vel laoreet.\n\nAnte in fames scelerisque ridiculus elementum ornare pellentesque arcu. Volutpat nec nunc, ante in fames scelerisque ridiculus elementum ornare pellentesque arcu. Volutpat nec nunc. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus et scelerisque risus quam porta aenean sed cursus. Vestibulum aliquet eros, euismod platea felis velit. Consectetur arcu proin vel laoreet.\n\nAnte in fames scelerisque ridiculus elementum ornare pellentesque arcu. Volutpat nec nunc, ante in fames scelerisque ridiculus elementum ornare pellentesque arcu. Volutpat nec nunc."),
+            ],
+          ),
+        ),
+        if (role == Roles.petSitter) ...[
+          VerticalSpacing(12),
+          Padding(
+            padding: AppBaseStyles.horizontalPadding,
+            child: Row(
+              children: [
+                AppButton(
+                  horizontalPadding: 10,
+                  child: Icon(
+                    Icons.favorite,
+                    size: 20,
+                    color: Colors.white,
+                  ),
+                  text: '',
                 ),
+                HorizontalSpacing(16),
+                Expanded(child: AppButton(text: 'Request to pet sit')),
               ],
             ),
-            VerticalSpacing(12),
-            Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus et scelerisque risus quam porta aenean sed cursus. Vestibulum aliquet eros, euismod platea felis velit. Consectetur arcu proin vel laoreet.\n\nAnte in fames scelerisque ridiculus elementum ornare pellentesque arcu. Volutpat nec nunc, ante in fames scelerisque ridiculus elementum ornare pellentesque arcu. Volutpat nec nunc.")
-          ],
-        ),
+          ),
+          VerticalSpacing(),
+          Padding(
+            padding: AppBaseStyles.horizontalPadding,
+            child: AppButton(text: 'Add to My Calendar'),
+          ),
+          AppSpacing(context).bottomSpacing,
+        ],
       ],
     );
   }

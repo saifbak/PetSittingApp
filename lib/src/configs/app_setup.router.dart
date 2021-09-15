@@ -11,10 +11,14 @@ import 'package:stacked/stacked.dart';
 
 import '../views/auth/login/login_view.dart';
 import '../views/auth/signup/signup_view.dart';
+import '../views/employee_details/employee_details_view.dart';
 import '../views/home/home_view.dart';
 import '../views/home/home_view_model.dart';
+import '../views/landing/landing_view.dart';
+import '../views/my_employees/my_employees_view.dart';
 import '../views/onboarding/onboarding_view.dart';
 import '../views/options_select/options_select_view.dart';
+import '../views/options_select/options_select_view_model.dart';
 import '../views/payment/payment_view.dart';
 import '../views/per_details/pet_details_view.dart';
 import '../views/profile/profile_view.dart';
@@ -34,6 +38,9 @@ class Routes {
   static const String paymentView = '/payment-view';
   static const String profileView = '/profile-view';
   static const String petDetailsView = '/pet-details-view';
+  static const String landingView = '/landing-view';
+  static const String myEmployeesView = '/my-employees-view';
+  static const String employeeDetailsView = '/employee-details-view';
   static const all = <String>{
     splashView,
     onBoardingView,
@@ -46,6 +53,9 @@ class Routes {
     paymentView,
     profileView,
     petDetailsView,
+    landingView,
+    myEmployeesView,
+    employeeDetailsView,
   };
 }
 
@@ -64,6 +74,9 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.paymentView, page: PaymentView),
     RouteDef(Routes.profileView, page: ProfileView),
     RouteDef(Routes.petDetailsView, page: PetDetailsView),
+    RouteDef(Routes.landingView, page: LandingView),
+    RouteDef(Routes.myEmployeesView, page: MyEmployeesView),
+    RouteDef(Routes.employeeDetailsView, page: EmployeeDetailsView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -131,7 +144,29 @@ class StackedRouter extends RouterBase {
     PetDetailsView: (data) {
       var args = data.getArgs<PetDetailsViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => PetDetailsView(request: args.request),
+        builder: (context) => PetDetailsView(
+          request: args.request,
+          role: args.role,
+        ),
+        settings: data,
+      );
+    },
+    LandingView: (data) {
+      var args = data.getArgs<LandingViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => LandingView(navBarItems: args.navBarItems),
+        settings: data,
+      );
+    },
+    MyEmployeesView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => MyEmployeesView(),
+        settings: data,
+      );
+    },
+    EmployeeDetailsView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => EmployeeDetailsView(),
         settings: data,
       );
     },
@@ -145,5 +180,12 @@ class StackedRouter extends RouterBase {
 /// PetDetailsView arguments holder class
 class PetDetailsViewArguments {
   final Request request;
-  PetDetailsViewArguments({required this.request});
+  final Roles role;
+  PetDetailsViewArguments({required this.request, required this.role});
+}
+
+/// LandingView arguments holder class
+class LandingViewArguments {
+  final List<NavBarItem> navBarItems;
+  LandingViewArguments({required this.navBarItems});
 }

@@ -47,6 +47,23 @@ class _Body extends StatelessWidget {
                   Text(
                       "Dogs are my life. I have been doing this for 10 years now and I would not choose anything else. I love taking the dogs to the park and having them run around."),
                   VerticalSpacing(12),
+                  Row(
+                    children: [
+                      LabelWithContent(
+                        labelText: 'Experience',
+                        content: '10 years',
+                        contentIcon: IconlyLight.work,
+                      ),
+                      Spacer(),
+                      LabelWithContent(
+                        labelText: 'Prefers',
+                        content: 'Dogs 10-24',
+                        contentIcon: IconlyLight.category,
+                      ),
+                      Spacer(),
+                    ],
+                  ),
+                  VerticalSpacing(12),
                   AppDivider(),
                   VerticalSpacing(12),
                 ],
@@ -82,13 +99,14 @@ class _Body extends StatelessWidget {
             VerticalSpacing(),
             AnimatedContainer(
               duration: Duration(milliseconds: 500),
-              padding: EdgeInsets.all(12),
+              padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
               height: model.fullReviewsDisplay ? 175 * 1.75 : 175,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: AppColors.whisper),
               ),
               child: ReadMoreScrollableContent(
+                toggleBehaviour: true,
                 contentSeparator: VerticalSpacing(12),
                 readMoreCallback: (val) => model.fullReviewsDisplay = val,
                 readMoreContent: model.fullReviewsDisplay,
@@ -157,30 +175,6 @@ class _Body extends StatelessWidget {
                     ],
                   );
                 },
-              ),
-            ),
-            ExpandedSection(
-              expand: !model.fullReviewsDisplay,
-              child: Column(
-                children: [
-                  VerticalSpacing(16),
-                  Row(
-                    children: [
-                      LabelWithContent(
-                        labelText: 'Experience',
-                        content: '10 years',
-                        contentIcon: IconlyLight.work,
-                      ),
-                      Spacer(),
-                      LabelWithContent(
-                        labelText: 'Prefers',
-                        content: 'Dogs 10-24',
-                        contentIcon: IconlyLight.category,
-                      ),
-                      Spacer(),
-                    ],
-                  ),
-                ],
               ),
             ),
           ],

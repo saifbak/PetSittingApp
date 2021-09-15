@@ -10,6 +10,7 @@ class ReadMoreScrollableContent extends StatefulWidget {
     required this.contentItemBuilder,
     this.readMoreCallback,
     this.readMoreContent = false,
+    this.toggleBehaviour = false,
   });
 
   final int contentLength;
@@ -17,6 +18,7 @@ class ReadMoreScrollableContent extends StatefulWidget {
   final Widget Function(BuildContext, int) contentItemBuilder;
   final ValueChanged<bool>? readMoreCallback;
   final bool? readMoreContent;
+  final bool? toggleBehaviour;
 
   @override
   _ReadMoreScrollableContentState createState() =>
@@ -49,7 +51,7 @@ class _ReadMoreScrollableContentState extends State<ReadMoreScrollableContent> {
   Widget build(BuildContext context) {
     final list = ListView.separated(
       physics: scrollPhysics,
-      padding: EdgeInsets.only(right: 8),
+      padding: const EdgeInsets.only(top: 12, bottom: 12, right: 8),
       controller: scrollCtrl,
       itemBuilder: widget.contentItemBuilder,
       separatorBuilder: (_, __) => widget.contentSeparator ?? VerticalSpacing(),
@@ -64,19 +66,28 @@ class _ReadMoreScrollableContentState extends State<ReadMoreScrollableContent> {
                 ? Scrollbar(controller: scrollCtrl, child: list)
                 : list),
         if (readMoreTextDisplay) ...[
-          VerticalSpacing(16),
+          VerticalSpacing(10),
           GestureDetector(
             onTap: () {
-              setState(() {
+              if (widget.toggleBehaviour!) {
+                readMoreContent = !readMoreContent;
+              } else {
                 readMoreContent = true;
-                scrollPhysics = ScrollPhysics();
                 readMoreTextDisplay = false;
-              });
+              }
+              if (readMoreContent) {
+                scrollPhysics = ScrollPhysics();
+              } else {
+                scrollPhysics = NeverScrollableScrollPhysics();
+              }
+              setState(() {});
               if (widget.readMoreCallback != null)
                 widget.readMoreCallback!(readMoreContent);
             },
             child: Text(
-              'Read more',
+              widget.toggleBehaviour!
+                  ? 'Read ${!readMoreContent ? 'more' : 'less'}'
+                  : 'Read more',
               style:
                   AppTextStyles.xMedium(color: AppColors.primaryColor).copyWith(
                 decoration: TextDecoration.underline,
