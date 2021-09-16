@@ -27,7 +27,7 @@ class LocalStorage {
   static readSP(String key, {String defValue = ''}) {
     if (_preferences == null) return defValue;
     String val = _preferences!.getString(key) ?? '';
-    return json.decode(val) ?? defValue;
+    return val != '' ? (json.decode(val) ?? defValue) : '';
   }
 
   // get value

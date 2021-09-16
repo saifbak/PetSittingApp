@@ -36,14 +36,14 @@ class _Body extends StatelessWidget {
   final GlobalKey<State> keyLoader = new GlobalKey<State>();
 
   //Controllers
-  final petCtrl = TextEditingController(text: 'Zollo');
-  final locationCtrl = TextEditingController(text: 'Nazimabad');
-  final ageCtrl = TextEditingController(text: '20');
-  final weightCtrl = TextEditingController(text: '15');
-  final breedCtrl = TextEditingController(text: 'Chocolate');
-  final fromDateCtrl = TextEditingController(text: '2020-12-11');
-  final toDateCtrl = TextEditingController(text: '2020-12-21');
-  final descriptionCtrl = TextEditingController(text: 'This is test details');
+  final petCtrl = TextEditingController();
+  final locationCtrl = TextEditingController();
+  final ageCtrl = TextEditingController();
+  final weightCtrl = TextEditingController();
+  final breedCtrl = TextEditingController();
+  final fromDateCtrl = TextEditingController();
+  final toDateCtrl = TextEditingController();
+  final descriptionCtrl = TextEditingController();
 
   _Body(this.model);
 

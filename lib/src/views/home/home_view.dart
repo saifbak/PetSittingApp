@@ -48,7 +48,7 @@ class _Body extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              WelcomeHeading(name: model.user!.name),
+              WelcomeHeading(name: model.user?.name ?? ''),
               Container(
                 width: 30,
                 height: 30,

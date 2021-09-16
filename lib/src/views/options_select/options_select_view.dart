@@ -45,7 +45,7 @@ class _Body extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           VerticalSpacing(context.topSpace() + screenSize.height * .05),
-          WelcomeHeading(name: 'John Carter'),
+          WelcomeHeading(name: ''),
           VerticalSpacing(screenSize.height * .04),
           Text(
             'Choose from the options below',

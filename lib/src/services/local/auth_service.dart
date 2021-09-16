@@ -10,8 +10,6 @@ import 'package:whiskers_away_app/src/services/remote/api_service.dart';
 import 'package:whiskers_away_app/src/services/remote/network_exceptions.dart';
 
 class AuthService with ReactiveServiceMixin {
-  final apiService = locator<ApiService>();
-
   ReactiveValue<User?> _user = ReactiveValue<User?>(null);
   User? get user => _user.value;
 
@@ -25,6 +23,7 @@ class AuthService with ReactiveServiceMixin {
 
   Future<ApiResult<dynamic>> register(User userRequest) async {
     try {
+      final apiService = locator<ApiService>();
       ResponseWrapper response = await apiService.client
           .postReq("/signup", data: userRequest.toJson());
 
@@ -45,6 +44,7 @@ class AuthService with ReactiveServiceMixin {
   Future<ApiResult<dynamic>> login(
       Map<String, dynamic> userLoginRequest) async {
     try {
+      final apiService = locator<ApiService>();
       ResponseWrapper response =
           await apiService.client.postReq("/login", data: userLoginRequest);
 
@@ -68,6 +68,7 @@ class AuthService with ReactiveServiceMixin {
 
   Future<ApiResult<User>> getUserDetails() async {
     try {
+      final apiService = locator<ApiService>();
       ResponseWrapper response =
           await apiService.client.getReq("/user/details");
 
@@ -92,16 +93,14 @@ class AuthService with ReactiveServiceMixin {
   Future<ApiResult<dynamic>> sendPetRequest(
       Map<String, dynamic> request) async {
     try {
-      print(request);
-      print(request.toString());
+      final apiService = locator<ApiService>();
+      // print(request);
+      // print(request.toString());
       ResponseWrapper response =
           await apiService.client.postReq("/createjob", data: request);
 
       return ApiResult.success(data: response.data);
     } catch (e) {
-      DioError err = e as DioError;
-      //print(err.message);
-      print(err.response.toString());
       return ApiResult.failure(
         error: NetworkExceptions.getDioException(e),
       );

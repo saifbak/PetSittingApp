@@ -44,8 +44,8 @@ class _Body extends StatelessWidget {
   final GlobalKey<State> keyLoader = new GlobalKey<State>();
 
   //Controllers
-  final emailCtrl = TextEditingController(text: 'admin@gmail.com');
-  final passwordCtrl = TextEditingController(text: '12345678');
+  final emailCtrl = TextEditingController();
+  final passwordCtrl = TextEditingController();
 
   _Body(this.model);
 

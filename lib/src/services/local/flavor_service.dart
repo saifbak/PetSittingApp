@@ -22,9 +22,9 @@ class FlavorService {
   static String get getBaseApi {
     // return prod url
     if (env == Env.prod) {
-      return "http://192.168.0.9:8002/api/";
+      return "https://whiskersaway.enorness.com/api/";
     }
     // return url other than prod one
-    return "http://192.168.0.9:8002/api/";
+    return "https://whiskersaway.enorness.com/apiub/";
   }
 }

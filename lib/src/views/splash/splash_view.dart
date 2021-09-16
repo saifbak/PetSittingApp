@@ -13,9 +13,10 @@ class SplashView extends StatelessWidget {
     return ViewModelBuilder<SplashViewModel>.nonReactive(
       viewModelBuilder: () => SplashViewModel(),
       onModelReady: (model) async {
-        dynamic abc = await model.authenticatedUser();
-        print("abc");
-        print(abc);
+        //return NavService.home();
+        await model.authenticatedUser();
+        /* print("abc");
+        print(abc); */
       },
       builder: (_, __, ___) {
         return AnnotatedRegion<SystemUiOverlayStyle>(
