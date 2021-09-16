@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:whiskers_away_app/src/models/wrappers/response_wrapper.dart';
 import 'package:whiskers_away_app/src/services/local/flavor_service.dart';
+import 'package:whiskers_away_app/src/services/local/local_storage_service.dart';
 
 const _defaultConnectTimeout = Duration.millisecondsPerMinute;
 const _defaultReceiveTimeout = Duration.millisecondsPerMinute;
@@ -23,9 +24,25 @@ class ApiClient {
       ..options.receiveTimeout = _defaultReceiveTimeout
       ..httpClientAdapter
       ..options.headers = customHeaders;
-    if (interceptors?.isNotEmpty ?? false) {
+    /* if (interceptors?.isNotEmpty ?? false) {
       _dio?.interceptors.addAll(interceptors!);
+    } */
+
+    String token = LocalStorage.readSP('token');
+
+    if (token != '') {
+      _dio?.interceptors.add(
+        InterceptorsWrapper(onRequest:
+            (RequestOptions options, RequestInterceptorHandler handler) async {
+          options.headers.putIfAbsent('Authorization', () => "$token");
+          handler.next(options);
+        }, onResponse: (response, ResponseInterceptorHandler handler) {
+          handler.next(response);
+        }),
+      );
     }
+
+    print(_dio.toString());
   }
 
   ResponseWrapper _response(Response? response) {

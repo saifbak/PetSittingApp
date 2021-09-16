@@ -65,10 +65,11 @@ abstract class NetworkExceptions with _$NetworkExceptions {
     }
   }
 
-  static NetworkExceptions? getDioException(error) {
+  static NetworkExceptions getDioException(error) {
     if (error is Exception) {
       try {
-        NetworkExceptions? networkExceptions;
+        NetworkExceptions networkExceptions =
+            NetworkExceptions.unexpectedError();
         if (error is DioError) {
           switch (error.type) {
             case DioErrorType.cancel:

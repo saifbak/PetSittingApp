@@ -20,6 +20,9 @@ class AppTextField extends StatefulWidget {
     this.onTap,
     this.labelIcon,
     this.endLabel,
+    this.controller,
+    this.validators,
+    this.validator,
     this.bottomSpacing = true,
   });
 
@@ -36,6 +39,9 @@ class AppTextField extends StatefulWidget {
   final IconData? labelIcon;
   final Widget? endLabel;
   final bool? bottomSpacing;
+  final TextEditingController? controller;
+  final List<Function>? validators;
+  final dynamic validator;
 
   @override
   _AppTextFieldState createState() => _AppTextFieldState();
@@ -75,7 +81,7 @@ class _AppTextFieldState extends State<AppTextField> {
             alignment: Alignment.centerRight,
             children: [
               Container(
-                height: widget.maxLines! > 1 ? null : 45,
+                //height: widget.maxLines! > 1 ? null : 45,
                 child: TextFormField(
                   style: AppTextStyles.xxLarge(color: AppColors.primaryColor),
                   keyboardType: widget.textInputType,
@@ -83,6 +89,24 @@ class _AppTextFieldState extends State<AppTextField> {
                   maxLines: widget.maxLines,
                   readOnly: widget.readOnlyField!,
                   onTap: widget.onTap,
+                  validator: widget.validator,
+                  /* validator: (val) {
+                    print(widget.validators);
+                    if (widget.validators!.length > 0) {
+                      var vadl = widget.validators![0];
+                      return vadl(val);
+                      /* String? foundValidator =
+                          widget.validators!.first((Function callback) {
+                        return callback(val);
+                      });
+ */
+                      /* if (foundValidator!.isNotEmpty) {
+                        return foundValidator;
+                      } */
+                    }
+                    return null;
+                  }, */
+                  controller: widget.controller,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
@@ -102,6 +126,17 @@ class _AppTextFieldState extends State<AppTextField> {
                             size: 22,
                           )
                         : null,
+                    errorBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: AppColors.error, width: 1.0),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    errorStyle: AppTextStyles.xSmall(color: AppColors.error),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: AppColors.error, width: 1.0),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     contentPadding: EdgeInsets.only(
                       top: 15,
                       left: 15,

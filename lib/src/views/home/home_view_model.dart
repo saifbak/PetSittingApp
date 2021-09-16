@@ -1,6 +1,8 @@
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
+import 'package:whiskers_away_app/src/models/User.dart';
+import 'package:whiskers_away_app/src/services/local/auth_service.dart';
 
 class Request {
   final String dogName;
@@ -36,6 +38,7 @@ class PetSitter {
 
 class HomeViewModel extends BaseViewModel {
   final bottomSheetService = locator<BottomSheetService>();
+  final _authService = locator<AuthService>();
 
   List<PetSitter> get petSittersList => [
         PetSitter(
@@ -114,5 +117,9 @@ class HomeViewModel extends BaseViewModel {
   set selectedIndex(int val) {
     _selectedIndex = val;
     notifyListeners();
+  }
+
+  User? get user {
+    return this._authService.user;
   }
 }

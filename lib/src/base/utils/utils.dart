@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
+import 'package:whiskers_away_app/src/shared/app_spinner_dialog.dart';
 import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
 import 'package:whiskers_away_app/src/views/home/widgets/listing_sheet.dart';
 import 'package:whiskers_away_app/src/views/options_select/options_select_view_model.dart';
@@ -27,6 +28,8 @@ class AppUtils {
     final builders = {
       'payment': (context, sheetRequest, completer) =>
           PaymentDialog(request: sheetRequest, completer: completer),
+      'spinner': (context, sheetRequest, completer) =>
+          AppSpinnerDialog(request: sheetRequest, completer: completer)
     };
 
     dialogService.registerCustomDialogBuilders(builders);

@@ -12,11 +12,10 @@ class SplashView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<SplashViewModel>.nonReactive(
       viewModelBuilder: () => SplashViewModel(),
-      onModelReady: (_) {
-        Future.delayed(
-          Duration(seconds: 2),
-          NavService.optionsSelect,
-        );
+      onModelReady: (model) async {
+        dynamic abc = await model.authenticatedUser();
+        print("abc");
+        print(abc);
       },
       builder: (_, __, ___) {
         return AnnotatedRegion<SystemUiOverlayStyle>(

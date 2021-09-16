@@ -4,6 +4,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.router.dart';
+import 'package:whiskers_away_app/src/core/validators/default_validator.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_logo.dart';
@@ -37,7 +38,17 @@ class LoginView extends StatelessWidget {
 
 class _Body extends StatelessWidget {
   final LoginViewModel model;
-  const _Body(this.model);
+
+  final formKey = GlobalKey<FormState>();
+  AutovalidateMode autoValidate = AutovalidateMode.disabled;
+  final GlobalKey<State> keyLoader = new GlobalKey<State>();
+
+  //Controllers
+  final emailCtrl = TextEditingController(text: 'admin@gmail.com');
+  final passwordCtrl = TextEditingController(text: '12345678');
+
+  _Body(this.model);
+
   @override
   Widget build(BuildContext context) {
     final screenSize = context.screenSize();
@@ -48,18 +59,27 @@ class _Body extends StatelessWidget {
         Center(child: AppLogo(width: screenSize.width / 2.5)),
         VerticalSpacing(screenSize.height * .05),
         Form(
+          key: formKey,
           child: Column(
             children: [
               AppTextField(
+                controller: emailCtrl,
                 hintText: 'Enter your username / email',
                 label: 'Username / Email',
                 prefixIcon: IconlyLight.profile,
+                validator: (val) {
+                  return DefaultValidator.required(val, "Email/Username");
+                },
               ),
               AppTextField(
+                controller: passwordCtrl,
                 hintText: 'Enter your password',
                 label: 'Password',
                 prefixIcon: IconlyLight.lock,
                 hasPasswordEye: true,
+                validator: (val) {
+                  return DefaultValidator.required(val, "Password");
+                },
               ),
               Padding(
                 padding: AppBaseStyles.horizontalPadding,
@@ -80,9 +100,15 @@ class _Body extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AppButton(
-                    text: 'Log In',
-                    horizontalPadding: 50,
-                    onPressed: () => NavService.landing(
+                      text: 'Log In',
+                      horizontalPadding: 50,
+                      onPressed: () {
+                        if (!formKey.currentState!.validate()) {
+                          autoValidate = AutovalidateMode.onUserInteraction;
+                          return;
+                        }
+                        onSubmit(context);
+                        /* NavService.landing(
                       arguments: LandingViewArguments(
                         navBarItems: [
                           // NavBarItem(
@@ -107,8 +133,8 @@ class _Body extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ),
-                  ),
+                    ), */
+                      }),
                 ],
               ),
               VerticalSpacing(24),
@@ -122,5 +148,19 @@ class _Body extends StatelessWidget {
         )
       ],
     );
+  }
+
+  Future<void> onSubmit(ctx) async {
+    try {
+      await model.login({
+        "email": emailCtrl.text.trim(),
+        "password": passwordCtrl.text.trim(),
+      }, ctx);
+      NavService.home();
+    } catch (e) {
+      /* Timer(Duration(seconds: 1), () {
+        model.showErrorAlert(e);
+      }); */
+    }
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
+import 'package:whiskers_away_app/src/core/validators/default_validator.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_textfield.dart';
@@ -29,7 +30,22 @@ class RequestSubmitView extends StatelessWidget {
 
 class _Body extends StatelessWidget {
   final RequestSubmitViewModel model;
-  const _Body(this.model);
+
+  final formKey = GlobalKey<FormState>();
+  AutovalidateMode autoValidate = AutovalidateMode.disabled;
+  final GlobalKey<State> keyLoader = new GlobalKey<State>();
+
+  //Controllers
+  final petCtrl = TextEditingController(text: 'Zollo');
+  final locationCtrl = TextEditingController(text: 'Nazimabad');
+  final ageCtrl = TextEditingController(text: '20');
+  final weightCtrl = TextEditingController(text: '15');
+  final breedCtrl = TextEditingController(text: 'Chocolate');
+  final fromDateCtrl = TextEditingController(text: '2020-12-11');
+  final toDateCtrl = TextEditingController(text: '2020-12-21');
+  final descriptionCtrl = TextEditingController(text: 'This is test details');
+
+  _Body(this.model);
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +56,7 @@ class _Body extends StatelessWidget {
         AppTopBar(text: 'Submit a Request'),
         VerticalSpacing(16),
         Form(
+          key: formKey,
           child: Expanded(
             child: ListView(
               shrinkWrap: true,
@@ -83,35 +100,52 @@ class _Body extends StatelessWidget {
                 PetSittingPlace(),
                 VerticalSpacing(20),
                 AppTextField(
+                  controller: petCtrl,
                   hintText: 'Enter pet name',
                   label: 'Pet Name',
                   padding: EdgeInsets.zero,
+                  validator: (val) {
+                    return DefaultValidator.required(val, "Pet Name");
+                  },
                 ),
                 AppTextField(
+                  controller: locationCtrl,
                   hintText: 'Enter location',
                   label: 'Location',
                   padding: EdgeInsets.zero,
+                  validator: (val) {
+                    return DefaultValidator.required(val, "Location");
+                  },
                 ),
                 Row(
                   children: [
                     Expanded(
                       child: AppTextField(
+                        controller: ageCtrl,
                         hintText: 'Enter age',
                         label: 'Age',
                         padding: EdgeInsets.zero,
+                        validator: (val) {
+                          return DefaultValidator.required(val, "Age");
+                        },
                       ),
                     ),
                     HorizontalSpacing(14),
                     Expanded(
                       child: AppTextField(
+                        controller: weightCtrl,
                         hintText: 'Enter weight',
                         label: 'Weight',
                         padding: EdgeInsets.zero,
+                        validator: (val) {
+                          return DefaultValidator.required(val, "Weight");
+                        },
                       ),
                     )
                   ],
                 ),
                 AppTextField(
+                  controller: breedCtrl,
                   hintText: 'Enter breed',
                   label: 'Breed',
                   padding: EdgeInsets.zero,
@@ -120,28 +154,31 @@ class _Body extends StatelessWidget {
                   children: [
                     Expanded(
                       child: AppTextField(
-                        hintText: 'Select date',
+                        controller: fromDateCtrl,
+                        hintText: 'YYYY-MM-DD',
                         label: 'From',
                         padding: EdgeInsets.zero,
                         suffixIcon: IconlyLight.calendar,
-                        readOnlyField: true,
+                        //readOnlyField: true,
                         onTap: () {},
                       ),
                     ),
                     HorizontalSpacing(14),
                     Expanded(
                       child: AppTextField(
-                        hintText: 'Select date',
+                        controller: toDateCtrl,
+                        hintText: 'YYYY-MM-DD',
                         label: 'To',
                         padding: EdgeInsets.zero,
                         suffixIcon: IconlyLight.calendar,
-                        readOnlyField: true,
+                        //readOnlyField: true,
                         onTap: () {},
                       ),
                     )
                   ],
                 ),
                 AppTextField(
+                  controller: descriptionCtrl,
                   hintText: 'Enter description',
                   label: 'Description',
                   padding: EdgeInsets.zero,
@@ -154,7 +191,13 @@ class _Body extends StatelessWidget {
                     AppButton(
                       text: 'Submit',
                       horizontalPadding: 70,
-                      onPressed: () => NavService.popOut,
+                      onPressed: () {
+                        if (!formKey.currentState!.validate()) {
+                          autoValidate = AutovalidateMode.onUserInteraction;
+                          return;
+                        }
+                        onSubmit(context);
+                      },
                     ),
                   ],
                 ),
@@ -165,6 +208,26 @@ class _Body extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future<void> onSubmit(ctx) async {
+    try {
+      await model.sendPetRequest({
+        "pet_name": petCtrl.text.trim(),
+        "location": locationCtrl.text.trim(),
+        "age": ageCtrl.text.trim(),
+        "weight": weightCtrl.text.trim(),
+        "from_date": fromDateCtrl.text.trim(),
+        "to_date": toDateCtrl.text.trim(),
+        "breed": breedCtrl.text.trim(),
+        "description": descriptionCtrl.text.trim(),
+      }, ctx);
+      NavService.home();
+    } catch (e) {
+      /* Timer(Duration(seconds: 1), () {
+        model.showErrorAlert(e);
+      }); */
+    }
   }
 }
 
