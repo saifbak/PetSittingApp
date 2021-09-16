@@ -15,11 +15,8 @@ import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/auth/login/login_view_model.dart';
 import 'package:whiskers_away_app/src/views/explore/explore_view.dart';
-import 'package:whiskers_away_app/src/views/home/home_view.dart';
 import 'package:whiskers_away_app/src/views/landing/landing_view.dart';
 import 'package:whiskers_away_app/src/views/my_availability/my_availability_view.dart';
-import 'package:whiskers_away_app/src/views/my_employees/my_employees_view.dart';
-import 'package:whiskers_away_app/src/views/terms_conditions/terms_conditions_view.dart';
 
 class LoginView extends StatelessWidget {
   @override

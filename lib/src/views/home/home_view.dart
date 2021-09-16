@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.router.dart';
@@ -13,6 +14,7 @@ import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
+import 'package:whiskers_away_app/src/views/home/widgets/listing_sheet.dart';
 import 'package:whiskers_away_app/src/views/options_select/options_select_view_model.dart';
 
 class HomeView extends StatelessWidget {
@@ -20,9 +22,6 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.nonReactive(
       viewModelBuilder: () => HomeViewModel(),
-      onModelReady: (model) {
-        AppUtils.setupCustomBottomSheetBuilders(model.petSittersList);
-      },
       builder: (_, model, __) {
         return Scaffold(
           body: _Body(model),
@@ -130,8 +129,13 @@ class _Body extends StatelessWidget {
               itemBuilder: (_, index) {
                 final request = model.newRequestsList[index];
                 return GestureDetector(
-                  onTap: () => model.bottomSheetService
-                      .showCustomSheet(variant: 'listing'),
+                  onTap: () async {
+                    await showMaterialModalBottomSheet(
+                        context: context,
+                        backgroundColor: Colors.transparent,
+                        builder: (_) =>
+                            ListingSheet(list: model.petSittersList));
+                  },
                   child: AppListingCard(
                     request: request,
                     role: Roles.petOwner,

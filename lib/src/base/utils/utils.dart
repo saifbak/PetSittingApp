@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
-import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
-import 'package:whiskers_away_app/src/views/home/widgets/listing_sheet.dart';
 import 'package:whiskers_away_app/src/views/options_select/options_select_view_model.dart';
 import 'package:whiskers_away_app/src/views/payment/widgets/payment_dialog.dart';
 
@@ -30,20 +28,6 @@ class AppUtils {
     };
 
     dialogService.registerCustomDialogBuilders(builders);
-  }
-
-  static void setupCustomBottomSheetBuilders(List<PetSitter> list) {
-    var bottomSheetService = locator<BottomSheetService>();
-
-    final builders = {
-      'listing': (context, sheetRequest, completer) => ListingSheet(
-            request: sheetRequest,
-            completer: completer,
-            list: list,
-          ),
-    };
-
-    bottomSheetService.setCustomSheetBuilders(builders);
   }
 
   static BoxShadow boxShadow1(
