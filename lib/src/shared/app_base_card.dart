@@ -12,6 +12,7 @@ class AppBaseCard extends StatelessWidget {
     this.padding,
     this.height,
     this.width,
+    this.plainDisplay = false,
   });
 
   final Widget child;
@@ -23,9 +24,12 @@ class AppBaseCard extends StatelessWidget {
   final EdgeInsets? margin;
   final double? height;
   final double? width;
+  final bool? plainDisplay;
 
   @override
   Widget build(BuildContext context) {
+    if (plainDisplay!) return this.child;
+
     return Container(
       width: this.width,
       height: this.height,

@@ -64,7 +64,7 @@ class _AppTabBarState extends State<AppTabBar> {
       child: Column(
         children: [
           AppBaseCard(
-            noDisplay: widget.customTab != null,
+            plainDisplay: widget.customTab != null,
             padding: EdgeInsets.all(6),
             margin: AppBaseStyles.horizontalPadding,
             child: ValueListenableBuilder<String>(
