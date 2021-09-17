@@ -11,12 +11,16 @@ class AppTabBar extends StatefulWidget {
     required this.onChanged,
     this.active,
     required this.pagesContent,
-  });
+    this.customTab,
+  })  : hasNoPageScrolling = tabs.length > 2,
+        assert(pagesContent.length > 0);
 
   final List<String> tabs;
   final ValueChanged<String> onChanged;
   final String? active;
   final List<Widget> pagesContent;
+  final Widget Function(bool isActive, String val)? customTab;
+  final bool? hasNoPageScrolling;
 
   @override
   _AppTabBarState createState() => _AppTabBarState();
@@ -38,14 +42,19 @@ class _AppTabBarState extends State<AppTabBar> {
   void onTabChanged(dynamic val, {bool changePage = false}) {
     activeTab = val is int ? widget.tabs[val] : val;
     widget.onChanged(activeTab);
-    if (changePage) {
-      pageController.animateToPage(
-        widget.tabs.indexOf(activeTab),
-        duration: Duration(milliseconds: 400),
-        curve: Curves.easeInOut,
-      );
+    if (!widget.hasNoPageScrolling!) {
+      if (changePage) {
+        pageController.animateToPage(
+          widget.tabs.indexOf(activeTab),
+          duration: Duration(milliseconds: 400),
+          curve: Curves.easeInOut,
+        );
+      } else {
+        notifier.value = activeTab;
+      }
     } else {
       notifier.value = activeTab;
+      setState(() {});
     }
   }
 
@@ -55,12 +64,14 @@ class _AppTabBarState extends State<AppTabBar> {
       child: Column(
         children: [
           AppBaseCard(
+            noDisplay: widget.customTab != null,
             padding: EdgeInsets.all(6),
             margin: AppBaseStyles.horizontalPadding,
             child: ValueListenableBuilder<String>(
               valueListenable: notifier,
               builder: (_, String value, child) {
                 return _Tabs(
+                  customTab: widget.customTab,
                   tabs: widget.tabs,
                   active: value,
                   onSelectTab: (val) => onTabChanged(val, changePage: true),
@@ -68,13 +79,17 @@ class _AppTabBarState extends State<AppTabBar> {
               },
             ),
           ),
-          Expanded(
-            child: PageView(
-              children: widget.pagesContent,
-              onPageChanged: onTabChanged,
-              controller: pageController,
-            ),
-          )
+          if (!widget.hasNoPageScrolling!)
+            Expanded(
+              child: PageView(
+                children: widget.pagesContent,
+                onPageChanged: onTabChanged,
+                controller: pageController,
+              ),
+            )
+          else if (widget.tabs.indexOf(activeTab) <=
+              widget.pagesContent.length - 1)
+            Expanded(child: widget.pagesContent[widget.tabs.indexOf(activeTab)])
         ],
       ),
     );
@@ -86,10 +101,12 @@ class _Tabs extends StatefulWidget {
     required this.tabs,
     this.active,
     required this.onSelectTab,
+    this.customTab,
   });
   final List<String> tabs;
   final String? active;
   final ValueChanged<String> onSelectTab;
+  final Widget Function(bool isActive, String val)? customTab;
 
   @override
   _TabsState createState() => _TabsState();
@@ -128,24 +145,28 @@ class _TabsState extends State<_Tabs> {
           return Expanded(
             child: GestureDetector(
               onTap: () => onTabChanged(value),
-              child: AnimatedContainer(
-                duration: Duration(milliseconds: 250),
-                curve: Curves.easeInOut,
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: Center(
-                  child: Text(
-                    value,
-                    style: AppTextStyles.xxLarge(
-                      weight: FontWeight.w500,
-                      color: isActive ? Colors.white : AppColors.primaryColor,
+              child: widget.customTab != null
+                  ? widget.customTab!(isActive, value)
+                  : AnimatedContainer(
+                      duration: Duration(milliseconds: 250),
+                      curve: Curves.easeInOut,
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Center(
+                        child: Text(
+                          value,
+                          style: AppTextStyles.xxLarge(
+                            weight: FontWeight.w500,
+                            color: isActive
+                                ? Colors.white
+                                : AppColors.primaryColor,
+                          ),
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        color: isActive ? AppColors.primaryColor : Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
-                  ),
-                ),
-                decoration: BoxDecoration(
-                  color: isActive ? AppColors.primaryColor : Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
             ),
           );
         },
