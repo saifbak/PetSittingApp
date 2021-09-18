@@ -6,6 +6,7 @@ import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_base_card.dart';
 import 'package:whiskers_away_app/src/shared/app_heading.dart';
 import 'package:whiskers_away_app/src/shared/app_tab_bar.dart';
+import 'package:whiskers_away_app/src/shared/pet_sitter_card.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
@@ -72,94 +73,12 @@ class _Body extends StatelessWidget {
                   final sitter = model.petSittersList[index];
                   return GestureDetector(
                     onTap: NavService.employeeDetails,
-                    child: AppBaseCard(
-                      padding: const EdgeInsets.all(10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: AppColors.whisper,
-                              image: DecorationImage(
-                                image: AssetImage(sitter.imgUrl),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          HorizontalSpacing(10),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          sitter.name,
-                                          style: AppTextStyles.xLarge(
-                                            weight: FontWeight.w500,
-                                          ),
-                                        ),
-                                        VerticalSpacing(6),
-                                      ],
-                                    ),
-                                    Icon(
-                                      Icons.more_vert_rounded,
-                                      color: AppColors.primaryColor,
-                                    ),
-                                  ],
-                                ),
-                                Text('Total Bookings'),
-                                VerticalSpacing(2),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      IconlyBold.bookmark,
-                                      size: 16,
-                                      color: AppColors.primaryColor,
-                                    ),
-                                    HorizontalSpacing(4),
-                                    Text(
-                                      '10',
-                                      style: AppTextStyles.xxMedium(
-                                        color: AppColors.darkGray,
-                                      ),
-                                    ),
-                                    Spacer(),
-                                    Icon(
-                                      IconlyBold.location,
-                                      size: 16,
-                                      color: AppColors.primaryColor,
-                                    ),
-                                    HorizontalSpacing(4),
-                                    Text(
-                                      sitter.location,
-                                      style: AppTextStyles.xxMedium(
-                                        color: AppColors.darkGray,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    child: PetSitterCard(petSitter: sitter),
                   );
                 },
                 separatorBuilder: (_, __) => VerticalSpacing(16),
                 itemCount: idx % 2 == 1
-                    ? model.petSittersList.length - 4
+                    ? model.petSittersList.length - 2
                     : model.petSittersList.length,
               );
             },
