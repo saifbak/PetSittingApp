@@ -7,6 +7,7 @@ import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_divider.dart';
 import 'package:whiskers_away_app/src/shared/base_profile_view.dart';
 import 'package:whiskers_away_app/src/shared/expanded_section.dart';
+import 'package:whiskers_away_app/src/shared/image_display_box.dart';
 import 'package:whiskers_away_app/src/shared/multi_style_text.dart';
 import 'package:whiskers_away_app/src/shared/read_more_scrollable_content.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
@@ -118,17 +119,9 @@ class _Body extends StatelessWidget {
                     children: [
                       Column(
                         children: [
-                          Container(
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppColors.whisper,
-                              image: DecorationImage(
-                                image: AssetImage('${review.authorImgUrl}'),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                          ImageDisplayBox(
+                            size: 30,
+                            imgUrl: review.authorImgUrl,
                           ),
                         ],
                       ),

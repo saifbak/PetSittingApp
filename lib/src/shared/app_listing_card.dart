@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:whiskers_away_app/src/shared/app_base_card.dart';
 import 'package:whiskers_away_app/src/shared/app_status_visibility_tag.dart';
+import 'package:whiskers_away_app/src/shared/image_display_box.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
@@ -26,18 +27,7 @@ class AppListingCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppColors.whisper,
-                  image: DecorationImage(
-                    image: AssetImage(request.dogImgUrl),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              ImageDisplayBox(imgUrl: request.dogImgUrl),
               HorizontalSpacing(10),
               Expanded(
                 child: Row(
