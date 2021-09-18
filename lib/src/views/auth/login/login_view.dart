@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
-import 'package:whiskers_away_app/src/configs/app_setup.router.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_logo.dart';
@@ -14,9 +13,6 @@ import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/auth/login/login_view_model.dart';
-import 'package:whiskers_away_app/src/views/explore/explore_view.dart';
-import 'package:whiskers_away_app/src/views/landing/landing_view.dart';
-import 'package:whiskers_away_app/src/views/my_availability/my_availability_view.dart';
 
 class LoginView extends StatelessWidget {
   @override
@@ -79,32 +75,7 @@ class _Body extends StatelessWidget {
                   AppButton(
                     text: 'Log In',
                     horizontalPadding: 50,
-                    onPressed: () => NavService.landing(
-                      arguments: LandingViewArguments(
-                        navBarItems: [
-                          // NavBarItem(
-                          //   IconlyLight.search,
-                          //   'Bookings',
-                          //   HomeView(),
-                          // ),
-                          // NavBarItem(
-                          //   IconlyLight.user2,
-                          //   'My Employees',
-                          //   MyEmployeesView(),
-                          // ),
-                          NavBarItem(
-                            IconlyLight.search,
-                            'Explore',
-                            ExploreView(),
-                          ),
-                          NavBarItem(
-                            IconlyLight.work,
-                            'My Availability',
-                            MyAvailabilityView(),
-                          ),
-                        ],
-                      ),
-                    ),
+                    onPressed: NavService.home,
                   ),
                 ],
               ),
