@@ -56,12 +56,13 @@ class ListingSheet extends StatelessWidget {
                       NavService.profile();
                     },
                     child: AppBaseCard(
+                      padding: const EdgeInsets.all(10),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            width: 50,
-                            height: 50,
+                            width: 60,
+                            height: 60,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: AppColors.whisper,
@@ -73,41 +74,63 @@ class ListingSheet extends StatelessWidget {
                           ),
                           HorizontalSpacing(10),
                           Expanded(
-                            child: Row(
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Column(
+                                Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      sitter.name,
-                                      style: AppTextStyles.xLarge(
-                                        weight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    VerticalSpacing(6),
-                                    Row(
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Icon(
-                                          IconlyBold.location,
-                                          size: 16,
-                                          color: AppColors.primaryColor,
-                                        ),
-                                        HorizontalSpacing(4),
                                         Text(
-                                          sitter.location,
-                                          style: AppTextStyles.xxMedium(
-                                            color: AppColors.darkGray,
+                                          sitter.name,
+                                          style: AppTextStyles.xLarge(
+                                            weight: FontWeight.w500,
                                           ),
                                         ),
+                                        VerticalSpacing(6),
                                       ],
+                                    ),
+                                    Icon(
+                                      Icons.more_vert_rounded,
+                                      color: AppColors.primaryColor,
                                     ),
                                   ],
                                 ),
-                                Icon(
-                                  Icons.more_vert_rounded,
-                                  color: AppColors.primaryColor,
+                                Text('Total Bookings'),
+                                VerticalSpacing(2),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      IconlyBold.bookmark,
+                                      size: 16,
+                                      color: AppColors.primaryColor,
+                                    ),
+                                    HorizontalSpacing(4),
+                                    Text(
+                                      '10',
+                                      style: AppTextStyles.xxMedium(
+                                        color: AppColors.darkGray,
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Icon(
+                                      IconlyBold.location,
+                                      size: 16,
+                                      color: AppColors.primaryColor,
+                                    ),
+                                    HorizontalSpacing(4),
+                                    Text(
+                                      sitter.location,
+                                      style: AppTextStyles.xxMedium(
+                                        color: AppColors.darkGray,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),

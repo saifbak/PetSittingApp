@@ -94,7 +94,7 @@ class AppListingCard extends StatelessWidget {
               ),
             ],
           ),
-          if (petSitterRole) ...[
+          if (petSitterRole || role == Roles.manager) ...[
             VerticalSpacing(12),
             Text(
               request.desc,

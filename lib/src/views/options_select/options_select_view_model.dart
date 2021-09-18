@@ -1,6 +1,10 @@
 import 'package:stacked/stacked.dart';
 
-enum Roles { petOwner, petSitter }
+enum Roles {
+  petOwner,
+  petSitter,
+  manager,
+}
 
 class OptionsSelectViewModel extends BaseViewModel {
   List<Roles> get petSittingOptions => [Roles.petSitter, Roles.petOwner];

@@ -73,7 +73,7 @@ class _Body extends StatelessWidget {
                   return GestureDetector(
                     onTap: NavService.employeeDetails,
                     child: AppBaseCard(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(10),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

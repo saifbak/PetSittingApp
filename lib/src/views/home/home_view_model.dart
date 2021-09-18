@@ -30,8 +30,14 @@ class PetSitter {
   final String name;
   final String location;
   final String imgUrl;
+  final int totalBookings;
 
-  PetSitter(this.name, this.location, this.imgUrl);
+  PetSitter(
+    this.name,
+    this.location,
+    this.imgUrl,
+    this.totalBookings,
+  );
 }
 
 class HomeViewModel extends BaseViewModel {
@@ -42,13 +48,14 @@ class HomeViewModel extends BaseViewModel {
           'Ralph Edwards',
           'Houston',
           'assets/images/profile_pic.jpg',
+          5,
         )
       ];
 
   List<Request> get requestsList => [
         Request(
           'Sully',
-          '   Filled   ',
+          'In progress',
           'May 20-24',
           'Houston',
           'Golden Retriever',
@@ -59,7 +66,7 @@ class HomeViewModel extends BaseViewModel {
         ),
         Request(
           'Sasha',
-          '   Filled   ',
+          'Completed',
           'May 01-04',
           'Houston',
           'Husky',
@@ -70,7 +77,7 @@ class HomeViewModel extends BaseViewModel {
         ),
         Request(
           'Sully',
-          '   Filled   ',
+          'Completed',
           'May 20-24',
           'Houston',
           'Golden Retriever',
@@ -81,7 +88,7 @@ class HomeViewModel extends BaseViewModel {
         ),
         Request(
           'Sasha',
-          '   Filled   ',
+          'In progress',
           'May 01-04',
           'Houston',
           'Husky',
@@ -95,7 +102,7 @@ class HomeViewModel extends BaseViewModel {
   List<Request> get newRequestsList => [
         Request(
           'Sully',
-          '   Open   ',
+          'New Request',
           'May 20-24',
           'Houston',
           'Golden Retriever',
@@ -107,7 +114,6 @@ class HomeViewModel extends BaseViewModel {
       ];
 
   List<String> get ownerRequests => ['Requests', "New requests"];
-  List<String> get managerEmployeeJobs => ['Filled jobs', "Open jobs"];
 
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
