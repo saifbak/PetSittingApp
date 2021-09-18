@@ -63,20 +63,25 @@ class _AppTabBarState extends State<AppTabBar> {
     return Expanded(
       child: Column(
         children: [
-          AppBaseCard(
-            plainDisplay: widget.customTab != null,
-            padding: EdgeInsets.all(6),
-            margin: AppBaseStyles.horizontalPadding,
-            child: ValueListenableBuilder<String>(
-              valueListenable: notifier,
-              builder: (_, String value, child) {
-                return _Tabs(
-                  customTab: widget.customTab,
-                  tabs: widget.tabs,
-                  active: value,
-                  onSelectTab: (val) => onTabChanged(val, changePage: true),
-                );
-              },
+          Padding(
+            padding: widget.customTab != null
+                ? AppBaseStyles.horizontalPadding
+                : EdgeInsets.zero,
+            child: AppBaseCard(
+              plainDisplay: widget.customTab != null,
+              padding: EdgeInsets.all(6),
+              margin: AppBaseStyles.horizontalPadding,
+              child: ValueListenableBuilder<String>(
+                valueListenable: notifier,
+                builder: (_, String value, child) {
+                  return _Tabs(
+                    customTab: widget.customTab,
+                    tabs: widget.tabs,
+                    active: value,
+                    onSelectTab: (val) => onTabChanged(val, changePage: true),
+                  );
+                },
+              ),
             ),
           ),
           if (!widget.hasNoPageScrolling!)
