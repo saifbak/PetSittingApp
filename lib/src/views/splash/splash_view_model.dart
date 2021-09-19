@@ -9,23 +9,16 @@ class SplashViewModel extends BaseViewModel {
   Future<dynamic> authenticatedUser() async {
     final _authService = locator<AuthService>();
 
-    try {
-      if (LocalStorage.readSP('token') != '') {
-        ApiResult apiResult = await _authService.getUserDetails();
-        apiResult.when(success: (data) {
-          //print("[SUCCESS] _authService.user");
-        }, failure: (err) {
-          print(err);
-          //print("[FAILUER] _authService.user");
-        });
-        return NavService.home();
-      } else {
-        return NavService.optionsSelect();
-      }
-    } catch (e) {
-      print(e.toString());
-      return NavService.optionsSelect();
-    }
+    ApiResult apiResult = await _authService.getUserDetails();
+    apiResult.when(success: (data) {
+      //print("[SUCCESS] _authService.user");
+
+      NavService.home();
+    }, failure: (err) {
+      print(err);
+      NavService.optionsSelect();
+      //print("[FAILUER] _authService.user");
+    });
   }
 
   // @override

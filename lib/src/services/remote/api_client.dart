@@ -28,19 +28,16 @@ class ApiClient {
       _dio?.interceptors.addAll(interceptors!);
     } */
 
-    String token = LocalStorage.readSP('token');
-
-    if (token != '') {
-      _dio?.interceptors.add(
-        InterceptorsWrapper(onRequest:
-            (RequestOptions options, RequestInterceptorHandler handler) async {
-          options.headers.putIfAbsent('Authorization', () => "$token");
-          handler.next(options);
-        }, onResponse: (response, ResponseInterceptorHandler handler) {
-          handler.next(response);
-        }),
-      );
-    }
+    _dio?.interceptors.add(
+      InterceptorsWrapper(onRequest:
+          (RequestOptions options, RequestInterceptorHandler handler) async {
+        options.headers.putIfAbsent(
+            'Authorization', () => "${LocalStorage.readSP('token')}");
+        handler.next(options);
+      }, onResponse: (response, ResponseInterceptorHandler handler) {
+        handler.next(response);
+      }),
+    );
 
     print(_dio.toString());
   }

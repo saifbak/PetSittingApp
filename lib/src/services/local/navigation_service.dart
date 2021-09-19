@@ -15,9 +15,11 @@ class NavService {
       StackedRouter().onGenerateRoute;
 
   // routes with args
-  static Future<dynamic>? optionsSelect({dynamic arguments}) =>
-      _navigationService!
-          .replaceWith(Routes.optionsSelectView, arguments: arguments);
+  static Future<dynamic>? optionsSelect({dynamic arguments}) {
+    return _navigationService!
+        .replaceWith(Routes.optionsSelectView, arguments: arguments);
+  }
+
   static Future<dynamic>? onBoarding({dynamic arguments}) => _navigationService!
       .navigateTo(Routes.onBoardingView, arguments: arguments);
   static Future<dynamic>? login({dynamic arguments}) =>
