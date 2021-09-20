@@ -4,6 +4,7 @@ class User {
   late String name;
   late String email;
   String? password;
+  int? roleId;
   String? address;
   String? phone;
   double? hourlyRate;
@@ -17,6 +18,7 @@ class User {
     this.address,
     this.phone,
     this.hourlyRate,
+    this.roleId,
   });
 
   dynamic toJson() {
@@ -29,6 +31,7 @@ class User {
     data['address'] = this.address;
     data['phone'] = this.phone;
     data['hourly_rate'] = this.hourlyRate;
+    data['role_id'] = this.roleId;
     return data;
   }
 }

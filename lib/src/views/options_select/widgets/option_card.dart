@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whiskers_away_app/src/core/enums/role_enum.dart';
 import 'package:whiskers_away_app/src/shared/multi_style_text.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
@@ -9,12 +10,12 @@ class OptionCard extends StatelessWidget {
     required this.role,
     required this.isSelected,
   });
-  final Roles role;
+  final Role role;
   final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
-    final petSitter = role == Roles.petSitter;
+    final petSitter = role == Role.PET_SITTER;
 
     final textColor = isSelected ? Colors.white : AppColors.primaryColor;
 

@@ -49,12 +49,6 @@ class _Body extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               WelcomeHeading(name: model.user?.name ?? ''),
-              GestureDetector(
-                child: Text('LOGIN'),
-                onTap: () {
-                  NavService.login();
-                },
-              ),
               Container(
                 width: 30,
                 height: 30,
@@ -167,16 +161,18 @@ class _Body extends StatelessWidget {
           ],
         ),
         VerticalSpacing(16),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AppButton(
-              text: 'Submit a request',
-              horizontalPadding: 30,
-              onPressed: NavService.requestSubmit,
-            ),
-          ],
-        ),
+        model.isOwner()
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AppButton(
+                    text: 'Submit a request',
+                    horizontalPadding: 30,
+                    onPressed: NavService.requestSubmit,
+                  ),
+                ],
+              )
+            : Container(),
         AppSpacing(context).bottomSpacing,
       ],
     );

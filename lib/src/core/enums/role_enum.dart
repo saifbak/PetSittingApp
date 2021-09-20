@@ -1,0 +1,1 @@
+enum Role { ADMIN, MANAGER, PET_OWNER, PET_SITTER }

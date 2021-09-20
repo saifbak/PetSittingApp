@@ -44,6 +44,7 @@ class ApiService {
         name: response.data['name'],
         password: response.data['password'],
         id: response.data['id'],
+        roleId: response.data['role_id'],
       );
       return ApiResult.success(data: userDetails);
     } catch (e) {
@@ -62,6 +63,7 @@ class ApiService {
         name: response.data['name'],
         password: response.data['password'],
         id: response.data['id'],
+        roleId: response.data['role_id'],
       );
 
       return ApiResult.success(data: userDetails);

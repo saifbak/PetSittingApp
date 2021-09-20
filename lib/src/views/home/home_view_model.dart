@@ -157,4 +157,8 @@ class HomeViewModel extends BaseViewModel {
     _jobService.jobs = val;
     notifyListeners();
   }
+
+  bool isOwner() {
+    return _authService.isOwner();
+  }
 }

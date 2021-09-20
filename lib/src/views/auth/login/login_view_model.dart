@@ -29,7 +29,7 @@ class LoginViewModel extends BaseViewModel {
       apiResult.when(success: (data) {
         print(data);
         _authService.user = data;
-        NavService.home();
+        _authService.navigateHomeScreen();
       }, failure: (NetworkExceptions error) {
         showErrorAlert(error);
       });

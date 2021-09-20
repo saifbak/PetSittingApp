@@ -13,6 +13,7 @@ import 'package:whiskers_away_app/src/services/remote/api_service.dart';
 class SignUpViewModel extends BaseViewModel {
   final dialogService = locator<DialogService>();
   final _apiService = locator<ApiService>();
+  final _authService = locator<AuthService>();
 
   Future<dynamic> signup(Map<String, dynamic> payload, ctx) async {
     setBusy(true);
@@ -27,6 +28,7 @@ class SignUpViewModel extends BaseViewModel {
         phone: payload['phone'],
         address: payload['address'],
         username: payload['username'],
+        roleId: _authService.getRoleById(),
       );
       ApiResult apiResult = await _apiService.register(user);
 

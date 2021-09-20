@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
+import 'package:whiskers_away_app/src/core/enums/role_enum.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_heading.dart';
@@ -17,7 +18,10 @@ import 'package:whiskers_away_app/src/views/options_select/widgets/option_card.d
 class OptionsSelectView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<OptionsSelectViewModel>.nonReactive(
+    return ViewModelBuilder<OptionsSelectViewModel>.reactive(
+      onModelReady: (model) {
+        model.setDefaultRole();
+      },
       viewModelBuilder: () => OptionsSelectViewModel(),
       builder: (_, model, __) {
         return Scaffold(
@@ -100,7 +104,7 @@ class _Body extends StatelessWidget {
 }
 
 class Option extends ViewModelWidget<OptionsSelectViewModel> {
-  final Roles role;
+  final Role role;
 
   Option({required this.role});
 

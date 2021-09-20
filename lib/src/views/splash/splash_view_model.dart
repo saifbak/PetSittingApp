@@ -16,7 +16,7 @@ class SplashViewModel extends BaseViewModel {
     apiResult.when(success: (data) {
       //print("[SUCCESS] _authService.user");
       _authService.user = data;
-      NavService.home();
+      _authService.navigateHomeScreen();
     }, failure: (err) {
       print(err);
       NavService.optionsSelect();

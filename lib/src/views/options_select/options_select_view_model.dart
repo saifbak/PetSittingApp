@@ -1,14 +1,24 @@
 import 'package:stacked/stacked.dart';
+import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
+import 'package:whiskers_away_app/src/core/enums/role_enum.dart';
+import 'package:whiskers_away_app/src/services/local/auth_service.dart';
 
 enum Roles { petOwner, petSitter }
 
 class OptionsSelectViewModel extends BaseViewModel {
-  List<Roles> get petSittingOptions => [Roles.petSitter, Roles.petOwner];
+  List<Role> get petSittingOptions => [Role.PET_SITTER, Role.PET_OWNER];
+  final _authService = locator<AuthService>();
 
-  Roles _selectedRole = Roles.petSitter;
-  Roles get selectedRole => _selectedRole;
-  set selectedRole(Roles val) {
+  Role _selectedRole = Role.PET_SITTER;
+  Role get selectedRole => _selectedRole;
+
+  set selectedRole(Role val) {
     _selectedRole = val;
+    _authService.role = val;
     notifyListeners();
+  }
+
+  setDefaultRole() {
+    selectedRole = Role.PET_SITTER;
   }
 }
