@@ -1,5 +1,6 @@
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
+import 'package:whiskers_away_app/src/services/remote/api_service.dart';
 import 'package:whiskers_away_app/src/services/local/auth_service.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:whiskers_away_app/src/services/remote/api_result.dart';
@@ -8,6 +9,7 @@ import 'package:whiskers_away_app/src/styles/app_colors.dart';
 
 class RequestSubmitViewModel extends BaseViewModel {
   List<String> get petSittingOptions => ['Own home', "Sitter's home"];
+  final _apiService = locator<ApiService>();
   final _authService = locator<AuthService>();
   final dialogService = locator<DialogService>();
 
@@ -25,7 +27,7 @@ class RequestSubmitViewModel extends BaseViewModel {
           variant: 'spinner', barrierDismissible: true);
 
       payload['petowner_id'] = _authService.user!.id;
-      ApiResult apiResult = await _authService.sendPetRequest(payload);
+      ApiResult apiResult = await _apiService.sendPetRequest(payload);
 
       apiResult.when(success: (data) {
         print(data);

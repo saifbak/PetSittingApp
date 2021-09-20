@@ -103,10 +103,10 @@ class _Body extends StatelessWidget {
                       role: Roles.petSitter,
                     ),
                   ),
-                  child: AppListingCard(
+                  /* child: AppListingCard(
                     request: request,
                     role: Roles.petSitter,
-                  ),
+                  ), */
                 );
               },
               separatorBuilder: (_, __) => VerticalSpacing(16),

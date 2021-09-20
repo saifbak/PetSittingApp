@@ -8,10 +8,11 @@ import 'package:whiskers_away_app/src/models/User.dart';
 import 'package:whiskers_away_app/src/services/remote/api_result.dart';
 import 'package:whiskers_away_app/src/services/remote/network_exceptions.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
+import 'package:whiskers_away_app/src/services/remote/api_service.dart';
 
 class SignUpViewModel extends BaseViewModel {
   final dialogService = locator<DialogService>();
-  final _authService = locator<AuthService>();
+  final _apiService = locator<ApiService>();
 
   Future<dynamic> signup(Map<String, dynamic> payload, ctx) async {
     setBusy(true);
@@ -27,7 +28,7 @@ class SignUpViewModel extends BaseViewModel {
         address: payload['address'],
         username: payload['username'],
       );
-      ApiResult apiResult = await _authService.register(user);
+      ApiResult apiResult = await _apiService.register(user);
 
       Navigator.of(ctx, rootNavigator: true).pop();
 
@@ -35,7 +36,6 @@ class SignUpViewModel extends BaseViewModel {
         print(data);
       }, failure: (NetworkExceptions error) {
         showErrorAlert(error);
-        //NetworkExceptions.getErrorMessage(error);
       });
 
       setBusy(false);

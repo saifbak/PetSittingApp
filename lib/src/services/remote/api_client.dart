@@ -31,18 +31,20 @@ class ApiClient {
     _dio?.interceptors.add(
       InterceptorsWrapper(onRequest:
           (RequestOptions options, RequestInterceptorHandler handler) async {
-        options.headers.putIfAbsent(
-            'Authorization', () => "${LocalStorage.readSP('token')}");
+        if (LocalStorage.readSP('token') != '') {
+          print(LocalStorage.readSP('token'));
+          options.headers.putIfAbsent(
+              'Authorization', () => "${LocalStorage.readSP('token')}");
+        }
         handler.next(options);
       }, onResponse: (response, ResponseInterceptorHandler handler) {
         handler.next(response);
       }),
     );
-
-    print(_dio.toString());
   }
 
   ResponseWrapper _response(Response? response) {
+    //print(response?.data);
     return ResponseWrapper(
       data: response?.data?['data'] ?? response?.data,
       message: response?.data?['message'] ?? response?.statusMessage,
@@ -71,6 +73,7 @@ class ApiClient {
     } on FormatException catch (_) {
       throw FormatException("Unable to process the data");
     } catch (e) {
+      print(e);
       throw e;
     }
   }

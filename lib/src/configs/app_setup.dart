@@ -2,6 +2,7 @@ import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:whiskers_away_app/src/services/local/auth_service.dart';
 import 'package:whiskers_away_app/src/services/local/connectivity_service.dart';
+import 'package:whiskers_away_app/src/services/local/job_service.dart';
 import 'package:whiskers_away_app/src/services/local/keyboard_service.dart';
 import 'package:whiskers_away_app/src/services/remote/api_service.dart';
 import 'package:whiskers_away_app/src/views/auth/login/login_view.dart';
@@ -42,6 +43,7 @@ import 'package:whiskers_away_app/src/views/terms_conditions/terms_conditions_vi
     LazySingleton(classType: BottomSheetService),
     LazySingleton(classType: NavigationService),
     LazySingleton(classType: AuthService),
+    LazySingleton(classType: JobService),
     LazySingleton(classType: ConnectivityService),
     LazySingleton(classType: KeyboardService),
     LazySingleton(classType: ApiService),

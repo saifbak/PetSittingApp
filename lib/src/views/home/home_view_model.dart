@@ -1,8 +1,13 @@
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
+import 'package:whiskers_away_app/src/models/Job.dart';
 import 'package:whiskers_away_app/src/models/User.dart';
 import 'package:whiskers_away_app/src/services/local/auth_service.dart';
+import 'package:whiskers_away_app/src/services/local/job_service.dart';
+import 'package:whiskers_away_app/src/services/remote/api_result.dart';
+import 'package:whiskers_away_app/src/services/remote/api_service.dart';
+import 'package:whiskers_away_app/src/services/remote/network_exceptions.dart';
 
 class Request {
   final String dogName;
@@ -39,6 +44,9 @@ class PetSitter {
 class HomeViewModel extends BaseViewModel {
   final bottomSheetService = locator<BottomSheetService>();
   final _authService = locator<AuthService>();
+  final _apiService = locator<ApiService>();
+  final _jobService = locator<JobService>();
+  List<Job> _newJobs = [];
 
   List<PetSitter> get petSittersList => [
         PetSitter(
@@ -121,5 +129,32 @@ class HomeViewModel extends BaseViewModel {
 
   User? get user {
     return this._authService.user;
+  }
+
+  Future<List<Job>?> getNewJobs() async {
+    setBusy(true);
+
+    ApiResult<List<Job>> apiResult = await _apiService.getNewJobs();
+    apiResult.when(success: (data) {
+      newJobs = data;
+      setBusy(false);
+    }, failure: (NetworkExceptions error) {
+      setBusy(false);
+      //print(error.toString());
+      /* _snackService.showSnackbar(
+          message: NetworkExceptions.getErrorMessage(error)); */
+      //print(err);
+      //print("[FAILUER] _authService.user");
+    });
+  }
+
+  List<Job> get newJobs {
+    return _newJobs;
+  }
+
+  set newJobs(List<Job> val) {
+    _newJobs = val;
+    _jobService.jobs = val;
+    notifyListeners();
   }
 }

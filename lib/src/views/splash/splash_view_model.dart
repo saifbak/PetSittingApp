@@ -5,14 +5,17 @@ import 'package:whiskers_away_app/src/services/local/local_storage_service.dart'
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/services/remote/api_result.dart';
 
-class SplashViewModel extends BaseViewModel {
-  Future<dynamic> authenticatedUser() async {
-    final _authService = locator<AuthService>();
+import 'package:whiskers_away_app/src/services/remote/api_service.dart';
 
-    ApiResult apiResult = await _authService.getUserDetails();
+class SplashViewModel extends BaseViewModel {
+  final _apiService = locator<ApiService>();
+  final _authService = locator<AuthService>();
+
+  Future<dynamic> authenticatedUser() async {
+    ApiResult apiResult = await _apiService.getUserDetails();
     apiResult.when(success: (data) {
       //print("[SUCCESS] _authService.user");
-
+      _authService.user = data;
       NavService.home();
     }, failure: (err) {
       print(err);

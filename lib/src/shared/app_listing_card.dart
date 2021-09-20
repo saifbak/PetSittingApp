@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:whiskers_away_app/src/models/Job.dart';
 import 'package:whiskers_away_app/src/shared/app_base_card.dart';
 import 'package:whiskers_away_app/src/shared/app_status_visibility_tag.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
@@ -13,7 +14,7 @@ class AppListingCard extends StatelessWidget {
     required this.request,
     required this.role,
   });
-  final Request request;
+  final Job request;
   final Roles role;
 
   @override
@@ -33,7 +34,7 @@ class AppListingCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   color: AppColors.whisper,
                   image: DecorationImage(
-                    image: AssetImage(request.dogImgUrl),
+                    image: AssetImage('assets/images/dog_pic1.jpg'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -48,14 +49,14 @@ class AppListingCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          request.dogName,
+                          request.petName,
                           style: AppTextStyles.xLarge(
                             weight: FontWeight.w500,
                           ),
                         ),
                         VerticalSpacing(2),
                         Text(
-                          request.dogBreed,
+                          request.breed ?? '',
                           style: AppTextStyles.xMedium(
                             color: AppColors.gray,
                           ),
@@ -66,7 +67,7 @@ class AppListingCard extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            '${request.dogAge} years old',
+                            '${request.age} years old',
                             style:
                                 AppTextStyles.xxMedium(color: AppColors.gray),
                           ),
@@ -81,14 +82,14 @@ class AppListingCard extends StatelessWidget {
                           ),
                           HorizontalSpacing(4),
                           Text(
-                            '${request.dogWeight.toInt()} lbs',
+                            '${request.weight} lbs',
                             style:
                                 AppTextStyles.xxMedium(color: AppColors.gray),
                           ),
                         ],
                       ),
                     ] else
-                      AppStatusVisibilityTag(text: request.status)
+                      AppStatusVisibilityTag(text: request.status ?? '')
                   ],
                 ),
               ),
@@ -97,7 +98,7 @@ class AppListingCard extends StatelessWidget {
           if (petSitterRole) ...[
             VerticalSpacing(12),
             Text(
-              request.desc,
+              request.description ?? '',
               style: AppTextStyles.xMedium(color: AppColors.gray),
             ),
           ],
@@ -111,15 +112,15 @@ class AppListingCard extends StatelessWidget {
               ),
               HorizontalSpacing(4),
               Text(
-                request.location,
+                request.location ?? '',
                 style: AppTextStyles.xxMedium(
                   color: AppColors.darkGray,
                 ),
               ),
               Spacer(),
               Text(
-                request.date,
-                style: AppTextStyles.large(
+                request.period ?? '',
+                style: AppTextStyles.xMedium(
                   weight: FontWeight.w500,
                   color: AppColors.primaryColor,
                 ),

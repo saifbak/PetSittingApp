@@ -41,9 +41,11 @@ abstract class NetworkExceptions with _$NetworkExceptions {
 
   const factory NetworkExceptions.unexpectedError() = UnexpectedError;
 
-  static NetworkExceptions handleResponse(int? statusCode) {
+  static NetworkExceptions handleResponse(
+      int? statusCode, Response<dynamic>? response) {
     switch (statusCode) {
       case 400:
+        return NetworkExceptions.defaultError(response?.data['message']);
       case 401:
       case 403:
         return NetworkExceptions.unauthorizedRequest();
@@ -82,8 +84,9 @@ abstract class NetworkExceptions with _$NetworkExceptions {
               networkExceptions = NetworkExceptions.sendTimeout();
               break;
             case DioErrorType.response:
-              networkExceptions =
-                  NetworkExceptions.handleResponse(error.response?.statusCode);
+              networkExceptions = NetworkExceptions.handleResponse(
+                  error.response?.statusCode, error.response);
+
               break;
             case DioErrorType.sendTimeout:
               networkExceptions = NetworkExceptions.sendTimeout();
@@ -106,6 +109,9 @@ abstract class NetworkExceptions with _$NetworkExceptions {
       }
     } else {
       if (error.toString().contains("is not a subtype of")) {
+        print("error---------");
+        print(error);
+        print(error.toString());
         return NetworkExceptions.unableToProcess();
       } else {
         return NetworkExceptions.unexpectedError();

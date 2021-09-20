@@ -18,7 +18,7 @@ import 'package:whiskers_away_app/src/views/options_select/options_select_view_m
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<HomeViewModel>.nonReactive(
+    return ViewModelBuilder<HomeViewModel>.reactive(
       viewModelBuilder: () => HomeViewModel(),
       onModelReady: (model) {
         AppUtils.setupCustomBottomSheetBuilders(model.petSittersList);
@@ -49,6 +49,12 @@ class _Body extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               WelcomeHeading(name: model.user?.name ?? ''),
+              GestureDetector(
+                child: Text('LOGIN'),
+                onTap: () {
+                  NavService.login();
+                },
+              ),
               Container(
                 width: 30,
                 height: 30,
@@ -66,7 +72,11 @@ class _Body extends StatelessWidget {
         ),
         VerticalSpacing(14),
         AppTabBar(
-          onChanged: print,
+          onChanged: (type) {
+            if (type == model.ownerRequests[1]) {
+              model.getNewJobs();
+            }
+          },
           tabs: model.ownerRequests,
           pagesContent: [
             Column(
@@ -113,10 +123,10 @@ class _Body extends StatelessWidget {
                               role: Roles.petOwner,
                             ),
                           ),
-                          child: AppListingCard(
+                          /* child: AppListingCard(
                             request: request,
                             role: Roles.petOwner,
-                          ),
+                          ), */
                         );
                       },
                       separatorBuilder: (_, __) => VerticalSpacing(16),
@@ -124,23 +134,29 @@ class _Body extends StatelessWidget {
                 ),
               ],
             ),
-            ListView.separated(
-              padding:
-                  AppBaseStyles.horizontalPadding.copyWith(bottom: 16, top: 16),
-              itemBuilder: (_, index) {
-                final request = model.newRequestsList[index];
-                return GestureDetector(
-                  onTap: () => model.bottomSheetService
-                      .showCustomSheet(variant: 'listing'),
-                  child: AppListingCard(
-                    request: request,
-                    role: Roles.petOwner,
+            model.isBusy
+                ? Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryColor,
+                    ),
+                  )
+                : ListView.separated(
+                    padding: AppBaseStyles.horizontalPadding
+                        .copyWith(bottom: 16, top: 16),
+                    itemBuilder: (_, index) {
+                      final request = model.newJobs[index];
+                      return GestureDetector(
+                        onTap: () => model.bottomSheetService
+                            .showCustomSheet(variant: 'listing'),
+                        child: AppListingCard(
+                          request: request,
+                          role: Roles.petOwner,
+                        ),
+                      );
+                    },
+                    separatorBuilder: (_, __) => VerticalSpacing(16),
+                    itemCount: model.newJobs.length,
                   ),
-                );
-              },
-              separatorBuilder: (_, __) => VerticalSpacing(16),
-              itemCount: model.newRequestsList.length,
-            ),
           ],
         ),
         VerticalSpacing(16),

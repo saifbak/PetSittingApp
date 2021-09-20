@@ -153,10 +153,9 @@ class _Body extends StatelessWidget {
   Future<void> onSubmit(ctx) async {
     try {
       await model.login({
-        "email": emailCtrl.text.trim(),
+        "username": emailCtrl.text.trim(),
         "password": passwordCtrl.text.trim(),
       }, ctx);
-      NavService.home();
     } catch (e) {
       /* Timer(Duration(seconds: 1), () {
         model.showErrorAlert(e);
