@@ -56,8 +56,8 @@ class HomeViewModel extends BaseViewModel {
         )
       ];
 
-  List<Request> get requestsList => [
-        Request(
+  List<Job> get requestsList => [
+        /* Request(
           'Sully',
           '   Filled   ',
           'May 20-24',
@@ -100,7 +100,7 @@ class HomeViewModel extends BaseViewModel {
           8,
           20,
           "Need someone to take care of my doggy for some days.",
-        ),
+        ), */
       ];
 
   List<Request> get newRequestsList => [

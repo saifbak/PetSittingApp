@@ -8,6 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:whiskers_away_app/src/models/Job.dart';
 
 import '../views/auth/login/login_view.dart';
 import '../views/auth/signup/signup_view.dart';
@@ -179,7 +180,7 @@ class StackedRouter extends RouterBase {
 
 /// PetDetailsView arguments holder class
 class PetDetailsViewArguments {
-  final Request request;
+  final Job request;
   final Roles role;
   PetDetailsViewArguments({required this.request, required this.role});
 }

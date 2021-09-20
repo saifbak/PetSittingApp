@@ -1,9 +1,10 @@
 import 'package:stacked/stacked.dart';
+import 'package:whiskers_away_app/src/models/Job.dart';
 import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
 
 class ExploreViewModel extends BaseViewModel {
-  List<Request> get requestsList => [
-        Request(
+  List<Job> get requestsList => [
+        /* Request(
           'Sully',
           '   Filled   ',
           'May 20-24',
@@ -46,6 +47,6 @@ class ExploreViewModel extends BaseViewModel {
           8,
           20,
           "Need someone to take care of my doggy for some days.",
-        ),
+        ), */
       ];
 }

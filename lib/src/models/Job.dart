@@ -11,6 +11,7 @@ class Job {
   String? description;
   String? status;
   String? period;
+  Map<String, dynamic>? owner;
 
   Job(
       {required this.id,
@@ -38,6 +39,7 @@ class Job {
     description = json['description'];
     status = json['status'];
     period = json['period'];
+    owner = json['owner'];
   }
 
   Map<String, dynamic> toJson() {

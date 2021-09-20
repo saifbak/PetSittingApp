@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
+import 'package:whiskers_away_app/src/models/Job.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_top_bar.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
@@ -16,7 +17,7 @@ import 'package:whiskers_away_app/src/views/options_select/options_select_view_m
 import 'package:whiskers_away_app/src/views/per_details/pet_details_view_model.dart';
 
 class PetDetailsView extends StatelessWidget {
-  final Request request;
+  final Job request;
   final Roles role;
 
   const PetDetailsView({
@@ -45,7 +46,7 @@ class PetDetailsView extends StatelessWidget {
 
 class _Body extends StatelessWidget {
   final PetDetailsViewModel model;
-  final Request request;
+  final Job request;
   final Roles role;
 
   const _Body(this.model, this.request, this.role);
@@ -108,7 +109,7 @@ class _Body extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            request.dogBreed,
+                            request.petName,
                             style: AppTextStyles.xLarge(
                               color: Colors.white,
                               weight: FontWeight.w700,
@@ -116,7 +117,15 @@ class _Body extends StatelessWidget {
                           ),
                           VerticalSpacing(4),
                           Text(
-                            '${request.dogWeight.toInt()} lbs',
+                            request.breed ?? '',
+                            style: AppTextStyles.xxLarge(
+                              color: Colors.white,
+                              weight: FontWeight.w500,
+                            ),
+                          ),
+                          VerticalSpacing(4),
+                          Text(
+                            '${request.weight} lbs',
                             style: AppTextStyles.xxLarge(
                               color: Colors.white,
                               weight: FontWeight.w500,
@@ -132,7 +141,7 @@ class _Body extends StatelessWidget {
                               ),
                               HorizontalSpacing(4),
                               Text(
-                                request.location,
+                                request.location ?? '',
                                 style: AppTextStyles.xMedium(
                                   color: Colors.white,
                                   weight: FontWeight.w500,
@@ -140,7 +149,7 @@ class _Body extends StatelessWidget {
                               ),
                               Spacer(),
                               Text(
-                                '${request.dogAge} years old',
+                                '${request.age} years old',
                                 style: AppTextStyles.xMedium(
                                   color: Colors.white,
                                   weight: FontWeight.w500,
@@ -187,7 +196,9 @@ class _Body extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Jessi Smith',
+                              request.owner != null
+                                  ? request.owner!['name']
+                                  : '',
                               style: AppTextStyles.xLarge(
                                 weight: FontWeight.w500,
                               ),
@@ -211,8 +222,7 @@ class _Body extends StatelessWidget {
                 ],
               ),
               VerticalSpacing(12),
-              Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus et scelerisque risus quam porta aenean sed cursus. Vestibulum aliquet eros, euismod platea felis velit. Consectetur arcu proin vel laoreet.\n\nAnte in fames scelerisque ridiculus elementum ornare pellentesque arcu. Volutpat nec nunc, ante in fames scelerisque ridiculus elementum ornare pellentesque arcu. Volutpat nec nunc. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus et scelerisque risus quam porta aenean sed cursus. Vestibulum aliquet eros, euismod platea felis velit. Consectetur arcu proin vel laoreet.\n\nAnte in fames scelerisque ridiculus elementum ornare pellentesque arcu. Volutpat nec nunc, ante in fames scelerisque ridiculus elementum ornare pellentesque arcu. Volutpat nec nunc."),
+              Text(request.description ?? ''),
             ],
           ),
         ),
