@@ -1,8 +1,13 @@
 import 'package:stacked/stacked.dart';
+import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
 import 'package:whiskers_away_app/src/models/Job.dart';
+import 'package:whiskers_away_app/src/models/User.dart';
+import 'package:whiskers_away_app/src/services/local/auth_service.dart';
 import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
 
 class ExploreViewModel extends BaseViewModel {
+  final _authService = locator<AuthService>();
+
   List<Job> get requestsList => [
         /* Request(
           'Sully',
@@ -49,4 +54,8 @@ class ExploreViewModel extends BaseViewModel {
           "Need someone to take care of my doggy for some days.",
         ), */
       ];
+
+  User? get user {
+    return this._authService.user;
+  }
 }

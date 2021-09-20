@@ -16,7 +16,7 @@ import 'package:whiskers_away_app/src/views/options_select/options_select_view_m
 class ExploreView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<ExploreViewModel>.nonReactive(
+    return ViewModelBuilder<ExploreViewModel>.reactive(
       viewModelBuilder: () => ExploreViewModel(),
       builder: (_, model, __) {
         return Scaffold(
@@ -43,7 +43,7 @@ class _Body extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              WelcomeHeading(name: 'John Karter'),
+              WelcomeHeading(name: model.user?.name ?? ''),
               Container(
                 width: 30,
                 height: 30,
