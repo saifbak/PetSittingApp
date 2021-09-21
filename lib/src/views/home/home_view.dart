@@ -49,9 +49,12 @@ class _Body extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               WelcomeHeading(name: 'John Carter'),
-              ImageDisplayBox(
-                size: 30,
-                imgUrl: "assets/images/profile_pic.jpg",
+              GestureDetector(
+                onTap: NavService.userProfile,
+                child: ImageDisplayBox(
+                  size: 30,
+                  imgUrl: "assets/images/profile_pic.jpg",
+                ),
               ),
             ],
           ),
