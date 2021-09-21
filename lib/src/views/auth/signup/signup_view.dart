@@ -198,7 +198,7 @@ class _Body extends StatelessWidget {
         "email": emailCtrl.text.trim(),
         "password": passwordCtrl.text.trim(),
         "username": usernameCtrl.text.trim(),
-        "name": usernameCtrl.text.trim(),
+        "name": nameCtrl.text.trim(),
         "address": addressCtrl.text.trim(),
         "phone": phoneCtrl.text.trim(),
       }, ctx);
