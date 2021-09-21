@@ -18,6 +18,9 @@ class ExploreView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<ExploreViewModel>.reactive(
       viewModelBuilder: () => ExploreViewModel(),
+      onModelReady: (model) {
+        model.getExploreJobs();
+      },
       builder: (_, model, __) {
         return Scaffold(
           body: _Body(model),
@@ -95,7 +98,7 @@ class _Body extends StatelessWidget {
               padding:
                   AppBaseStyles.horizontalPadding.copyWith(bottom: 16, top: 16),
               itemBuilder: (_, index) {
-                final request = model.requestsList[index];
+                final request = model.newJobs[index];
                 return GestureDetector(
                   onTap: () => NavService.petDetails(
                     arguments: PetDetailsViewArguments(
@@ -110,7 +113,7 @@ class _Body extends StatelessWidget {
                 );
               },
               separatorBuilder: (_, __) => VerticalSpacing(16),
-              itemCount: model.requestsList.length),
+              itemCount: model.newJobs.length),
         ),
       ],
     );

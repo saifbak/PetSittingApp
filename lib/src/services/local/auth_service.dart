@@ -39,8 +39,8 @@ class AuthService with ReactiveServiceMixin {
     Role? val = role;
     /* print(
       "val------",
-    );
-    print(val.toString()); */
+    ); 
+    print(val.toString());*/
     if (val.toString() == 'Role.PET_SITTER') {
       return 4;
     } else if (val.toString() == 'Role.PET_OWNER') {

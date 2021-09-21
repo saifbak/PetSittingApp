@@ -141,13 +141,13 @@ class _Body extends StatelessWidget {
                       final request = model.newJobs[index];
                       return GestureDetector(
                         onTap: () {
-                          NavService.petDetails(
-                              arguments: PetDetailsViewArguments(
-                            request: request,
-                            role: Roles.petOwner,
-                          ));
-                          /* model.bottomSheetService
-                              .showCustomSheet(variant: 'listing'); */
+                          // NavService.petDetails(
+                          //     arguments: PetDetailsViewArguments(
+                          //   request: request,
+                          //   role: Roles.petOwner,
+                          // ));
+                          model.bottomSheetService
+                              .showCustomSheet(variant: 'listing');
                         },
                         child: AppListingCard(
                           request: request,

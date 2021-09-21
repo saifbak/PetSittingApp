@@ -19,8 +19,7 @@ void main() async {
   AppUtils.setupCustomDialogBuilders();
 
   // app flavor init
-  FlavorService.init(package);
-
+  FlavorService.init(package);  
   await LocalStorage.getInstance();
 
   runApp(AppView());

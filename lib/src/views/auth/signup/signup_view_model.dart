@@ -17,6 +17,7 @@ class SignUpViewModel extends BaseViewModel {
 
   Future<dynamic> signup(Map<String, dynamic> payload, ctx) async {
     setBusy(true);
+    print(payload);
     try {
       dialogService.showCustomDialog(
           variant: 'spinner', barrierDismissible: true);
