@@ -9,12 +9,12 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/models/Job.dart';
+import 'package:stacked/stacked_annotations.dart';
 
 import '../views/auth/login/login_view.dart';
 import '../views/auth/signup/signup_view.dart';
 import '../views/employee_details/employee_details_view.dart';
 import '../views/home/home_view.dart';
-import '../views/home/home_view_model.dart';
 import '../views/landing/landing_view.dart';
 import '../views/my_employees/my_employees_view.dart';
 import '../views/onboarding/onboarding_view.dart';
@@ -27,6 +27,7 @@ import '../views/request_submit/request_submit_view.dart';
 import '../views/splash/splash_view.dart';
 import '../views/terms_conditions/terms_conditions_view.dart';
 import '../views/explore/explore_view.dart';
+import '../views/user_profile/user_profile_view.dart';
 
 class Routes {
   static const String splashView = '/';
@@ -44,6 +45,7 @@ class Routes {
   static const String landingView = '/landing-view';
   static const String myEmployeesView = '/my-employees-view';
   static const String employeeDetailsView = '/employee-details-view';
+  static const String userProfileView = '/user-profile-view';
   static const all = <String>{
     splashView,
     onBoardingView,
@@ -60,6 +62,7 @@ class Routes {
     landingView,
     myEmployeesView,
     employeeDetailsView,
+    userProfileView,
   };
 }
 
@@ -82,42 +85,43 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.landingView, page: LandingView),
     RouteDef(Routes.myEmployeesView, page: MyEmployeesView),
     RouteDef(Routes.employeeDetailsView, page: EmployeeDetailsView),
+    RouteDef(Routes.userProfileView, page: UserProfileView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, StackedRouteFactory>{
     SplashView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
         builder: (context) => SplashView(),
         settings: data,
       );
     },
     OnBoardingView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
         builder: (context) => OnBoardingView(),
         settings: data,
       );
     },
     LoginView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
         builder: (context) => LoginView(),
         settings: data,
       );
     },
     SignUpView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
         builder: (context) => SignUpView(),
         settings: data,
       );
     },
     OptionsSelectView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
         builder: (context) => OptionsSelectView(),
         settings: data,
       );
     },
     HomeView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
         builder: (context) => HomeView(),
         settings: data,
       );
@@ -129,32 +133,32 @@ class StackedRouter extends RouterBase {
       );
     },
     RequestSubmitView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
         builder: (context) => RequestSubmitView(),
         settings: data,
       );
     },
     TermsConditionsView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
         builder: (context) => TermsConditionsView(),
         settings: data,
       );
     },
     PaymentView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
         builder: (context) => PaymentView(),
         settings: data,
       );
     },
     ProfileView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
         builder: (context) => ProfileView(),
         settings: data,
       );
     },
     PetDetailsView: (data) {
       var args = data.getArgs<PetDetailsViewArguments>(nullOk: false);
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
         builder: (context) => PetDetailsView(
           request: args.request,
           role: args.role,
@@ -164,20 +168,26 @@ class StackedRouter extends RouterBase {
     },
     LandingView: (data) {
       var args = data.getArgs<LandingViewArguments>(nullOk: false);
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
         builder: (context) => LandingView(navBarItems: args.navBarItems),
         settings: data,
       );
     },
     MyEmployeesView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
         builder: (context) => MyEmployeesView(),
         settings: data,
       );
     },
     EmployeeDetailsView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
         builder: (context) => EmployeeDetailsView(),
+        settings: data,
+      );
+    },
+    UserProfileView: (data) {
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
+        builder: (context) => UserProfileView(),
         settings: data,
       );
     },
