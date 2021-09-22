@@ -53,6 +53,9 @@ class NavService {
   static Future<dynamic>? employeeDetails({dynamic arguments}) =>
       _navigationService!
           .navigateTo(Routes.employeeDetailsView, arguments: arguments);
+  static Future<dynamic>? userProfile({dynamic arguments}) =>
+      _navigationService!
+          .navigateTo(Routes.userProfileView, arguments: arguments);
 
   // back route
   static bool get popOut => _navigationService!.back();
