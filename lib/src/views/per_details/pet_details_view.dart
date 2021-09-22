@@ -213,7 +213,7 @@ class _Body extends StatelessWidget {
                           ],
                         ),
                         Text(
-                          'May 25, 2021',
+                          request.period ?? '',
                           style: AppTextStyles.xMedium(),
                         )
                       ],
