@@ -84,11 +84,48 @@ class _Body extends StatelessWidget {
                       final request = model.newJobs[index];
                       return GestureDetector(
                         onTap: () async {
+                          await model.getJobResponse(request.id);
+
+                          print(model.jobResponses);
+
                           await showMaterialModalBottomSheet(
                               context: context,
                               backgroundColor: Colors.transparent,
-                              builder: (_) =>
-                                  ListingSheet(list: model.petSittersList));
+                              builder: (_) {
+                                return model.isBusy
+                                    ? Center(
+                                        child: CircularProgressIndicator(
+                                          color: AppColors.primaryColor,
+                                        ),
+                                      )
+                                    : ListingSheet(list: model.jobResponses);
+                                //return Text('sdsdsdds');
+                                //await model.getJobResponse(request.id);
+                                //return ListingSheet(list: model.petSittersList);
+                                /* return FutureBuilder<dynamic>(
+                                  future: model.getJobResponse(request
+                                      .id), // function where you call your api
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<dynamic> snapshot) {
+                                    // AsyncSnapshot<Your object type>
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return Text('sdsd');
+                                    } else {
+                                      print("-------->coming");
+                                      print(snapshot.data);
+                                      if (snapshot.hasError)
+                                        return Center(
+                                            child: Text(
+                                                'Error: ${snapshot.error}'));
+                                      else
+                                        return Center(
+                                            child: new Text('saddsa')); // s
+                                    }
+                                  },
+                                ); */
+                              });
+
                           //  NavService.petDetails(
                           //      arguments: PetDetailsViewArguments(
                           //   request: request,

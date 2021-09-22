@@ -11,7 +11,7 @@ class ListingSheet extends StatelessWidget {
   const ListingSheet({
     required this.list,
   });
-  final List<PetSitter> list;
+  final List<Map<String, dynamic>> list;
 
   @override
   Widget build(BuildContext context) {
@@ -43,23 +43,33 @@ class ListingSheet extends StatelessWidget {
             VerticalSpacing(4),
             Text('Available Pet Sitters for this request'),
             VerticalSpacing(8),
-            Expanded(
-              child: ListView.separated(
-                padding: const EdgeInsets.only(top: 8, bottom: 16),
-                shrinkWrap: true,
-                itemBuilder: (_, index) {
-                  final sitter = list[index];
-                  return GestureDetector(
-                      onTap: () {
-                        NavService.popOut;
-                        NavService.profile();
+            list.length > 0
+                ? Expanded(
+                    child: ListView.separated(
+                      padding: const EdgeInsets.only(top: 8, bottom: 16),
+                      shrinkWrap: true,
+                      itemBuilder: (_, index) {
+                        final sitter = list[index];
+                        return GestureDetector(
+                            onTap: () {
+                              NavService.popOut;
+                              NavService.profile();
+                            },
+                            child: PetSitterCard(petSitter: sitter));
                       },
-                      child: PetSitterCard(petSitter: sitter));
-                },
-                separatorBuilder: (_, __) => VerticalSpacing(16),
-                itemCount: list.length,
-              ),
-            ),
+                      separatorBuilder: (_, __) => VerticalSpacing(16),
+                      itemCount: list.length,
+                    ),
+                  )
+                : Expanded(
+                    child: Center(
+                      child: Text(
+                        'No any request found yet!',
+                        style:
+                            AppTextStyles.xLarge(color: AppColors.primaryColor),
+                      ),
+                    ),
+                  ),
           ],
         ),
       ),

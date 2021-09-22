@@ -10,17 +10,17 @@ import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
 class PetSitterCard extends StatelessWidget {
   const PetSitterCard({required this.petSitter});
 
-  final PetSitter petSitter;
+  final Map<String, dynamic> petSitter;
 
   @override
   Widget build(BuildContext context) {
-    print(petSitter.hourlyRates);
+    //print(petSitter.hourlyRates);
     return AppBaseCard(
       padding: const EdgeInsets.all(10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ImageDisplayBox(size: 60, imgUrl: petSitter.imgUrl),
+          ImageDisplayBox(size: 60, imgUrl: 'assets/images/profile_pic.jpg'),
           HorizontalSpacing(10),
           Expanded(
             child: Column(
@@ -34,7 +34,7 @@ class PetSitterCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          petSitter.name,
+                          petSitter['name'],
                           style: AppTextStyles.xLarge(
                             weight: FontWeight.w500,
                           ),
@@ -43,7 +43,7 @@ class PetSitterCard extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      '\$' + petSitter.hourlyRates + '/hr',
+                      '\$' + petSitter['hourly_rate'] + '/hr',
                       style: AppTextStyles.xLarge(
                         weight: FontWeight.w500,
                         color: AppColors.primaryColor,
@@ -51,22 +51,22 @@ class PetSitterCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text('Total Bookings'),
+                // Text('Total Bookings'),
                 VerticalSpacing(2),
                 Row(
                   children: [
-                    Icon(
+                    /* Icon(
                       IconlyBold.bookmark,
                       size: 16,
                       color: AppColors.primaryColor,
                     ),
                     HorizontalSpacing(4),
                     Text(
-                      '${petSitter.totalBookings}',
+                      '${5}',
                       style: AppTextStyles.xxMedium(
                         color: AppColors.darkGray,
                       ),
-                    ),
+                    ), */
                     Spacer(),
                     Icon(
                       IconlyBold.location,
@@ -75,7 +75,7 @@ class PetSitterCard extends StatelessWidget {
                     ),
                     HorizontalSpacing(4),
                     Text(
-                      petSitter.location,
+                      petSitter['address'],
                       style: AppTextStyles.xxMedium(
                         color: AppColors.darkGray,
                       ),

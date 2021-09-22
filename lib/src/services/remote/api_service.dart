@@ -44,6 +44,8 @@ class ApiService {
         email: response.data['email'],
         name: response.data['name'],
         password: response.data['password'],
+        address: response.data['address'],
+        phone: response.data['phone'],
         id: response.data['id'],
         roleId: response.data['role_id'],
       );
@@ -63,6 +65,8 @@ class ApiService {
         email: response.data['email'],
         name: response.data['name'],
         password: response.data['password'],
+        phone: response.data['phone'],
+        address: response.data['address'],
         id: response.data['id'],
         roleId: response.data['role_id'],
       );
@@ -135,16 +139,15 @@ class ApiService {
     }
   }
 
-  Future<ApiResult<List<JobResp>>> getJobResponses(request) async {
+  Future<ApiResult<List<Map<String, dynamic>>>> getJobResponses(jobID) async {
     try {
-      print('Job Request Api Hit log====>');
-      print(request);
+      //print(request);
+      print(jobID.toString());
       ResponseWrapper response =
-          await _apiClient.getReq("/job/seeproposals/${request.toString()}");
+          await _apiClient.getReq("/job/seeproposals/${jobID.toString()}");
 
-      List<JobResp> jobResp = response.data.map<JobResp>((item) {
-        return new JobResp.fromJson(item);
-      }).toList();
+      List<Map<String, dynamic>> jobResp =
+          List<Map<String, dynamic>>.from(response.data);
       print(jobResp);
       return ApiResult.success(data: jobResp);
     } catch (e) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:whiskers_away_app/src/models/User.dart';
 import 'package:whiskers_away_app/src/shared/app_base_card.dart';
 import 'package:whiskers_away_app/src/shared/app_top_bar.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
@@ -9,15 +10,16 @@ import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 
 class BaseProfileView extends StatelessWidget {
-  const BaseProfileView({
-    required this.centerContent,
-    required this.bottomContent,
-    required this.appTopBarText,
-  });
+  const BaseProfileView(
+      {required this.centerContent,
+      required this.bottomContent,
+      required this.appTopBarText,
+      this.user});
 
   final Widget centerContent;
   final Widget bottomContent;
   final String appTopBarText;
+  final User? user;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +69,7 @@ class BaseProfileView extends StatelessWidget {
                           VerticalSpacing((profileAvatarSize / 2) - 6),
                           Center(
                             child: Text(
-                              'Ralph Edwards',
+                              user?.name ?? 'Ralph Johnson',
                               style: AppTextStyles.xLarge(
                                 color: AppColors.darkGray,
                                 weight: FontWeight.w500,

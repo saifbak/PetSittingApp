@@ -13,7 +13,7 @@ import 'package:whiskers_away_app/src/views/user_profile/user_profile_view_model
 class UserProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<UserProfileViewModel>.nonReactive(
+    return ViewModelBuilder<UserProfileViewModel>.reactive(
       viewModelBuilder: () => UserProfileViewModel(),
       builder: (_, model, __) {
         return Scaffold(
@@ -33,6 +33,9 @@ class _Body extends StatelessWidget {
     final screenSize = context.screenSize();
 
     final noPadding = EdgeInsets.zero;
+    final addressCtrl = TextEditingController(text: model.user!.address);
+    final nameCtrl = TextEditingController(text: model.user!.name);
+    final phoneCtrl = TextEditingController(text: model.user!.phone);
 
     return BaseProfileView(
       centerContent: Column(
@@ -42,8 +45,10 @@ class _Body extends StatelessWidget {
             hintText: 'Enter your fullname',
             label: 'Full Name',
             prefixIcon: IconlyLight.profile,
+            controller: nameCtrl,
           ),
           AppTextField(
+            controller: phoneCtrl,
             padding: noPadding,
             hintText: 'Enter your phone number',
             label: 'Phone Number',
@@ -51,6 +56,7 @@ class _Body extends StatelessWidget {
             textInputType: TextInputType.phone,
           ),
           AppTextField(
+            controller: addressCtrl,
             padding: noPadding,
             hintText: 'Enter your address',
             label: 'Address',
@@ -84,6 +90,7 @@ class _Body extends StatelessWidget {
         ),
       ),
       appTopBarText: 'Profile Edit',
+      user: model.user!,
     );
   }
 }

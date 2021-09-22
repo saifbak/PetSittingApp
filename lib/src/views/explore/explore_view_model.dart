@@ -108,7 +108,6 @@ class ExploreViewModel extends BaseViewModel {
 
   Future<List<Job>?> getExploreJobs() async {
     setBusy(true);
-    print('Api hit');
     ApiResult<List<Job>> apiResult = await _apiService.getExploreJobs();
     apiResult.when(success: (data) {
       newJobs = data;

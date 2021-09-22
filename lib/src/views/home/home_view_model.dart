@@ -55,6 +55,7 @@ class HomeViewModel extends BaseViewModel {
   final _apiService = locator<ApiService>();
   final _jobService = locator<JobService>();
   List<Job> _newJobs = [];
+  List<Map<String, dynamic>> _jobResponses = [];
 
   List<PetSitter> get petSittersList => [
         PetSitter(
@@ -157,13 +158,39 @@ class HomeViewModel extends BaseViewModel {
     });
   }
 
+  Future<List<Map<String, dynamic>>?> getJobResponse(jobID) async {
+    setBusy(true);
+
+    ApiResult<dynamic> apiResult = await _apiService.getJobResponses(jobID);
+    apiResult.when(success: (data) {
+      jobResponses = data;
+      setBusy(false);
+    }, failure: (NetworkExceptions error) {
+      setBusy(false);
+      //print(error.toString());
+      /* _snackService.showSnackbar(
+          message: NetworkExceptions.getErrorMessage(error)); */
+      //print(err);
+      //print("[FAILUER] _authService.user");
+    });
+  }
+
   List<Job> get newJobs {
     return _newJobs;
+  }
+
+  List<Map<String, dynamic>> get jobResponses {
+    return _jobResponses;
   }
 
   set newJobs(List<Job> val) {
     _newJobs = val;
     _jobService.jobs = val;
+    notifyListeners();
+  }
+
+  set jobResponses(List<Map<String, dynamic>> val) {
+    _jobResponses = val;
     notifyListeners();
   }
 

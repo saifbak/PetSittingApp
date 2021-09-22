@@ -69,10 +69,11 @@ class _Body extends StatelessWidget {
                 ),
                 itemBuilder: (_, index) {
                   final sitter = model.petSittersList[index];
-                  return GestureDetector(
+                  return Container();
+                  /* return GestureDetector(
                     onTap: NavService.employeeDetails,
                     child: PetSitterCard(petSitter: sitter),
-                  );
+                  ); */
                 },
                 separatorBuilder: (_, __) => VerticalSpacing(16),
                 itemCount: idx % 2 == 1
