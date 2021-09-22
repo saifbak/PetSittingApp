@@ -120,4 +120,17 @@ class ApiService {
       );
     }
   }
+
+  Future<ApiResult<dynamic>> requestToPetSit(request, desc) async {
+    try {
+      ResponseWrapper response = await _apiClient
+          .postReq("/job/RequestToPetSit/${request.toString()}", data: desc);
+
+      return ApiResult.success(data: response.data);
+    } catch (e) {
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
+    }
+  }
 }

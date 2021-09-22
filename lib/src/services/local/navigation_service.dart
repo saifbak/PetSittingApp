@@ -32,6 +32,8 @@ class NavService {
       _navigationService!.replaceWith(Routes.signUpView, arguments: arguments);
   static Future<dynamic>? home({dynamic arguments}) => _navigationService!
       .clearStackAndShow(Routes.homeView, arguments: arguments);
+  static Future<dynamic>? explore({dynamic arguments}) => _navigationService!
+      .clearStackAndShow(Routes.exploreView, arguments: arguments);
   static Future<dynamic>? landing({dynamic arguments}) => _navigationService!
       .clearStackAndShow(Routes.landingView, arguments: arguments);
   static Future<dynamic>? requestSubmit({dynamic arguments}) =>

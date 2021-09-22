@@ -9,6 +9,7 @@ import 'package:whiskers_away_app/src/views/auth/login/login_view.dart';
 import 'package:whiskers_away_app/src/views/auth/signup/signup_view.dart';
 import 'package:whiskers_away_app/src/views/employee_details/employee_details_view.dart';
 import 'package:whiskers_away_app/src/views/home/home_view.dart';
+import 'package:whiskers_away_app/src/views/explore/explore_view.dart';
 import 'package:whiskers_away_app/src/views/landing/landing_view.dart';
 import 'package:whiskers_away_app/src/views/my_employees/my_employees_view.dart';
 import 'package:whiskers_away_app/src/views/onboarding/onboarding_view.dart';
@@ -28,6 +29,7 @@ import 'package:whiskers_away_app/src/views/terms_conditions/terms_conditions_vi
     MaterialRoute(page: SignUpView),
     MaterialRoute(page: OptionsSelectView),
     MaterialRoute(page: HomeView),
+    MaterialRoute(page: ExploreView),
     MaterialRoute(page: RequestSubmitView),
     MaterialRoute(page: TermsConditionsView),
     MaterialRoute(page: PaymentView),
