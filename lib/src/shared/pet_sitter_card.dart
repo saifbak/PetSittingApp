@@ -43,7 +43,9 @@ class PetSitterCard extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      '\$' + petSitter['hourly_rate'] + '/hr',
+                      petSitter['hourly_rate'] != null
+                          ? '\$' + petSitter['hourly_rate'] + '/hr'
+                          : '',
                       style: AppTextStyles.xLarge(
                         weight: FontWeight.w500,
                         color: AppColors.primaryColor,
