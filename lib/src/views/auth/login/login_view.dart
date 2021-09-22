@@ -151,6 +151,8 @@ class _Body extends StatelessWidget {
   }
 
   Future<void> onSubmit(ctx) async {
+    print(emailCtrl.text.trim());
+    print(passwordCtrl.text.trim());
     try {
       await model.login({
         "username": emailCtrl.text.trim(),

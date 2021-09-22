@@ -6,7 +6,9 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/models/Job.dart';
+import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
+import 'package:whiskers_away_app/src/shared/app_textfield.dart';
 import 'package:whiskers_away_app/src/shared/app_top_bar.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
@@ -36,6 +38,7 @@ class PetDetailsView extends StatelessWidget {
             statusBarColor: Colors.transparent,
           ),
           child: Scaffold(
+            // resizeToAvoidBottomInset: false,
             body: _Body(model, request, role),
           ),
         );
@@ -49,10 +52,12 @@ class _Body extends StatelessWidget {
   final Job request;
   final Roles role;
 
-  const _Body(this.model, this.request, this.role);
-
+  _Body(this.model, this.request, this.role);
+  final replyCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    print('request id==>');
+    print(request.id);
     final screenSize = context.screenSize();
 
     return Column(
@@ -227,33 +232,71 @@ class _Body extends StatelessWidget {
           ),
         ),
         if (role == Roles.petSitter) ...[
-          VerticalSpacing(12),
-          Padding(
-            padding: AppBaseStyles.horizontalPadding,
-            child: Row(
-              children: [
-                AppButton(
-                  horizontalPadding: 10,
-                  child: Icon(
-                    Icons.favorite,
-                    size: 20,
-                    color: Colors.white,
-                  ),
-                  text: '',
+          SingleChildScrollView(
+              child: Column(
+            children: [
+              VerticalSpacing(0),
+              Padding(
+                padding: AppBaseStyles.horizontalPadding,
+                child: AppTextField(
+                  controller: replyCtrl,
+                  hintText: 'Enter your reply',
+                  label: '',
+                  prefixIcon: IconlyLight.send,
+                  maxLines: 4,
+                  padding: EdgeInsets.zero,
+                  // validator: (val) {
+                  //   return DefaultValidator.required(val, "Full Name");
+                  // },
                 ),
-                HorizontalSpacing(16),
-                Expanded(child: AppButton(text: 'Request to pet sit')),
-              ],
-            ),
-          ),
-          VerticalSpacing(),
-          Padding(
-            padding: AppBaseStyles.horizontalPadding,
-            child: AppButton(text: 'Add to My Calendar'),
-          ),
-          AppSpacing(context).bottomSpacing,
+              ),
+              // AppSpacing(context).bottomSpacing,
+              VerticalSpacing(12),
+              Padding(
+                padding: AppBaseStyles.horizontalPadding,
+                child: Row(
+                  children: [
+                    AppButton(
+                      horizontalPadding: 10,
+                      child: Icon(
+                        Icons.favorite,
+                        size: 20,
+                        color: Colors.white,
+                      ),
+                      text: '',
+                    ),
+                    HorizontalSpacing(16),
+                    Expanded(
+                        child: AppButton(
+                            onPressed: () {
+                              onSubmit(context);
+                            },
+                            text: 'Request to pet sit')),
+                  ],
+                ),
+              ),
+              VerticalSpacing(),
+              Padding(
+                padding: AppBaseStyles.horizontalPadding,
+                child: AppButton(text: 'Add to My Calendar'),
+              ),
+              AppSpacing(context).bottomSpacing,
+            ],
+          ))
         ],
       ],
     );
+  }
+
+  Future<void> onSubmit(ctx) async {
+    try {
+      await model.requestToPetSit(
+          request.id, {"description": replyCtrl.text.trim()}, ctx);
+      NavService.explore();
+    } catch (e) {
+      /* Timer(Duration(seconds: 1), () {
+        model.showErrorAlert(e);
+      }); */
+    }
   }
 }

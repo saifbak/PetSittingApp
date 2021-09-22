@@ -50,6 +50,7 @@ class _Body extends StatelessWidget {
   final locationCtrl = TextEditingController();
   final addressCtrl = TextEditingController();
   final phoneCtrl = TextEditingController();
+  final hourlRateCtrl = TextEditingController();
 
   _Body(this.model);
 
@@ -109,6 +110,18 @@ class _Body extends StatelessWidget {
                   return DefaultValidator.required(val, "Phone");
                 },
               ),
+              model.isPetSitter()
+                  ? AppTextField(
+                      controller: hourlRateCtrl,
+                      hintText: 'Enter your hourly rate',
+                      label: 'Hourly Rate',
+                      prefixIcon: IconlyLight.wallet,
+                      textInputType: TextInputType.phone,
+                      validator: (val) {
+                        return DefaultValidator.required(val, "Hourly Rate");
+                      },
+                    )
+                  : Container(),
               AppTextField(
                 controller: addressCtrl,
                 hintText: 'Enter your address',
@@ -200,6 +213,9 @@ class _Body extends StatelessWidget {
         "username": usernameCtrl.text.trim(),
         "name": nameCtrl.text.trim(),
         "address": addressCtrl.text.trim(),
+        "hourlyRate": model.isPetSitter()
+            ? double.parse(hourlRateCtrl.text.trim())
+            : null,
         "phone": phoneCtrl.text.trim(),
       }, ctx);
       NavService.loginReplace();

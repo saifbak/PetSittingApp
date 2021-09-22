@@ -118,6 +118,7 @@ class _Body extends StatelessWidget {
                             ),
                           ),
                           child: AppListingCard(
+                            _,
                             request: request,
                             role: Roles.petOwner,
                           ),
@@ -140,18 +141,20 @@ class _Body extends StatelessWidget {
                     itemBuilder: (_, index) {
                       final request = model.newJobs[index];
                       return GestureDetector(
-                        onTap: () {
-                          NavService.petDetails(
-                              arguments: PetDetailsViewArguments(
-                            request: request,
-                            role: Roles.petOwner,
-                          ));
-                          /* model.bottomSheetService
-                              .showCustomSheet(variant: 'listing'); */
-                        },
+                        // onTap: () {
+                        //   //   // NavService.petDetails(
+                        //   //   //     arguments: PetDetailsViewArguments(
+                        //   //   //   request: request,
+                        //   //   //   role: Roles.petOwner,
+                        //   //   // ));
+                        //   model.bottomSheetService
+                        //       .showCustomSheet(variant: 'listing');
+                        // },
                         child: AppListingCard(
+                          model,
                           request: request,
                           role: Roles.petOwner,
+                          // model: model,
                         ),
                       );
                     },

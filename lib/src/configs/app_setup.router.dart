@@ -26,6 +26,7 @@ import '../views/profile/profile_view.dart';
 import '../views/request_submit/request_submit_view.dart';
 import '../views/splash/splash_view.dart';
 import '../views/terms_conditions/terms_conditions_view.dart';
+import '../views/explore/explore_view.dart';
 
 class Routes {
   static const String splashView = '/';
@@ -34,6 +35,7 @@ class Routes {
   static const String signUpView = '/sign-up-view';
   static const String optionsSelectView = '/options-select-view';
   static const String homeView = '/home-view';
+  static const String exploreView = '/explore-view';
   static const String requestSubmitView = '/request-submit-view';
   static const String termsConditionsView = '/terms-conditions-view';
   static const String paymentView = '/payment-view';
@@ -49,6 +51,7 @@ class Routes {
     signUpView,
     optionsSelectView,
     homeView,
+    exploreView,
     requestSubmitView,
     termsConditionsView,
     paymentView,
@@ -70,6 +73,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.signUpView, page: SignUpView),
     RouteDef(Routes.optionsSelectView, page: OptionsSelectView),
     RouteDef(Routes.homeView, page: HomeView),
+    RouteDef(Routes.exploreView, page: ExploreView),
     RouteDef(Routes.requestSubmitView, page: RequestSubmitView),
     RouteDef(Routes.termsConditionsView, page: TermsConditionsView),
     RouteDef(Routes.paymentView, page: PaymentView),
@@ -115,6 +119,12 @@ class StackedRouter extends RouterBase {
     HomeView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => HomeView(),
+        settings: data,
+      );
+    },
+    ExploreView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ExploreView(),
         settings: data,
       );
     },
