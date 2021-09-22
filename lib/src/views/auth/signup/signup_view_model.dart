@@ -18,6 +18,8 @@ class SignUpViewModel extends BaseViewModel {
   Future<dynamic> signup(Map<String, dynamic> payload, ctx) async {
     setBusy(true);
     print(payload);
+    print('===> hours payload');
+    print(payload['hourlyRate']);
     try {
       dialogService.showCustomDialog(
           variant: 'spinner', barrierDismissible: true);
@@ -29,6 +31,9 @@ class SignUpViewModel extends BaseViewModel {
         phone: payload['phone'],
         address: payload['address'],
         username: payload['username'],
+        hourlyRate: payload['hourlyRate'] != null
+            ? payload['hourlyRate'].toDouble()
+            : payload['hourlyRate'],
         roleId: _authService.getRoleById(),
       );
       ApiResult apiResult = await _apiService.register(user);
@@ -55,5 +60,9 @@ class SignUpViewModel extends BaseViewModel {
       buttonTitle: 'Cancel',
       buttonTitleColor: AppColors.primaryColor,
     );
+  }
+
+  bool isPetSitter() {
+    return _authService.isPetSitter();
   }
 }
