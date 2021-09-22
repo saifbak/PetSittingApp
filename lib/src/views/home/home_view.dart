@@ -23,6 +23,9 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
       viewModelBuilder: () => HomeViewModel(),
+      onModelReady: (model) {
+        model.getNewJobs();
+      },
       builder: (_, model, __) {
         return Scaffold(
           body: _Body(model),
@@ -62,12 +65,47 @@ class _Body extends StatelessWidget {
         VerticalSpacing(14),
         AppTabBar(
           onChanged: (type) {
-            if (type == model.ownerRequests[1]) {
+            if (type == model.ownerRequests[0]) {
               model.getNewJobs();
             }
           },
           tabs: model.ownerRequests,
           pagesContent: [
+            model.isBusy
+                ? Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryColor,
+                    ),
+                  )
+                : ListView.separated(
+                    padding: AppBaseStyles.horizontalPadding
+                        .copyWith(bottom: 16, top: 16),
+                    itemBuilder: (_, index) {
+                      final request = model.newJobs[index];
+                      return GestureDetector(
+                        onTap: () async {
+                          await showMaterialModalBottomSheet(
+                              context: context,
+                              backgroundColor: Colors.transparent,
+                              builder: (_) =>
+                                  ListingSheet(list: model.petSittersList));
+                          //  NavService.petDetails(
+                          //      arguments: PetDetailsViewArguments(
+                          //   request: request,
+                          //    role: Roles.petOwner,
+                          //   ));
+                        },
+                        child: AppListingCard(
+                          model,
+                          request: request,
+                          role: Roles.petOwner,
+                          // model: model,
+                        ),
+                      );
+                    },
+                    separatorBuilder: (_, __) => VerticalSpacing(16),
+                    itemCount: model.newJobs.length,
+                  ),
             Column(
               children: [
                 VerticalSpacing(12),
@@ -113,7 +151,7 @@ class _Body extends StatelessWidget {
                             ),
                           ),
                           child: AppListingCard(
-                            _,
+                            model,
                             request: request,
                             role: Roles.petOwner,
                           ),
@@ -124,41 +162,6 @@ class _Body extends StatelessWidget {
                 ),
               ],
             ),
-            model.isBusy
-                ? Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.primaryColor,
-                    ),
-                  )
-                : ListView.separated(
-                    padding: AppBaseStyles.horizontalPadding
-                        .copyWith(bottom: 16, top: 16),
-                    itemBuilder: (_, index) {
-                      final request = model.newJobs[index];
-                      return GestureDetector(
-                        onTap: () async {
-                          await showMaterialModalBottomSheet(
-                              context: context,
-                              backgroundColor: Colors.transparent,
-                              builder: (_) =>
-                                  ListingSheet(list: model.petSittersList));
-                          //  NavService.petDetails(
-                          //      arguments: PetDetailsViewArguments(
-                          //   request: request,
-                          //    role: Roles.petOwner,
-                          //   ));
-                        },
-                        child: AppListingCard(
-                          model,
-                          request: request,
-                          role: Roles.petOwner,
-                          // model: model,
-                        ),
-                      );
-                    },
-                    separatorBuilder: (_, __) => VerticalSpacing(16),
-                    itemCount: model.newJobs.length,
-                  ),
           ],
         ),
         VerticalSpacing(16),

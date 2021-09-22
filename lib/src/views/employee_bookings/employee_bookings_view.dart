@@ -60,6 +60,7 @@ class _Body extends StatelessWidget {
                         ),
                       ),
                       child: AppListingCard(
+                        model,
                         request: request,
                         role: Roles.manager,
                       ),
@@ -82,6 +83,7 @@ class _Body extends StatelessWidget {
                       ),
                     ),
                     child: AppListingCard(
+                      model,
                       request: request,
                       role: Roles.manager,
                     ),

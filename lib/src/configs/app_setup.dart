@@ -3,6 +3,8 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:whiskers_away_app/src/services/local/auth_service.dart';
 import 'package:whiskers_away_app/src/services/local/connectivity_service.dart';
 import 'package:whiskers_away_app/src/services/local/job_service.dart';
+import 'package:whiskers_away_app/src/services/local/job_resp_services.dart';
+
 import 'package:whiskers_away_app/src/services/local/keyboard_service.dart';
 import 'package:whiskers_away_app/src/services/remote/api_service.dart';
 import 'package:whiskers_away_app/src/views/auth/login/login_view.dart';
@@ -48,6 +50,7 @@ import 'package:whiskers_away_app/src/views/user_profile/user_profile_view.dart'
     LazySingleton(classType: NavigationService),
     LazySingleton(classType: AuthService),
     LazySingleton(classType: JobService),
+    LazySingleton(classType: JobRespService),
     LazySingleton(classType: ConnectivityService),
     LazySingleton(classType: KeyboardService),
     LazySingleton(classType: ApiService),

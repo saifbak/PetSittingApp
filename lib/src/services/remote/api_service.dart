@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:whiskers_away_app/src/models/Job.dart';
+import 'package:whiskers_away_app/src/models/JobResponse.dart';
 import 'package:whiskers_away_app/src/models/User.dart';
 import 'package:whiskers_away_app/src/models/wrappers/response_wrapper.dart';
 import 'package:whiskers_away_app/src/services/local/local_storage_service.dart';
@@ -128,6 +129,26 @@ class ApiService {
 
       return ApiResult.success(data: response.data);
     } catch (e) {
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
+    }
+  }
+
+  Future<ApiResult<List<JobResp>>> getJobResponses(request) async {
+    try {
+      print('Job Request Api Hit log====>');
+      print(request);
+      ResponseWrapper response =
+          await _apiClient.getReq("/job/seeproposals/${request.toString()}");
+
+      List<JobResp> jobResp = response.data.map<JobResp>((item) {
+        return new JobResp.fromJson(item);
+      }).toList();
+      print(jobResp);
+      return ApiResult.success(data: jobResp);
+    } catch (e) {
+      print(e);
       return ApiResult.failure(
         error: NetworkExceptions.getDioException(e),
       );

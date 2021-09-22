@@ -38,12 +38,14 @@ class PetSitter {
   final String location;
   final String imgUrl;
   final int totalBookings;
+  final String hourlyRates;
 
   PetSitter(
     this.name,
     this.location,
     this.imgUrl,
     this.totalBookings,
+    this.hourlyRates,
   );
 }
 
@@ -60,6 +62,7 @@ class HomeViewModel extends BaseViewModel {
           'Houston',
           'assets/images/profile_pic.jpg',
           5,
+          '10',
         )
       ];
 
@@ -124,7 +127,7 @@ class HomeViewModel extends BaseViewModel {
         ),
       ];
 
-  List<String> get ownerRequests => ['Requests', "New requests"];
+  List<String> get ownerRequests => ['Open Jobs', "Job History"];
 
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;

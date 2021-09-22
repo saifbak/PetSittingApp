@@ -14,18 +14,15 @@ import 'package:whiskers_away_app/src/views/options_select/options_select_view_m
 
 class AppListingCard extends StatelessWidget {
   const AppListingCard(
-    this.modell, {
+    this.model, {
     required this.request,
     required this.role,
   });
-  final modell;
+  final model;
   final Job request;
   final Roles role;
   @override
   Widget build(BuildContext context) {
-    print('AppListingCard');
-    print(modell);
-    print(role);
     final petSitterRole = role == Roles.petSitter;
 
     return AppBaseCard(
@@ -110,7 +107,9 @@ class AppListingCard extends StatelessWidget {
                             child: GestureDetector(
                               // padding: EdgeInsets.only(left: 10),
                               onTap: () {
-                                modell.bottomSheetService
+                                onSubmit(context);
+
+                                model.bottomSheetService
                                     .showCustomSheet(variant: 'listing');
                               },
                               child: Icon(
@@ -160,5 +159,20 @@ class AppListingCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> onSubmit(ctx) async {
+    try {
+      print('on Api hit ==>');
+      print(ctx);
+      print(request.id);
+      await model.getJobResponses(request.id, ctx);
+      print('asd');
+      // NavService.home();
+    } catch (e) {
+      /* Timer(Duration(seconds: 1), () {
+        model.showErrorAlert(e);
+      }); */
+    }
   }
 }

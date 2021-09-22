@@ -13,6 +13,8 @@ import 'package:stacked_services/stacked_services.dart';
 import '../services/local/auth_service.dart';
 import '../services/local/connectivity_service.dart';
 import '../services/local/job_service.dart';
+import '../services/local/job_resp_services.dart';
+
 import '../services/local/keyboard_service.dart';
 import '../services/remote/api_service.dart';
 
@@ -29,6 +31,7 @@ void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => AuthService());
   locator.registerLazySingleton(() => JobService());
+  locator.registerLazySingleton(() => JobRespService());
   locator.registerLazySingleton(() => ConnectivityService());
   locator.registerLazySingleton(() => KeyboardService());
   locator.registerLazySingleton(() => ApiService());

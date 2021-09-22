@@ -14,6 +14,7 @@ class PetSitterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(petSitter.hourlyRates);
     return AppBaseCard(
       padding: const EdgeInsets.all(10),
       child: Row(
@@ -41,9 +42,12 @@ class PetSitterCard extends StatelessWidget {
                         VerticalSpacing(6),
                       ],
                     ),
-                    Icon(
-                      Icons.more_vert_rounded,
-                      color: AppColors.primaryColor,
+                    Text(
+                      '\$' + petSitter.hourlyRates + '/hr',
+                      style: AppTextStyles.xLarge(
+                        weight: FontWeight.w500,
+                        color: AppColors.primaryColor,
+                      ),
                     ),
                   ],
                 ),
