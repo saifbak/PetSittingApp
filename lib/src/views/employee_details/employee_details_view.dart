@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
+import 'package:whiskers_away_app/src/base/utils/utils.dart';
+import 'package:whiskers_away_app/src/shared/app_date_availability_tile.dart';
 import 'package:whiskers_away_app/src/shared/app_divider.dart';
 import 'package:whiskers_away_app/src/shared/app_label_text.dart';
 import 'package:whiskers_away_app/src/shared/base_profile_view.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
-import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/employee_details/employee_details_view_model.dart';
-import 'package:whiskers_away_app/src/base/utils/utils.dart';
 
 class EmployeeDetailsView extends StatelessWidget {
   @override
@@ -77,85 +77,19 @@ class _Body extends StatelessWidget {
           VerticalSpacing(screenSize.height * .025),
           AppLabelText(text: 'Availability'),
           VerticalSpacing(12),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            child: Row(
-              children: [
-                Icon(
-                  IconlyLight.calendar,
-                  size: 20,
-                  color: Colors.white,
-                ),
-                HorizontalSpacing(6),
-                Text(
-                  'Oct. 11 - 14',
-                  style: AppTextStyles.xLarge(color: Colors.white),
-                ),
-                Spacer(),
-                Text(
-                  'Available',
-                  style: AppTextStyles.xLarge(color: Colors.white),
-                ),
-              ],
-            ),
-            decoration: BoxDecoration(
-              color: AppColors.primaryColor,
-              borderRadius: BorderRadius.circular(12),
-            ),
+          AppDateAvailabilityTile(
+            date: 'Oct. 10-12',
+            status: AvailabilityStatus.availabile,
           ),
           VerticalSpacing(16),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            child: Row(
-              children: [
-                Icon(
-                  IconlyLight.calendar,
-                  size: 20,
-                  color: AppColors.primaryColor,
-                ),
-                HorizontalSpacing(6),
-                Text(
-                  'Oct. 20-30',
-                  style: AppTextStyles.xLarge(color: AppColors.primaryColor),
-                ),
-                Spacer(),
-                Text(
-                  'Unavailable',
-                  style: AppTextStyles.xLarge(color: AppColors.primaryColor),
-                ),
-              ],
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppColors.primaryColor),
-            ),
+          AppDateAvailabilityTile(
+            date: 'Oct. 20-30',
+            status: AvailabilityStatus.unavailable,
           ),
           VerticalSpacing(16),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            child: Row(
-              children: [
-                Icon(
-                  IconlyLight.calendar,
-                  size: 20,
-                  color: AppColors.primaryColor,
-                ),
-                HorizontalSpacing(6),
-                Text(
-                  'Nov. 10',
-                  style: AppTextStyles.xLarge(color: AppColors.primaryColor),
-                ),
-                Spacer(),
-                Text(
-                  'Unavailable',
-                  style: AppTextStyles.xLarge(color: AppColors.primaryColor),
-                ),
-              ],
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppColors.primaryColor),
-            ),
+          AppDateAvailabilityTile(
+            date: 'Nov. 10',
+            status: AvailabilityStatus.unavailable,
           ),
         ],
       ),

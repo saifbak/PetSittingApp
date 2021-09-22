@@ -3,7 +3,11 @@ import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
 import 'package:whiskers_away_app/src/core/enums/role_enum.dart';
 import 'package:whiskers_away_app/src/services/local/auth_service.dart';
 
-enum Roles { petOwner, petSitter }
+enum Roles {
+  petOwner,
+  petSitter,
+  manager,
+}
 
 class OptionsSelectViewModel extends BaseViewModel {
   List<Role> get petSittingOptions => [Role.PET_SITTER, Role.PET_OWNER];

@@ -45,30 +45,44 @@ class _Body extends StatelessWidget {
         Expanded(child: model.getViewForIndex(model.currentTabIndex)),
         AppBaseCard(
           margin: AppBaseStyles.horizontalPadding,
+          padding: EdgeInsets.zero,
           boxShadowOpacity: .1,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: List.generate(
-              navBarItems.length,
-              (index) {
-                final item = navBarItems[index];
-                final isActive = model.currentTabIndex == index;
-                final color =
-                    isActive ? AppColors.primaryColor : AppColors.gray;
-                return GestureDetector(
-                  onTap: () => model.currentTabIndex = index,
-                  child: Column(
-                    children: [
-                      Icon(item.icon, color: color),
-                      VerticalSpacing(6),
-                      Text(
-                        item.title,
-                        style: AppTextStyles.xSmall(color: color),
-                      )
-                    ],
-                  ),
-                );
-              },
+          child: Material(
+            color: Colors.transparent,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: List.generate(
+                  navBarItems.length,
+                  (index) {
+                    final item = navBarItems[index];
+                    final isActive = model.currentTabIndex == index;
+                    final color =
+                        isActive ? AppColors.primaryColor : AppColors.gray;
+                    return InkResponse(
+                      radius: 50,
+                      containedInkWell: false,
+                      highlightColor: AppColors.primaryColor.withOpacity(.15),
+                      overlayColor: MaterialStateProperty.all(Colors.white),
+                      onTap: () => model.currentTabIndex = index,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        child: Column(
+                          children: [
+                            Icon(item.icon, color: color),
+                            VerticalSpacing(6),
+                            Text(
+                              item.title,
+                              style: AppTextStyles.xSmall(color: color),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
           ),
         ),

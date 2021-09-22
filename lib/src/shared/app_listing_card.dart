@@ -5,6 +5,7 @@ import 'package:whiskers_away_app/src/models/Job.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_base_card.dart';
 import 'package:whiskers_away_app/src/shared/app_status_visibility_tag.dart';
+import 'package:whiskers_away_app/src/shared/image_display_box.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
@@ -41,18 +42,7 @@ class AppListingCard extends StatelessWidget {
                     role: Roles.petOwner,
                   ));
                 },
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: AppColors.whisper,
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/dog_pic1.jpg'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+                child: ImageDisplayBox(imgUrl: 'assets/images/dog_pic1.jpg'),
               ),
               HorizontalSpacing(10),
               Expanded(
@@ -135,7 +125,7 @@ class AppListingCard extends StatelessWidget {
               ),
             ],
           ),
-          if (petSitterRole) ...[
+          if (petSitterRole || role == Roles.manager) ...[
             VerticalSpacing(12),
             Text(
               request.description ?? '',

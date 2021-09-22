@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.router.dart';
@@ -8,11 +9,13 @@ import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_heading.dart';
 import 'package:whiskers_away_app/src/shared/app_listing_card.dart';
 import 'package:whiskers_away_app/src/shared/app_tab_bar.dart';
+import 'package:whiskers_away_app/src/shared/image_display_box.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
+import 'package:whiskers_away_app/src/views/home/widgets/listing_sheet.dart';
 import 'package:whiskers_away_app/src/views/options_select/options_select_view_model.dart';
 
 class HomeView extends StatelessWidget {
@@ -20,9 +23,6 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
       viewModelBuilder: () => HomeViewModel(),
-      onModelReady: (model) {
-        AppUtils.setupCustomBottomSheetBuilders(model.petSittersList);
-      },
       builder: (_, model, __) {
         return Scaffold(
           body: _Body(model),
@@ -49,17 +49,9 @@ class _Body extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               WelcomeHeading(name: model.user?.name ?? ''),
-              Container(
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                  color: AppColors.whisper,
-                  borderRadius: BorderRadius.circular(8),
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/profile_pic.jpg'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+              ImageDisplayBox(
+                size: 30,
+                imgUrl: "assets/images/profile_pic.jpg",
               ),
             ],
           ),
@@ -141,15 +133,18 @@ class _Body extends StatelessWidget {
                     itemBuilder: (_, index) {
                       final request = model.newJobs[index];
                       return GestureDetector(
-                        // onTap: () {
-                        //   //   // NavService.petDetails(
-                        //   //   //     arguments: PetDetailsViewArguments(
-                        //   //   //   request: request,
-                        //   //   //   role: Roles.petOwner,
-                        //   //   // ));
-                        //   model.bottomSheetService
-                        //       .showCustomSheet(variant: 'listing');
-                        // },
+                        onTap: () async {
+                          await showMaterialModalBottomSheet(
+                              context: context,
+                              backgroundColor: Colors.transparent,
+                              builder: (_) =>
+                                  ListingSheet(list: model.petSittersList));
+                          //  NavService.petDetails(
+                          //      arguments: PetDetailsViewArguments(
+                          //   request: request,
+                          //    role: Roles.petOwner,
+                          //   ));
+                        },
                         child: AppListingCard(
                           model,
                           request: request,

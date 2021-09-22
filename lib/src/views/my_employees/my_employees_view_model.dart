@@ -9,31 +9,25 @@ class MyEmployeesViewModel extends BaseViewModel {
           'Ralph Edwards',
           'Houston',
           'assets/images/profile_pic.jpg',
+          10,
         ),
         PetSitter(
           'Ralph Edwards',
           'Houston',
           'assets/images/profile_pic.jpg',
+          5,
         ),
         PetSitter(
           'Ralph Edwards',
           'Houston',
           'assets/images/profile_pic.jpg',
+          3,
         ),
         PetSitter(
           'Ralph Edwards',
           'Houston',
           'assets/images/profile_pic.jpg',
-        ),
-        PetSitter(
-          'Ralph Edwards',
-          'Houston',
-          'assets/images/profile_pic.jpg',
-        ),
-        PetSitter(
-          'Ralph Edwards',
-          'Houston',
-          'assets/images/profile_pic.jpg',
+          9,
         ),
       ];
 }

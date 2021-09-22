@@ -6,6 +6,7 @@ import 'package:whiskers_away_app/src/configs/app_setup.router.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_heading.dart';
 import 'package:whiskers_away_app/src/shared/app_listing_card.dart';
+import 'package:whiskers_away_app/src/shared/image_display_box.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
@@ -47,17 +48,9 @@ class _Body extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               WelcomeHeading(name: model.user?.name ?? ''),
-              Container(
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                  color: AppColors.whisper,
-                  borderRadius: BorderRadius.circular(8),
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/profile_pic.jpg'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+              ImageDisplayBox(
+                size: 30,
+                imgUrl: "assets/images/profile_pic.jpg",
               ),
             ],
           ),
