@@ -52,6 +52,7 @@ class _Body extends StatelessWidget {
                       .copyWith(bottom: 16, top: 16),
                   itemBuilder: (_, index) {
                     final request = model.filledJobs[index];
+                    print(request);
                     return GestureDetector(
                       onTap: () => NavService.petDetails(
                         arguments: PetDetailsViewArguments(
