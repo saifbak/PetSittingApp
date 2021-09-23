@@ -24,8 +24,9 @@ class AppTextField extends StatefulWidget {
     this.validators,
     this.validator,
     this.bottomSpacing = true,
+    this.initialValue
   });
-
+  final String? initialValue;
   final String hintText;
   final String label;
   final bool? hasPasswordEye;
@@ -90,6 +91,8 @@ class _AppTextFieldState extends State<AppTextField> {
                   readOnly: widget.readOnlyField!,
                   onTap: widget.onTap,
                   validator: widget.validator,
+                  initialValue: widget.initialValue,
+                  // initial: widget.initialField
                   /* validator: (val) {
                     print(widget.validators);
                     if (widget.validators!.length > 0) {
@@ -108,6 +111,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   }, */
                   controller: widget.controller,
                   decoration: InputDecoration(
+                    
                     filled: true,
                     fillColor: Colors.white,
                     hintText: widget.hintText,

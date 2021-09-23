@@ -80,6 +80,20 @@ class ApiService {
     }
   }
 
+  Future<ApiResult<dynamic>> updateUserDetails(userData) async {
+    try {
+      ResponseWrapper response =
+          await _apiClient.postReq("/user/updatedetails", data: userData);
+
+      return ApiResult.success(data: response.data);
+    } catch (e) {
+      print(e.toString());
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
+    }
+  }
+
   Future<ApiResult<dynamic>> sendPetRequest(
       Map<String, dynamic> request) async {
     try {
