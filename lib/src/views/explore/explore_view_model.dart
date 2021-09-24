@@ -116,11 +116,6 @@ class ExploreViewModel extends BaseViewModel {
       setBusy(false);
     }, failure: (NetworkExceptions error) {
       setBusy(false);
-      //print(error.toString());
-      /* _snackService.showSnackbar(
-          message: NetworkExceptions.getErrorMessage(error)); */
-      //print(err);
-      //print("[FAILUER] _authService.user");
     });
   }
 

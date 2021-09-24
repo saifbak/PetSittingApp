@@ -17,10 +17,17 @@ import 'package:whiskers_away_app/src/views/payment/widgets/label_with_content.d
 import 'package:whiskers_away_app/src/views/profile/profile_view_model.dart';
 
 class ProfileView extends StatelessWidget {
+  final dynamic user;
+
+  ProfileView(this.user);
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ProfileViewModel>.reactive(
       viewModelBuilder: () => ProfileViewModel(),
+      // onModelReady: (model) {
+      //   model.reviewResponses();
+      // },
       builder: (_, model, __) {
         return Scaffold(
           body: _Body(model),
@@ -37,7 +44,6 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = context.screenSize();
-
     return BaseProfileView(
         centerContent: Column(
           children: [
@@ -114,6 +120,7 @@ class _Body extends StatelessWidget {
                 contentLength: model.reviewsList.length,
                 contentItemBuilder: (_, index) {
                   final review = model.reviewsList[index];
+                  // print(review);
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

@@ -1,12 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:whiskers_away_app/src/models/Job.dart';
 import 'package:whiskers_away_app/src/models/JobResponse.dart';
+import 'package:whiskers_away_app/src/models/Reviews.dart';
 import 'package:whiskers_away_app/src/models/User.dart';
 import 'package:whiskers_away_app/src/models/wrappers/response_wrapper.dart';
 import 'package:whiskers_away_app/src/services/local/local_storage_service.dart';
 import 'package:whiskers_away_app/src/services/remote/api_client.dart';
 import 'package:whiskers_away_app/src/services/remote/api_result.dart';
 import 'package:whiskers_away_app/src/services/remote/network_exceptions.dart';
+import 'package:whiskers_away_app/src/views/profile/profile_view_model.dart';
 
 class ApiService {
   late ApiClient _apiClient;
@@ -171,4 +173,20 @@ class ApiService {
       );
     }
   }
+
+  // Future<ApiResult<List<Review>>> reviewResponses() async {
+  //   try {
+  //     ResponseWrapper response = await _apiClient.getReq("/job/viewreview/6");
+  //     print(response.data);
+  //     List<Review> reviews = response.data.map<Review>((item) {
+  //       return new Review.fromJson(item);
+  //     }).toList();
+  //     return ApiResult.success(data: reviews);
+  //   } catch (e) {
+  //     print(e);
+  //     return ApiResult.failure(
+  //       error: NetworkExceptions.getDioException(e),
+  //     );
+  //   }
+  // }
 }

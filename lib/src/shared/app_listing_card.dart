@@ -163,12 +163,7 @@ class AppListingCard extends StatelessWidget {
 
   Future<void> onSubmit(ctx) async {
     try {
-      // print('on Api hit ==>');
-      // print(ctx);
-      // print(request.id);
       await model.getJobResponses(request.id, ctx);
-      print('asd');
-      // NavService.home();
     } catch (e) {
       /* Timer(Duration(seconds: 1), () {
         model.showErrorAlert(e);

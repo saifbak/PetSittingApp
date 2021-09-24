@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
+import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
+import 'package:whiskers_away_app/src/services/local/auth_service.dart';
+import 'package:whiskers_away_app/src/services/local/local_storage_service.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_textfield.dart';
@@ -38,11 +42,21 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = context.screenSize();
-
+    final _authService = locator<AuthService>();
     final noPadding = EdgeInsets.zero;
-    // nameCtrl.text = model.user!.name;
-    // addressCtrl.text = model.user?.address ?? "";
-    // phoneCtrl.text = model.user?.phone ?? "";
+
+    logoutUser() {
+      LocalStorage.removeSP("token");
+      NavService.loginReplace();
+      _authService.user = null;
+    }
+
+    // void logoutUser() async {
+    //   SharedPreferences prefs = await SharedPreferences.getInstance();
+    //   prefs?.clear();
+    //   Navigator.pushAndRemoveUntil(context, ModalRoute.withName("/login-view"),
+    //       ModalRoute.withName("/home-view"));
+    // }
 
     Future<void> onSubmit() async {
       try {
@@ -111,6 +125,9 @@ class _Body extends StatelessWidget {
       bottomContent: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0),
         child: AppButton(
+          onPressed: () {
+            logoutUser();
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

@@ -1,9 +1,13 @@
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
 import 'package:whiskers_away_app/src/models/User.dart';
+import 'package:whiskers_away_app/src/models/Reviews.dart';
 
 import 'package:whiskers_away_app/src/services/local/auth_service.dart';
+import 'package:whiskers_away_app/src/services/local/reviews_service.dart';
+import 'package:whiskers_away_app/src/services/remote/api_result.dart';
 import 'package:whiskers_away_app/src/services/remote/api_service.dart';
+import 'package:whiskers_away_app/src/services/remote/network_exceptions.dart';
 
 class Review {
   final String authorName;
@@ -22,8 +26,11 @@ class ProfileViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  // final _reviewService = locator<ReviewService>();
   final _authService = locator<AuthService>();
   final _apiService = locator<ApiService>();
+
+  // List<Review> _reviews = [];
 
   List<Review> get reviewsList => [
         Review(
@@ -52,7 +59,31 @@ class ProfileViewModel extends BaseViewModel {
         )
       ];
 
-  User? get user {
-    return this._authService.user;
-  }
+  // User? get user {
+  //   return this._authService.user;
+  // }
+
+  // Future<List<Review>?> reviewResponses() async {
+  //   // print(user);
+  //   setBusy(true);
+  //   ApiResult<List<Review>> apiResult = await _apiService.reviewResponses();
+  //   apiResult.when(success: (data) {
+  //     newReviews = data;
+  //     print('newReviews');
+  //     print(newReviews);
+  //     setBusy(false);
+  //   }, failure: (NetworkExceptions error) {
+  //     setBusy(false);
+  //   });
+  // }
+
+  // List<Review> get newReviews {
+  //   return _reviews;
+  // }
+
+  // set newReviews(List<Review> val) {
+  //   _reviews = val;
+  //   _reviewService.reviews = val;
+  //   notifyListeners();
+  // }
 }

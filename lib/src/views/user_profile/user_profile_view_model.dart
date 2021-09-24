@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
 import 'package:whiskers_away_app/src/models/User.dart';
-
 import 'package:whiskers_away_app/src/services/local/auth_service.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/services/remote/api_result.dart';
-
 import 'package:whiskers_away_app/src/services/remote/api_service.dart';
 
 class UserProfileViewModel extends BaseViewModel {
@@ -16,8 +14,6 @@ class UserProfileViewModel extends BaseViewModel {
   late TextEditingController addressCtrl, nameCtrl, phoneCtrl, hourlRateCtrl;
 
   Future<dynamic> updateUserDetails(userData) async {
-    print('updateUserDetails');
-    print(userData);
     ApiResult apiResult = await _apiService.updateUserDetails(userData);
     apiResult.when(success: (data) {
       _authService.user!.name = data['name'];
@@ -28,7 +24,6 @@ class UserProfileViewModel extends BaseViewModel {
     }, failure: (err) {
       print(err);
       NavService.optionsSelect();
-      //print("[FAILUER] _authService.user");
     });
   }
 
@@ -47,4 +42,3 @@ class UserProfileViewModel extends BaseViewModel {
     return _authService.isPetSitter();
   }
 }
-  

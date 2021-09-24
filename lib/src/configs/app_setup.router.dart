@@ -8,12 +8,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:whiskers_away_app/src/models/Job.dart';
 import 'package:stacked/stacked_annotations.dart';
 
+import '../models/Job.dart';
 import '../views/auth/login/login_view.dart';
 import '../views/auth/signup/signup_view.dart';
 import '../views/employee_details/employee_details_view.dart';
+import '../views/explore/explore_view.dart';
 import '../views/home/home_view.dart';
 import '../views/landing/landing_view.dart';
 import '../views/my_employees/my_employees_view.dart';
@@ -26,7 +27,6 @@ import '../views/profile/profile_view.dart';
 import '../views/request_submit/request_submit_view.dart';
 import '../views/splash/splash_view.dart';
 import '../views/terms_conditions/terms_conditions_view.dart';
-import '../views/explore/explore_view.dart';
 import '../views/user_profile/user_profile_view.dart';
 
 class Routes {
@@ -127,7 +127,7 @@ class StackedRouter extends RouterBase {
       );
     },
     ExploreView: (data) {
-      return MaterialPageRoute<dynamic>(
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
         builder: (context) => ExploreView(),
         settings: data,
       );
@@ -151,8 +151,9 @@ class StackedRouter extends RouterBase {
       );
     },
     ProfileView: (data) {
+      var args = data.getArgs<ProfileViewArguments>(nullOk: false);
       return MaterialPageRoute<MaterialRoute<dynamic>>(
-        builder: (context) => ProfileView(),
+        builder: (context) => ProfileView(args.user),
         settings: data,
       );
     },
@@ -197,6 +198,12 @@ class StackedRouter extends RouterBase {
 /// ************************************************************************
 /// Arguments holder classes
 /// *************************************************************************
+
+/// ProfileView arguments holder class
+class ProfileViewArguments {
+  final dynamic user;
+  ProfileViewArguments({required this.user});
+}
 
 /// PetDetailsView arguments holder class
 class PetDetailsViewArguments {

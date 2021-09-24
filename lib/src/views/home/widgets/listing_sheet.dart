@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
+import 'package:whiskers_away_app/src/configs/app_setup.router.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/pet_sitter_card.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
+import 'package:whiskers_away_app/src/views/options_select/options_select_view_model.dart';
 
 class ListingSheet extends StatelessWidget {
   const ListingSheet({
@@ -15,6 +17,7 @@ class ListingSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(list);
     final screenSize = context.screenSize();
     return Container(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -53,7 +56,10 @@ class ListingSheet extends StatelessWidget {
                         return GestureDetector(
                             onTap: () {
                               NavService.popOut;
-                              NavService.profile();
+                              NavService.profile(
+                                  arguments: ProfileViewArguments(
+                                user: sitter,
+                              ));
                             },
                             child: PetSitterCard(petSitter: sitter));
                       },

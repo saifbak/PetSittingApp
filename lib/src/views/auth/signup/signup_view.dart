@@ -218,7 +218,6 @@ class _Body extends StatelessWidget {
             : null,
         "phone": phoneCtrl.text.trim(),
       }, ctx);
-      NavService.loginReplace();
     } catch (e) {
       /* Timer(Duration(seconds: 1), () {
         model.showErrorAlert(e);
