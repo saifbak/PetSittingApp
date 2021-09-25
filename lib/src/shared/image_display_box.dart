@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 
 class ImageDisplayBox extends StatelessWidget {
-  final String imgUrl;
+  final String? imgUrl;
   final double size;
+  final String? assetDefaultImage;
 
   const ImageDisplayBox({
-    required this.imgUrl,
+    this.imgUrl,
     this.size = 40,
+    this.assetDefaultImage = 'pet.jpg',
   });
 
   @override
@@ -19,7 +21,10 @@ class ImageDisplayBox extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         color: AppColors.whisper,
         image: DecorationImage(
-          image: AssetImage(imgUrl),
+          image: imgUrl != null
+              ? NetworkImage(imgUrl!)
+              : AssetImage('assets/images/' + assetDefaultImage!)
+                  as ImageProvider,
           fit: BoxFit.cover,
         ),
       ),

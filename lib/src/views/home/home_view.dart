@@ -55,8 +55,9 @@ class _Body extends StatelessWidget {
               GestureDetector(
                 onTap: NavService.userProfile,
                 child: ImageDisplayBox(
-                  size: 30,
-                  imgUrl: "assets/images/profile_pic.jpg",
+                  size: 50,
+                  imgUrl: model.user!.profileImg,
+                  assetDefaultImage: "profile.png",
                 ),
               ),
             ],

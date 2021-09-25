@@ -25,6 +25,6 @@ class FlavorService {
       return "https://whiskersaway.enorness.com/api/";
     }
     // return url other than prod one
-    return "http://192.168.0.8:8002/api/";
+    return "http://192.168.1.101:8002/api/";
   }
 }

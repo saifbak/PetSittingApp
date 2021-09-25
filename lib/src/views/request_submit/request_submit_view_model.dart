@@ -1,5 +1,10 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart' as Dio;
+import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
+import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/services/remote/api_service.dart';
 import 'package:whiskers_away_app/src/services/local/auth_service.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -13,6 +18,10 @@ class RequestSubmitViewModel extends BaseViewModel {
   final _authService = locator<AuthService>();
   final dialogService = locator<DialogService>();
 
+  bool _imageUploadDisplay = false;
+  bool imageUploadLoading = false;
+  late File? _selectedImageFile;
+
   int _selectedIndex = 1;
   int get selectedIndex => _selectedIndex;
   set selectedIndex(int val) {
@@ -20,7 +29,7 @@ class RequestSubmitViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<dynamic> sendPetRequest(Map<String, dynamic> payload, ctx) async {
+  Future<void> sendPetRequest(Map<String, dynamic> payload, ctx) async {
     setBusy(true);
     try {
       dialogService.showCustomDialog(
@@ -29,14 +38,17 @@ class RequestSubmitViewModel extends BaseViewModel {
       payload['petowner_id'] = _authService.user!.id;
       ApiResult apiResult = await _apiService.sendPetRequest(payload);
 
-      apiResult.when(success: (data) {
-        print(data);
+      apiResult.when(success: (data) async {
+        if (selectedImageFile != null) {
+          await uploadImage(selectedImageFile!, data['id']);
+        }
+        setBusy(false);
+        NavService.home();
       }, failure: (NetworkExceptions error) {
         showErrorAlert(error);
+        setBusy(false);
         //NetworkExceptions.getErrorMessage(error);
       });
-
-      setBusy(false);
     } catch (e) {
       print(e.toString());
       setBusy(false);
@@ -50,5 +62,65 @@ class RequestSubmitViewModel extends BaseViewModel {
       buttonTitle: 'Cancel',
       buttonTitleColor: AppColors.primaryColor,
     );
+  }
+
+  bool get imageUploadDisplay => _imageUploadDisplay;
+  set imageUploadDisplay(bool val) {
+    _imageUploadDisplay = val;
+    notifyListeners();
+  }
+
+  File? get selectedImageFile => _selectedImageFile;
+  set selectedImageFile(File? val) {
+    _selectedImageFile = val;
+    imageUploadDisplay = true;
+    notifyListeners();
+  }
+
+  Future<void> uploadImage(File image, jobID) async {
+    imageUploadLoading = true;
+
+    final data = {
+      'image': Dio.MultipartFile.fromBytes(
+        image.readAsBytesSync(),
+        filename: image.path.split('/').last,
+      ),
+      'job_id': jobID
+    };
+    final res = await _apiService.uploadJobImage(data);
+    res.when(
+      success: (data) {
+        imageUploadLoading = false;
+        //imagePath = data['image_path'];
+        //profileImage = data['image_url'];
+      },
+      failure: (error) {
+        imageUploadLoading = false;
+      },
+    );
+  }
+
+  /// Get from gallery
+  getFromGallery() async {
+    XFile? pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      //maxWidth: 1800,
+      //maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      selectedImageFile = File(pickedFile.path);
+    }
+  }
+
+  /// Get from Camera
+  getFromCamera() async {
+    XFile? pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+      //maxWidth: 1800,
+      //maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      selectedImageFile = File(pickedFile.path);
+    }
   }
 }

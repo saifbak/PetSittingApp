@@ -17,7 +17,7 @@ import 'package:whiskers_away_app/src/views/request_submit/request_submit_view_m
 class RequestSubmitView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<RequestSubmitViewModel>.nonReactive(
+    return ViewModelBuilder<RequestSubmitViewModel>.reactive(
       viewModelBuilder: () => RequestSubmitViewModel(),
       builder: (_, model, __) {
         return Scaffold(
@@ -36,14 +36,15 @@ class _Body extends StatelessWidget {
   final GlobalKey<State> keyLoader = new GlobalKey<State>();
 
   //Controllers
-  final petCtrl = TextEditingController();
-  final locationCtrl = TextEditingController();
-  final ageCtrl = TextEditingController();
-  final weightCtrl = TextEditingController();
-  final breedCtrl = TextEditingController();
-  final fromDateCtrl = TextEditingController();
-  final toDateCtrl = TextEditingController();
-  final descriptionCtrl = TextEditingController();
+  final petCtrl = TextEditingController(text: 'Canis lupus');
+  final locationCtrl = TextEditingController(text: 'New York');
+  final ageCtrl = TextEditingController(text: '13');
+  final weightCtrl = TextEditingController(text: '6.5');
+  final breedCtrl = TextEditingController(text: 'Breed');
+  final fromDateCtrl = TextEditingController(text: '2021-09-15');
+  final toDateCtrl = TextEditingController(text: '2021-09-25');
+  final descriptionCtrl =
+      TextEditingController(text: 'This is test dependent on you');
 
   _Body(this.model);
 
@@ -75,27 +76,31 @@ class _Body extends StatelessWidget {
                   color: AppColors.primaryColor,
                   child: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(12)),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      width: double.infinity,
-                      color: AppColors.primaryColor.withOpacity(.15),
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            'assets/images/icons/add_img.png',
-                            width: 50,
-                          ),
-                          VerticalSpacing(),
-                          Text(
-                            'Add image',
-                            style: AppTextStyles.xxLarge(
-                                color: AppColors.primaryColor),
+                    child: model.imageUploadDisplay == false ||
+                            model.selectedImageFile == null
+                        ? Container(
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                            width: double.infinity,
+                            color: AppColors.primaryColor.withOpacity(.15),
+                            child: Column(
+                              children: [
+                                Image.asset(
+                                  'assets/images/icons/add_img.png',
+                                  width: 50,
+                                ),
+                                VerticalSpacing(),
+                                Text(
+                                  'Add image',
+                                  style: AppTextStyles.xxLarge(
+                                      color: AppColors.primaryColor),
+                                )
+                              ],
+                            ),
                           )
-                        ],
-                      ),
-                    ),
+                        : Image.file(model.selectedImageFile!),
                   ),
                 ),
+                ImageUploadOptions(),
                 VerticalSpacing(30),
                 PetSittingPlace(),
                 VerticalSpacing(20),
@@ -222,7 +227,6 @@ class _Body extends StatelessWidget {
         "breed": breedCtrl.text.trim(),
         "description": descriptionCtrl.text.trim(),
       }, ctx);
-      NavService.home();
     } catch (e) {
       /* Timer(Duration(seconds: 1), () {
         model.showErrorAlert(e);
@@ -293,5 +297,55 @@ class PetSittingPlace extends ViewModelWidget<RequestSubmitViewModel> {
         ),
       ],
     );
+  }
+}
+
+class ImageUploadOptions extends ViewModelWidget<RequestSubmitViewModel> {
+  @override
+  Widget build(BuildContext context, RequestSubmitViewModel model) {
+    return Container(
+        //duration: Duration(milliseconds: 250),
+        child: Container(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.camera,
+                color: AppColors.primaryColor,
+              ),
+              HorizontalSpacing(4),
+              GestureDetector(
+                onTap: () {
+                  model.getFromCamera();
+                },
+                child: Text(
+                  'Camera',
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Icon(
+                Icons.image,
+                color: AppColors.primaryColor,
+              ),
+              HorizontalSpacing(4),
+              GestureDetector(
+                child: Text('Gallery'),
+                onTap: () {
+                  model.getFromGallery();
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    )
+        //: VerticalSpacing(30),
+        );
   }
 }

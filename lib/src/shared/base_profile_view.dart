@@ -8,18 +8,29 @@ import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
+import 'dart:io';
 
 class BaseProfileView extends StatelessWidget {
   const BaseProfileView(
       {required this.centerContent,
       required this.bottomContent,
       required this.appTopBarText,
-      this.user});
+      this.user,
+      this.isEditable = false,
+      this.networkImage,
+      this.uploadImage,
+      this.defaultAssetImage = 'assets/images/profile.png',
+      this.onClicked});
 
   final Widget centerContent;
   final Widget bottomContent;
   final String appTopBarText;
+  final File? uploadImage;
+  final String? defaultAssetImage;
+  final String? networkImage;
   final User? user;
+  final bool isEditable;
+  final VoidCallback? onClicked;
 
   @override
   Widget build(BuildContext context) {
@@ -101,18 +112,27 @@ class BaseProfileView extends StatelessWidget {
                     ),
                     Align(
                       alignment: Alignment.topCenter,
-                      child: Container(
-                        width: profileAvatarSize,
-                        height: profileAvatarSize,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            color: AppColors.primaryColor,
-                            width: 3,
-                          ),
-                          shape: BoxShape.circle,
-                        ),
-                      ),
+                      child: isEditable
+                          ? Stack(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    if (onClicked != null) {
+                                      onClicked!();
+                                    }
+                                  },
+                                  child: buildProfileImage(profileAvatarSize),
+                                ),
+                                isEditable
+                                    ? Positioned(
+                                        child: buildEditIcon(),
+                                        right: 10,
+                                        bottom: 0,
+                                      )
+                                    : Container(),
+                              ],
+                            )
+                          : buildProfileImage(profileAvatarSize),
                     ),
                   ],
                 ),
@@ -125,8 +145,43 @@ class BaseProfileView extends StatelessWidget {
               ],
             ),
           ],
-        )
+        ),
       ],
+    );
+  }
+
+  Widget buildEditIcon() => ClipOval(
+        child: Container(
+          color: AppColors.primaryColor,
+          padding: EdgeInsets.all(6.0),
+          child: Icon(
+            Icons.edit,
+            color: Colors.white,
+            size: 20,
+          ),
+        ),
+      );
+
+  Widget buildProfileImage(profileAvatarSize) {
+    return Container(
+      width: profileAvatarSize,
+      height: profileAvatarSize,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: (this.uploadImage == null && this.networkImage != null)
+              ? NetworkImage(this.networkImage!)
+              : (this.uploadImage != null
+                  ? FileImage(uploadImage!)
+                  : AssetImage(this.defaultAssetImage!) as ImageProvider),
+        ),
+        color: Colors.white,
+        border: Border.all(
+          color: AppColors.primaryColor,
+          width: 3,
+        ),
+        shape: BoxShape.circle,
+      ),
     );
   }
 }

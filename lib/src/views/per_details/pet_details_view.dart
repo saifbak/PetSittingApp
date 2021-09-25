@@ -80,9 +80,9 @@ class _Body extends StatelessWidget {
                   bottomRight: Radius.circular(20),
                 ),
                 image: DecorationImage(
-                    image: AssetImage(
-                      'assets/images/pet_pic.jpg',
-                    ),
+                    image: request.publicImage != null
+                        ? NetworkImage(request.publicImage!)
+                        : AssetImage('assets/images/pet.jpg') as ImageProvider,
                     fit: BoxFit.cover),
               ),
             ),

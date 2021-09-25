@@ -39,7 +39,10 @@ class AppListingCard extends StatelessWidget {
                     role: Roles.petOwner,
                   ));
                 },
-                child: ImageDisplayBox(imgUrl: 'assets/images/dog_pic1.jpg'),
+                child: ImageDisplayBox(
+                  imgUrl: request.publicImage,
+                  assetDefaultImage: 'pet.jpg',
+                ),
               ),
               HorizontalSpacing(10),
               Expanded(

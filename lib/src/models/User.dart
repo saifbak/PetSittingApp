@@ -8,18 +8,19 @@ class User {
   String? address;
   String? phone;
   double? hourlyRate;
+  String? profileImg;
 
-  User({
-    this.id,
-    required this.name,
-    this.username,
-    required this.email,
-    this.password,
-    this.address,
-    this.phone,
-    this.hourlyRate,
-    this.roleId,
-  });
+  User(
+      {this.id,
+      required this.name,
+      this.username,
+      required this.email,
+      this.password,
+      this.address,
+      this.phone,
+      this.hourlyRate,
+      this.roleId,
+      this.profileImg});
 
   dynamic toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -32,6 +33,7 @@ class User {
     data['phone'] = this.phone;
     data['hourly_rate'] = this.hourlyRate;
     data['role_id'] = this.roleId;
+    data['profile_img'] = this.profileImg;
     return data;
   }
 }

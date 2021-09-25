@@ -11,6 +11,7 @@ class Job {
   String? description;
   String? status;
   String? period;
+  String? publicImage;
   Map<String, dynamic>? owner;
 
   Job(
@@ -40,6 +41,7 @@ class Job {
     status = json['status'];
     period = json['period'];
     owner = json['owner'];
+    publicImage = json['public_image'];
   }
 
   Map<String, dynamic> toJson() {
@@ -55,6 +57,7 @@ class Job {
     data['breed'] = this.breed;
     data['description'] = this.description;
     data['status'] = this.status;
+    data['public_image'] = this.publicImage;
     return data;
   }
 }

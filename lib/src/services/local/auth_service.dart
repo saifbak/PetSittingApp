@@ -15,6 +15,8 @@ import 'package:whiskers_away_app/src/views/home/home_view.dart';
 import 'package:whiskers_away_app/src/views/landing/landing_view.dart';
 import 'package:whiskers_away_app/src/views/my_availability/my_availability_view.dart';
 
+import 'dart:io';
+
 class AuthService with ReactiveServiceMixin {
   ReactiveValue<User?> _user = ReactiveValue<User?>(null);
   ReactiveValue<Role?> _role = ReactiveValue<Role?>(null);

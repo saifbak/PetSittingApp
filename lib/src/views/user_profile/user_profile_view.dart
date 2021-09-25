@@ -47,7 +47,7 @@ class _Body extends StatelessWidget {
 
     logoutUser() {
       LocalStorage.removeSP("token");
-      NavService.loginReplace();
+      NavService.loginClearAll();
       _authService.user = null;
     }
 
@@ -64,9 +64,9 @@ class _Body extends StatelessWidget {
           "name": model.nameCtrl.text.trim(),
           "address": model.addressCtrl.text.trim(),
           "phone": model.phoneCtrl.text.trim(),
-          "hourlyRate": model.isPetSitter()
+          /* "hourlyRate": model.isPetSitter()
               ? double.parse(model.hourlRateCtrl.text.trim())
-              : null,
+              : null, */
         });
         NavService.home();
       } catch (e) {
@@ -77,6 +77,10 @@ class _Body extends StatelessWidget {
     }
 
     return BaseProfileView(
+      isEditable: true,
+      onClicked: changePhoto,
+      networkImage: model.user?.profileImg,
+      uploadImage: model.selectedImageFile,
       centerContent: Form(
         key: model.formKey,
         child: Column(
@@ -150,4 +154,13 @@ class _Body extends StatelessWidget {
       user: model.user!,
     );
   }
+
+  changePhoto() {
+    model.getFromCamera();
+  }
+
+  /* @protected
+  void dispose() {
+    model.selectedImageFile = null;
+  } */
 }

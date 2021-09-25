@@ -50,12 +50,38 @@ class ApiService {
         phone: response.data['phone'],
         id: response.data['id'],
         roleId: response.data['role_id'],
+        profileImg: response.data['profile_img'],
       );
       return ApiResult.success(data: userDetails);
     } catch (e) {
       return ApiResult.failure(
         error: NetworkExceptions.getDioException(e),
       );
+    }
+  }
+
+  Future<ApiResult<dynamic>> uploadJobImage(Map<String, dynamic> data) async {
+    try {
+      var response = await _apiClient.postReq(
+        "job/upload/image",
+        data: FormData.fromMap(data),
+      );
+      return ApiResult.success(data: response.data);
+    } catch (e) {
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
+
+  Future<ApiResult<dynamic>> uploadProfileImage(
+      Map<String, dynamic> data) async {
+    try {
+      var response = await _apiClient.postReq(
+        "user/upload/profileimage",
+        data: FormData.fromMap(data),
+      );
+      return ApiResult.success(data: response.data);
+    } catch (e) {
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }
   }
 
@@ -71,6 +97,7 @@ class ApiService {
         address: response.data['address'],
         id: response.data['id'],
         roleId: response.data['role_id'],
+        profileImg: response.data['profile_img'],
       );
 
       return ApiResult.success(data: userDetails);

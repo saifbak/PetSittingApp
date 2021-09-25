@@ -26,6 +26,9 @@ class NavService {
       _navigationService!.navigateTo(Routes.loginView, arguments: arguments);
   static Future<dynamic>? loginReplace({dynamic arguments}) =>
       _navigationService!.replaceWith(Routes.loginView, arguments: arguments);
+  static Future<dynamic>? loginClearAll({dynamic arguments}) =>
+      _navigationService!
+          .clearStackAndShow(Routes.loginView, arguments: arguments);
   static Future<dynamic>? signup({dynamic arguments}) =>
       _navigationService!.navigateTo(Routes.signUpView, arguments: arguments);
   static Future<dynamic>? signupReplace({dynamic arguments}) =>
