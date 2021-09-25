@@ -50,7 +50,7 @@ class _Body extends StatelessWidget {
   final locationCtrl = TextEditingController();
   final addressCtrl = TextEditingController();
   final phoneCtrl = TextEditingController();
-  final hourlRateCtrl = TextEditingController();
+  final descriptionCtrl = TextEditingController();
 
   _Body(this.model);
 
@@ -69,7 +69,7 @@ class _Body extends StatelessWidget {
             children: [
               AppTextField(
                 controller: nameCtrl,
-                hintText: 'Enter your fullname',
+                hintText: 'Enter your full name',
                 label: 'Full Name',
                 prefixIcon: IconlyLight.profile,
                 validator: (val) {
@@ -110,18 +110,6 @@ class _Body extends StatelessWidget {
                   return DefaultValidator.required(val, "Phone");
                 },
               ),
-              model.isPetSitter()
-                  ? AppTextField(
-                      controller: hourlRateCtrl,
-                      hintText: 'Enter your hourly rate',
-                      label: 'Hourly Rate',
-                      prefixIcon: IconlyLight.wallet,
-                      textInputType: TextInputType.phone,
-                      validator: (val) {
-                        return DefaultValidator.required(val, "Hourly Rate");
-                      },
-                    )
-                  : Container(),
               AppTextField(
                 controller: addressCtrl,
                 hintText: 'Enter your address',
@@ -141,6 +129,18 @@ class _Body extends StatelessWidget {
                   return DefaultValidator.minLength(val, 6, "Password")();
                 },
               ),
+              model.isPetSitter()
+                  ? AppTextField(
+                controller: descriptionCtrl,
+                hintText: 'Profile Description',
+                label: 'Profile Description',
+                textInputType: TextInputType.text,
+                maxLines: 4,
+                validator: (val) {
+                  return DefaultValidator.required(val, "Description");
+                },
+              )
+                  : Container(),
               VerticalSpacing(screenSize.height * .025),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -213,8 +213,8 @@ class _Body extends StatelessWidget {
         "username": usernameCtrl.text.trim(),
         "name": nameCtrl.text.trim(),
         "address": addressCtrl.text.trim(),
-        "hourlyRate": model.isPetSitter()
-            ? double.parse(hourlRateCtrl.text.trim())
+        "description": model.isPetSitter()
+            ? descriptionCtrl.text.trim()
             : null,
         "phone": phoneCtrl.text.trim(),
       }, ctx);

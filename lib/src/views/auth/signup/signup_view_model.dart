@@ -21,8 +21,8 @@ class SignUpViewModel extends BaseViewModel {
   Future<dynamic> signup(Map<String, dynamic> payload, ctx) async {
     setBusy(true);
     print(payload);
-    print('===> hours payload');
-    print(payload['hourlyRate']);
+    print('===> description -> payload');
+    print(payload['description']);
     try {
       dialogService.showCustomDialog(
           variant: 'spinner', barrierDismissible: true);
@@ -34,9 +34,9 @@ class SignUpViewModel extends BaseViewModel {
         phone: payload['phone'],
         address: payload['address'],
         username: payload['username'],
-        hourlyRate: payload['hourlyRate'] != null
-            ? payload['hourlyRate'].toDouble()
-            : payload['hourlyRate'],
+        description: payload['description'] != null
+            ? payload['description']
+            : "",
         roleId: _authService.getRoleById(),
       );
       ApiResult apiResult = await _apiService.register(user);
@@ -59,7 +59,7 @@ class SignUpViewModel extends BaseViewModel {
 
   showErrorAlert(e) {
     dialogService.showDialog(
-      title: 'Error Occured',
+      title: 'Error Occurred',
       description: NetworkExceptions.getErrorMessage(e),
       buttonTitle: 'Cancel',
       buttonTitleColor: AppColors.primaryColor,

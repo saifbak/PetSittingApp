@@ -20,6 +20,7 @@ class User {
       this.phone,
       this.hourlyRate,
       this.roleId,
+      this.description,
       this.profileImg});
 
   dynamic toJson() {
@@ -31,7 +32,7 @@ class User {
     data['password'] = this.password;
     data['address'] = this.address;
     data['phone'] = this.phone;
-    data['hourly_rate'] = this.hourlyRate;
+    data['description'] = this.description;
     data['role_id'] = this.roleId;
     data['profile_img'] = this.profileImg;
     return data;

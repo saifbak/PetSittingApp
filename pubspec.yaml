@@ -39,6 +39,7 @@ dependencies:
   modal_bottom_sheet: ^2.0.0
   image_picker: ^0.8.4+1
   http: ^0.13.3
+  fluttertoast: ^8.0.8
 
 dev_dependencies:
   build_runner: ^2.0.4

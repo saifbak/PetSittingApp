@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
 import 'package:whiskers_away_app/src/shared/app_spinner_dialog.dart';
@@ -42,6 +43,11 @@ class AppUtils {
       blurRadius: blurRadius ?? 20,
       color: Colors.black.withOpacity(colorOpacity ?? .08),
     );
+  }
+
+  static void toastShow(String message) {
+    Fluttertoast.showToast(msg: message, backgroundColor: Colors.tealAccent);
+    print("toast called");
   }
 
   static String getRoleStr(Roles role) =>

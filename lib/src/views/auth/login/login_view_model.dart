@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
 import 'package:whiskers_away_app/src/models/User.dart';
 import 'package:whiskers_away_app/src/services/local/auth_service.dart';
@@ -25,7 +26,8 @@ class LoginViewModel extends BaseViewModel {
       ApiResult apiResult = await _apiService.login(payload);
 
       Navigator.of(ctx, rootNavigator: true).pop();
-
+      // SnackbarService().showSnackbar(message: "Successful Login");
+      AppUtils.toastShow("Successful Login");
       apiResult.when(success: (data) {
         print(data);
         _authService.user = data;

@@ -1,4 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:stacked_services/stacked_services.dart';
+import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/models/Job.dart';
 import 'package:whiskers_away_app/src/models/JobResponse.dart';
 import 'package:whiskers_away_app/src/models/Reviews.dart';
@@ -26,9 +29,12 @@ class ApiService {
     try {
       ResponseWrapper response =
           await _apiClient.postReq("/signup", data: userRequest.toJson());
-
+      // SnackbarService().showSnackbar(message: "");
+      AppUtils.toastShow("User Registered Successfully");
       return ApiResult.success(data: response.data);
     } catch (e) {
+      AppUtils.toastShow("Unsuccessful Registration !");
+      // SnackbarService().showSnackbar(message: "Unsuccessful Registration !");
       return ApiResult.failure(
         error: NetworkExceptions.getDioException(e),
       );
@@ -54,6 +60,7 @@ class ApiService {
       );
       return ApiResult.success(data: userDetails);
     } catch (e) {
+
       return ApiResult.failure(
         error: NetworkExceptions.getDioException(e),
       );

@@ -57,7 +57,7 @@ class RequestSubmitViewModel extends BaseViewModel {
 
   showErrorAlert(e) {
     dialogService.showDialog(
-      title: 'Error Occured',
+      title: 'Error Occurred',
       description: NetworkExceptions.getErrorMessage(e),
       buttonTitle: 'Cancel',
       buttonTitleColor: AppColors.primaryColor,
