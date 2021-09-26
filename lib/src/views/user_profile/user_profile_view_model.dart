@@ -60,8 +60,16 @@ class UserProfileViewModel extends BaseViewModel {
 
   /// Get from Camera
   getFromCamera() async {
-    XFile? pickedFile = await ImagePicker().pickImage(
+    /* XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.camera,
+      //maxWidth: 1800,
+      //maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      selectedImageFile = File(pickedFile.path);
+    } */
+    XFile? pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
       //maxWidth: 1800,
       //maxHeight: 1800,
     );

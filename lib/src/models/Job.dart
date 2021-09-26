@@ -10,9 +10,12 @@ class Job {
   String? breed;
   String? description;
   String? status;
+  String? jobStatus;
   String? period;
   String? publicImage;
   Map<String, dynamic>? owner;
+  Map<String, dynamic>? assigned;
+  List<Map<String, dynamic>>? proposals;
 
   Job(
       {required this.id,
@@ -25,6 +28,7 @@ class Job {
       this.toDate,
       this.breed,
       this.description,
+      this.jobStatus,
       this.status});
 
   Job.fromJson(Map<String, dynamic> json) {
@@ -39,8 +43,11 @@ class Job {
     breed = json['breed'];
     description = json['description'];
     status = json['status'];
+    jobStatus = json['job_status'];
     period = json['period'];
     owner = json['owner'];
+    assigned = json['assigned'];
+    proposals = json['proposals'];
     publicImage = json['public_image'];
   }
 

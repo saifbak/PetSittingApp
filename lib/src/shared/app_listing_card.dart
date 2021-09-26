@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.router.dart';
+import 'package:whiskers_away_app/src/core/enums/role_enum.dart';
 import 'package:whiskers_away_app/src/models/Job.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_base_card.dart';
@@ -20,10 +21,10 @@ class AppListingCard extends StatelessWidget {
   });
   final model;
   final Job request;
-  final Roles role;
+  final Role role;
   @override
   Widget build(BuildContext context) {
-    final petSitterRole = role == Roles.petSitter;
+    final petSitterRole = role == Role.PET_SITTER;
 
     return AppBaseCard(
       child: Column(
@@ -104,7 +105,7 @@ class AppListingCard extends StatelessWidget {
                       ),
                     ] else
                       Row(children: [
-                        AppStatusVisibilityTag(text: request.status ?? ''),
+                        AppStatusVisibilityTag(text: request.jobStatus ?? ''),
                         Container(
                             padding: EdgeInsets.only(left: 5),
                             child: GestureDetector(
@@ -127,7 +128,7 @@ class AppListingCard extends StatelessWidget {
               ),
             ],
           ),
-          if (petSitterRole || role == Roles.manager) ...[
+          if (petSitterRole || role == Role.MANAGER) ...[
             VerticalSpacing(12),
             Text(
               request.description ?? '',

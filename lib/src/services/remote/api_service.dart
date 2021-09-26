@@ -170,6 +170,22 @@ class ApiService {
     }
   }
 
+  Future<ApiResult<List<Job>>> getJobList(params) async {
+    try {
+      ResponseWrapper response =
+          await _apiClient.postReq("/job/list", data: params);
+      List<Job> jobs = response.data.map<Job>((item) {
+        return new Job.fromJson(item);
+      }).toList();
+      return ApiResult.success(data: jobs);
+    } catch (e) {
+      print(e);
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
+    }
+  }
+
   Future<ApiResult<List<Job>>> getExploreJobs() async {
     try {
       ResponseWrapper response =

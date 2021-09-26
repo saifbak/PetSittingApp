@@ -28,10 +28,10 @@ class PaymentViewModel extends BaseViewModel {
   }
 
   void init() {
-    nameCtrl = TextEditingController();
-    cardCtrl = TextEditingController();
-    dateCtrl = TextEditingController();
-    cvcCtrl = TextEditingController();
+    nameCtrl = TextEditingController(text: 'Test');
+    cardCtrl = TextEditingController(text: '4242424242424242');
+    dateCtrl = TextEditingController(text: '06/2022');
+    cvcCtrl = TextEditingController(text: '314');
   }
 
   Future<dynamic> makePayment() async {
@@ -40,11 +40,12 @@ class PaymentViewModel extends BaseViewModel {
       return;
     }
 
+    dynamic parsedDate = dateCtrl.text.split('/');
     Map<String, dynamic> paymentDetails = {
       'amount': jobProposal['price'],
       'number': cardCtrl.text,
-      'exp_month': dateCtrl.text.split('/')[0],
-      'exp_year': dateCtrl.text.split('/')[1],
+      'exp_month': parsedDate[0],
+      'exp_year': parsedDate[1],
       'cvc': cvcCtrl.text,
       'petsitter_id': jobProposal['petsitter_id'],
       'job_id': jobProposal['job_id'],

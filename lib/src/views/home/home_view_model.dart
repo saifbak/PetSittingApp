@@ -55,7 +55,10 @@ class HomeViewModel extends BaseViewModel {
   final _apiService = locator<ApiService>();
   final _jobService = locator<JobService>();
   List<Job> _newJobs = [];
+  List<Job> _jobHistory = [];
   List<Map<String, dynamic>> _jobResponses = [];
+
+  Map<String, dynamic> loading = {'open': false, 'history': false};
 
   List<PetSitter> get petSittersList => [
         PetSitter(
@@ -141,21 +144,45 @@ class HomeViewModel extends BaseViewModel {
     return this._authService.user;
   }
 
-  Future<List<Job>?> getNewJobs() async {
-    setBusy(true);
+  getOpenJobs() async {
+    setLoading('open', true);
 
-    ApiResult<List<Job>> apiResult = await _apiService.getNewJobs();
+    ApiResult<List<Job>> apiResult = await getJobs({
+      'status': ['NEW', 'IN_PROGRESS'],
+      'role_id': 3,
+      'user_id': _authService.user!.id,
+      'relations': ['owner', 'images']
+    });
+
     apiResult.when(success: (data) {
       newJobs = data;
-      setBusy(false);
+      setLoading('open', false);
     }, failure: (NetworkExceptions error) {
-      setBusy(false);
-      //print(error.toString());
-      /* _snackService.showSnackbar(
-          message: NetworkExceptions.getErrorMessage(error)); */
-      //print(err);
-      //print("[FAILUER] _authService.user");
+      setLoading('open', false);
     });
+  }
+
+  getJobHistory() async {
+    setLoading('history', true);
+
+    ApiResult<List<Job>> apiResult = await getJobs({
+      'status': ['COMPELETED'],
+      'role_id': 3,
+      'user_id': _authService.user!.id,
+      'relations': ['owner', 'images', 'assigned.petsitter']
+    });
+
+    apiResult.when(success: (data) {
+      jobHistory = data;
+      setLoading('history', false);
+    }, failure: (NetworkExceptions error) {
+      setLoading('history', false);
+    });
+  }
+
+  Future<ApiResult<List<Job>>> getJobs(params) async {
+    ApiResult<List<Job>> apiResult = await _apiService.getJobList(params);
+    return apiResult;
   }
 
   Future<List<Map<String, dynamic>>?> getJobResponse(jobID) async {
@@ -196,5 +223,27 @@ class HomeViewModel extends BaseViewModel {
 
   bool isOwner() {
     return _authService.isOwner();
+  }
+
+  setLoading(key, bool val) {
+    loading[key] = val;
+    notifyListeners();
+  }
+
+  get isOpenJobLoading {
+    return this.loading['open'];
+  }
+
+  get isHistoryJobLoading {
+    return this.loading['history'];
+  }
+
+  List<Job> get jobHistory {
+    return _jobHistory;
+  }
+
+  set jobHistory(List<Job> val) {
+    _jobHistory = val;
+    notifyListeners();
   }
 }

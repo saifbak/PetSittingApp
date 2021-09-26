@@ -3,6 +3,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.router.dart';
+import 'package:whiskers_away_app/src/core/enums/role_enum.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_heading.dart';
 import 'package:whiskers_away_app/src/shared/app_listing_card.dart';
@@ -106,7 +107,7 @@ class _Body extends StatelessWidget {
                   child: AppListingCard(
                     model,
                     request: request,
-                    role: Roles.petSitter,
+                    role: Role.PET_SITTER,
                   ),
                 );
               },
