@@ -1,4 +1,5 @@
 import 'package:stacked/stacked.dart';
+import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
 import 'package:whiskers_away_app/src/services/remote/api_service.dart';
 import 'package:whiskers_away_app/src/services/local/auth_service.dart';
@@ -19,18 +20,19 @@ class PetDetailsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<dynamic> requestToPetSit(payload, desc, ctx) async {
+  Future<dynamic> requestToPetSit(payload, data, ctx) async {
     setBusy(true);
     try {
       dialogService.showCustomDialog(
           variant: 'spinner', barrierDismissible: true);
 
       // payload['petowner_id'] = _authService.user!.id;
-      ApiResult apiResult = await _apiService.requestToPetSit(payload, desc);
+      ApiResult apiResult = await _apiService.requestToPetSit(payload, data);
 
       apiResult.when(success: (data) {
-        print(data);
+        AppUtils.toastShow("Yor Proposal has been submitted");
       }, failure: (NetworkExceptions error) {
+        AppUtils.toastShow("Yor Proposal has not been submitted !");
         showErrorAlert(error);
         //NetworkExceptions.getErrorMessage(error);
       });

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
 import 'package:whiskers_away_app/src/services/local/auth_service.dart';
 
@@ -45,8 +46,10 @@ class SignUpViewModel extends BaseViewModel {
 
       apiResult.when(success: (data) {
         showSuccessAlert();
+        AppUtils.toastShow("User Registered Successfully");
         print(data);
       }, failure: (NetworkExceptions error) {
+        AppUtils.toastShow("Unsuccessful Registration !");
         showErrorAlert(error);
       });
 

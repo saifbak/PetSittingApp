@@ -29,12 +29,8 @@ class ApiService {
     try {
       ResponseWrapper response =
           await _apiClient.postReq("/signup", data: userRequest.toJson());
-      // SnackbarService().showSnackbar(message: "");
-      AppUtils.toastShow("User Registered Successfully");
       return ApiResult.success(data: response.data);
     } catch (e) {
-      AppUtils.toastShow("Unsuccessful Registration !");
-      // SnackbarService().showSnackbar(message: "Unsuccessful Registration !");
       return ApiResult.failure(
         error: NetworkExceptions.getDioException(e),
       );
@@ -71,7 +67,7 @@ class ApiService {
     try {
       var response = await _apiClient.postReq(
         "job/upload/image",
-        data: FormData.fromMap(data),
+        data: data,
       );
       return ApiResult.success(data: response.data);
     } catch (e) {
@@ -84,7 +80,7 @@ class ApiService {
     try {
       var response = await _apiClient.postReq(
         "user/upload/profileimage",
-        data: FormData.fromMap(data),
+        data: data,
       );
       return ApiResult.success(data: response.data);
     } catch (e) {
@@ -180,7 +176,6 @@ class ApiService {
     try {
       ResponseWrapper response = await _apiClient
           .postReq("/job/RequestToPetSit/${request.toString()}", data: desc);
-
       return ApiResult.success(data: response.data);
     } catch (e) {
       return ApiResult.failure(

@@ -9,6 +9,7 @@ class User {
   String? phone;
   double? hourlyRate;
   String? profileImg;
+  String? description;
 
   User(
       {this.id,

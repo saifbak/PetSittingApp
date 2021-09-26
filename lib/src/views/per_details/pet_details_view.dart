@@ -54,6 +54,7 @@ class _Body extends StatelessWidget {
 
   _Body(this.model, this.request, this.role);
   final replyCtrl = TextEditingController();
+  final priceCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
     print('request id==>');
@@ -242,9 +243,22 @@ class _Body extends StatelessWidget {
                   controller: replyCtrl,
                   hintText: 'Enter your reply',
                   label: '',
-                  prefixIcon: IconlyLight.send,
                   maxLines: 4,
                   padding: EdgeInsets.zero,
+                  // validator: (val) {
+                  //   return DefaultValidator.required(val, "Full Name");
+                  // },
+                ),
+              ),
+              Padding(
+                padding: AppBaseStyles.horizontalPadding,
+                child: AppTextField(
+                  controller: priceCtrl,
+                  hintText: 'Price',
+                  label: '',
+                  maxLines: 1,
+                  padding: EdgeInsets.zero,
+                  textInputType: TextInputType.number,
                   // validator: (val) {
                   //   return DefaultValidator.required(val, "Full Name");
                   // },
@@ -276,10 +290,6 @@ class _Body extends StatelessWidget {
                 ),
               ),
               VerticalSpacing(),
-              Padding(
-                padding: AppBaseStyles.horizontalPadding,
-                child: AppButton(text: 'Add to My Calendar'),
-              ),
               AppSpacing(context).bottomSpacing,
             ],
           ))
@@ -291,7 +301,11 @@ class _Body extends StatelessWidget {
   Future<void> onSubmit(ctx) async {
     try {
       await model.requestToPetSit(
-          request.id, {"description": replyCtrl.text.trim()}, ctx);
+          request.id,
+          {
+            "description": replyCtrl.text.trim(),
+            "price" : double.parse(priceCtrl.text.trim()),
+      }, ctx);
       NavService.explore();
     } catch (e) {
       /* Timer(Duration(seconds: 1), () {
