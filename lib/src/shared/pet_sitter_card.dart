@@ -20,7 +20,10 @@ class PetSitterCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ImageDisplayBox(size: 60, imgUrl: 'assets/images/profile_pic.jpg'),
+          ImageDisplayBox(
+            size: 60,
+            imgUrl: petSitter['petsitter']['profile_img'],
+          ),
           HorizontalSpacing(10),
           Expanded(
             child: Column(
@@ -34,7 +37,7 @@ class PetSitterCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          petSitter['name'],
+                          petSitter['petsitter']['name'],
                           style: AppTextStyles.xLarge(
                             weight: FontWeight.w500,
                           ),
@@ -43,8 +46,8 @@ class PetSitterCard extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      petSitter['hourly_rate'] != null
-                          ? '\$' + petSitter['hourly_rate'] + '/hr'
+                      petSitter['price'] != null
+                          ? '\$' + petSitter['price']
                           : '',
                       style: AppTextStyles.xLarge(
                         weight: FontWeight.w500,
@@ -77,7 +80,7 @@ class PetSitterCard extends StatelessWidget {
                     ),
                     HorizontalSpacing(4),
                     Text(
-                      petSitter['address'],
+                      petSitter['petsitter']['address'],
                       style: AppTextStyles.xxMedium(
                         color: AppColors.darkGray,
                       ),

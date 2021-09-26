@@ -1,17 +1,14 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/models/Job.dart';
-import 'package:whiskers_away_app/src/models/JobResponse.dart';
-import 'package:whiskers_away_app/src/models/Reviews.dart';
 import 'package:whiskers_away_app/src/models/User.dart';
+import 'package:whiskers_away_app/src/models/wrappers/formdata_wrapper.dart';
 import 'package:whiskers_away_app/src/models/wrappers/response_wrapper.dart';
 import 'package:whiskers_away_app/src/services/local/local_storage_service.dart';
 import 'package:whiskers_away_app/src/services/remote/api_client.dart';
 import 'package:whiskers_away_app/src/services/remote/api_result.dart';
 import 'package:whiskers_away_app/src/services/remote/network_exceptions.dart';
-import 'package:whiskers_away_app/src/views/profile/profile_view_model.dart';
 
 class ApiService {
   late ApiClient _apiClient;
@@ -60,7 +57,6 @@ class ApiService {
       );
       return ApiResult.success(data: userDetails);
     } catch (e) {
-
       return ApiResult.failure(
         error: NetworkExceptions.getDioException(e),
       );
@@ -71,7 +67,7 @@ class ApiService {
     try {
       var response = await _apiClient.postReq(
         "job/upload/image",
-        data: FormData.fromMap(data),
+        data: FormDataWrapper.instance.fromMap(data),
       );
       return ApiResult.success(data: response.data);
     } catch (e) {
@@ -84,7 +80,7 @@ class ApiService {
     try {
       var response = await _apiClient.postReq(
         "user/upload/profileimage",
-        data: FormData.fromMap(data),
+        data: FormDataWrapper.instance.fromMap(data),
       );
       return ApiResult.success(data: response.data);
     } catch (e) {
@@ -138,6 +134,20 @@ class ApiService {
 
       return ApiResult.success(data: response.data);
     } catch (e) {
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
+    }
+  }
+
+  Future<ApiResult<dynamic>> createPayment(payload) async {
+    try {
+      ResponseWrapper response =
+          await _apiClient.postReq("/payment", data: payload);
+
+      return ApiResult.success(data: response.data);
+    } catch (e) {
+      print(e.toString());
       return ApiResult.failure(
         error: NetworkExceptions.getDioException(e),
       );

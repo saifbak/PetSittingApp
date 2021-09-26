@@ -2,6 +2,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:whiskers_away_app/src/models/User.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_divider.dart';
@@ -25,9 +26,9 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<ProfileViewModel>.reactive(
       viewModelBuilder: () => ProfileViewModel(),
-      // onModelReady: (model) {
-      //   model.reviewResponses();
-      // },
+      onModelReady: (model) {
+        model.userDetails = user;
+      },
       builder: (_, model, __) {
         return Scaffold(
           body: _Body(model),
@@ -44,17 +45,56 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = context.screenSize();
+
+    Map<String, dynamic> additionalDetails = {
+      'price': model.userDetails['price']
+    };
+
     return BaseProfileView(
+        networkImage: model.petUser.profileImg,
+        user: model.petUser,
+        metaData: additionalDetails,
         centerContent: Column(
           children: [
             ExpandedSection(
               expand: !model.fullReviewsDisplay,
               child: Column(
                 children: [
-                  Text(
-                      "Dogs are my life. I have been doing this for 10 years now and I would not choose anything else. I love taking the dogs to the park and having them run around."),
-                  VerticalSpacing(12),
-                  Row(
+                  Container(
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Profile Description',
+                          style: AppTextStyles.xLarge(
+                              color: AppColors.primaryColor,
+                              weight: FontWeight.w500),
+                        ),
+                        VerticalSpacing(5),
+                        Text(model.userDetails['petsitter']['description']),
+                      ],
+                    ),
+                  ),
+                  VerticalSpacing(20),
+                  Container(
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Job Description',
+                          style: AppTextStyles.xLarge(
+                              color: AppColors.primaryColor,
+                              weight: FontWeight.w500),
+                        ),
+                        VerticalSpacing(5),
+                        Text(model.userDetails['description']),
+                      ],
+                    ),
+                  ),
+                  VerticalSpacing(20),
+                  /* Row(
                     children: [
                       LabelWithContent(
                         labelText: 'Experience',
@@ -70,7 +110,7 @@ class _Body extends StatelessWidget {
                       Spacer(),
                     ],
                   ),
-                  VerticalSpacing(12),
+                  VerticalSpacing(12), */
                   AppDivider(),
                   VerticalSpacing(12),
                 ],
@@ -128,7 +168,6 @@ class _Body extends StatelessWidget {
                         children: [
                           ImageDisplayBox(
                             size: 30,
-                            imgUrl: review.authorImgUrl,
                           ),
                         ],
                       ),

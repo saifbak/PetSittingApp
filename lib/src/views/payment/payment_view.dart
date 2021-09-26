@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
+import 'package:whiskers_away_app/src/core/validators/default_validator.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_divider.dart';
 import 'package:whiskers_away_app/src/shared/app_status_visibility_tag.dart';
@@ -18,6 +19,9 @@ class PaymentView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<PaymentViewModel>.nonReactive(
       viewModelBuilder: () => PaymentViewModel(),
+      onModelReady: (model) {
+        model.init();
+      },
       builder: (_, model, __) {
         return Scaffold(
           resizeToAvoidBottomInset: false,
@@ -37,6 +41,8 @@ class _Body extends StatelessWidget {
     final screenSize = context.screenSize();
 
     return BaseProfileView(
+      networkImage: model.petUser.profileImg,
+      user: model.petUser,
       bottomContent: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -44,7 +50,7 @@ class _Body extends StatelessWidget {
             child: AppButton(
               text: 'Make Payment',
               onPressed: () {
-                model.dialogService.showCustomDialog(variant: 'payment');
+                model.makePayment();
               },
             ),
           ),
@@ -62,14 +68,14 @@ class _Body extends StatelessWidget {
                   LabelWithContent(
                     labelText: 'Location',
                     contentIcon: IconlyLight.location,
-                    content: "Pet Sitter’s Home",
+                    content: model.jobProposal['job']['location'],
                   ),
                   VerticalSpacing(16),
                   LabelWithContent(
                     labelText: 'Payment Summary',
                     content: Column(
                       children: [
-                        Row(
+                        /* Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Column(
@@ -97,7 +103,7 @@ class _Body extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  '= \$175',
+                                  '= \$' + model.jobProposal['price'],
                                   style: AppTextStyles.xxMedium(
                                     color: AppColors.darkGray,
                                   ),
@@ -123,7 +129,7 @@ class _Body extends StatelessWidget {
                             ],
                           ),
                         ),
-                        VerticalSpacing(),
+                        VerticalSpacing(), */
                         Row(
                           children: [
                             Text(
@@ -133,9 +139,9 @@ class _Body extends StatelessWidget {
                                 weight: FontWeight.w500,
                               ),
                             ),
-                            HorizontalSpacing(64),
+                            HorizontalSpacing(44),
                             Text(
-                              '= \$185',
+                              '= \$' + model.jobProposal['price'],
                               style: AppTextStyles.xxMedium(
                                 color: AppColors.darkGray,
                               ),
@@ -153,10 +159,10 @@ class _Body extends StatelessWidget {
                   LabelWithContent(
                     labelText: 'Date',
                     contentIcon: IconlyLight.calendar,
-                    content: "Nov. 10 - Nov. 15",
+                    content: model.jobProposal['job']['period'],
                   ),
                   VerticalSpacing(16),
-                  LabelWithContent(
+                  /* LabelWithContent(
                     labelText: 'Rewards',
                     content: '\$10.00',
                   ),
@@ -164,7 +170,7 @@ class _Body extends StatelessWidget {
                   AppStatusVisibilityTag(
                     text: 'Apply Rewards',
                     onPressed: () {},
-                  ),
+                  ), */
                 ],
               ),
             ],
@@ -173,9 +179,14 @@ class _Body extends StatelessWidget {
           AppDivider(),
           VerticalSpacing(20),
           Form(
+            key: model.formKey,
             child: Column(
               children: [
                 AppTextField(
+                  validator: (val) {
+                    return DefaultValidator.required(val, "Card Name");
+                  },
+                  controller: model.nameCtrl,
                   hintText: 'Enter name',
                   label: 'Card Holder Name',
                   padding: EdgeInsets.zero,
@@ -196,30 +207,42 @@ class _Body extends StatelessWidget {
                   ),
                 ),
                 AppTextField(
+                  controller: model.cardCtrl,
                   hintText: 'Enter number',
                   label: 'Card Number',
                   padding: EdgeInsets.zero,
                   labelIcon: IconlyLight.wallet,
+                  validator: (val) {
+                    return DefaultValidator.required(val, "Card Number");
+                  },
                 ),
                 Row(
                   children: [
                     Expanded(
                       child: AppTextField(
-                        hintText: 'XX/XX',
+                        controller: model.dateCtrl,
+                        hintText: 'MM',
                         label: 'Exp. Date',
                         padding: EdgeInsets.zero,
                         labelIcon: IconlyLight.calendar,
                         bottomSpacing: false,
+                        validator: (val) {
+                          return DefaultValidator.required(val, "Card Expiry");
+                        },
                       ),
                     ),
                     HorizontalSpacing(16),
                     Expanded(
                       child: AppTextField(
+                        controller: model.cvcCtrl,
                         hintText: 'XXX',
                         label: 'CVV',
                         padding: EdgeInsets.zero,
                         labelIcon: IconlyLight.wallet,
                         bottomSpacing: false,
+                        validator: (val) {
+                          return DefaultValidator.required(val, "Card CVV");
+                        },
                       ),
                     ),
                   ],

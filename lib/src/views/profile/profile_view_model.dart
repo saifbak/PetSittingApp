@@ -8,6 +8,7 @@ import 'package:whiskers_away_app/src/services/local/reviews_service.dart';
 import 'package:whiskers_away_app/src/services/remote/api_result.dart';
 import 'package:whiskers_away_app/src/services/remote/api_service.dart';
 import 'package:whiskers_away_app/src/services/remote/network_exceptions.dart';
+import 'package:whiskers_away_app/src/services/local/job_service.dart';
 
 class Review {
   final String authorName;
@@ -19,10 +20,22 @@ class Review {
 }
 
 class ProfileViewModel extends BaseViewModel {
+  final _jobService = locator<JobService>();
   bool _fullReviewsDisplay = false;
   bool get fullReviewsDisplay => _fullReviewsDisplay;
   set fullReviewsDisplay(bool val) {
     _fullReviewsDisplay = val;
+    notifyListeners();
+  }
+
+  Map<String, dynamic> _userDetails = {
+    'petsitter': {},
+    'job': {},
+  };
+  Map<String, dynamic> get userDetails => _userDetails;
+  set userDetails(Map<String, dynamic> val) {
+    _userDetails = val;
+    _jobService.selectedJobProposal = val;
     notifyListeners();
   }
 
@@ -86,4 +99,8 @@ class ProfileViewModel extends BaseViewModel {
   //   _reviewService.reviews = val;
   //   notifyListeners();
   // }
+
+  User get petUser {
+    return User.fromJson(_jobService.selectedJobProposal['petsitter']);
+  }
 }

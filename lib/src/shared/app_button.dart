@@ -15,6 +15,7 @@ class AppButton extends StatelessWidget {
     this.onPressed,
     this.horizontalPadding = 20,
     this.child,
+    this.isDisabled = false,
   });
 
   final AppButtonType type;
@@ -23,6 +24,7 @@ class AppButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final double? horizontalPadding;
   final Widget? child;
+  final bool? isDisabled;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,9 @@ class AppButton extends StatelessWidget {
         child: buttonText,
         padding: padding,
         decoration: BoxDecoration(
+          color: !isDisabled!
+              ? Colors.transparent.withOpacity(1)
+              : Colors.transparent.withOpacity(0.4),
           borderRadius: borderRadius,
           gradient: LinearGradient(colors: [
             Color(0xFF4ECEAF),
@@ -64,6 +69,9 @@ class AppButton extends StatelessWidget {
         child: buttonText,
         padding: padding,
         decoration: BoxDecoration(
+          /* color: !isDisabled!
+              ? Colors.transparent.withOpacity(1)
+              : Colors.transparent.withOpacity(0.5), */
           borderRadius: borderRadius,
           border: Border.all(
             color: AppColors.primaryColor,

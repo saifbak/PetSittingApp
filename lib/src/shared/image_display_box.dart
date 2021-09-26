@@ -14,6 +14,8 @@ class ImageDisplayBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(this.imgUrl);
+    print(this.assetDefaultImage);
     return Container(
       width: size,
       height: size,

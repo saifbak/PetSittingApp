@@ -18,7 +18,7 @@ import 'package:whiskers_away_app/src/views/terms_conditions/terms_conditions_vi
 class TermsConditionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<TermsConditionsViewModel>.nonReactive(
+    return ViewModelBuilder<TermsConditionsViewModel>.reactive(
       viewModelBuilder: () => TermsConditionsViewModel(),
       onModelReady: (model) {},
       builder: (_, model, __) {
@@ -93,7 +93,12 @@ class _Body extends StatelessWidget {
                   AppButton(
                     text: 'Accept',
                     fullWidth: true,
-                    onPressed: NavService.payment,
+                    onPressed: () {
+                      if (model.termsAccepted) {
+                        NavService.payment();
+                      }
+                    },
+                    isDisabled: model.termsAccepted == false,
                   ),
                   HorizontalSpacing(18),
                   AppButton(
@@ -118,7 +123,7 @@ class TermsAgreementCheck extends ViewModelWidget<TermsConditionsViewModel> {
   Widget build(BuildContext context, TermsConditionsViewModel model) {
     return Row(
       children: [
-        GestureDetector(
+        InkWell(
           onTap: () => model.termsAccepted = !model.termsAccepted,
           child: Container(
             width: 18,
@@ -137,13 +142,19 @@ class TermsAgreementCheck extends ViewModelWidget<TermsConditionsViewModel> {
                 : SizedBox(),
           ),
         ),
-        HorizontalSpacing(),
-        MultiStyleText(
-          firstText: 'I agree with the ',
-          firstTextStyle: AppTextStyles.xMedium(color: Color(0xFF5C5C5C)),
-          secondText: 'Terms and Conditions',
-          secondTextStyle: AppTextStyles.xMedium(color: AppColors.primaryColor)
-              .copyWith(decoration: TextDecoration.underline),
+        GestureDetector(
+          onTap: () => model.termsAccepted = !model.termsAccepted,
+          child: Container(
+            margin: EdgeInsets.only(left: 10.0),
+            child: MultiStyleText(
+              firstText: 'I agree with the ',
+              firstTextStyle: AppTextStyles.xMedium(color: Color(0xFF5C5C5C)),
+              secondText: 'Terms and Conditions',
+              secondTextStyle:
+                  AppTextStyles.xMedium(color: AppColors.primaryColor)
+                      .copyWith(decoration: TextDecoration.underline),
+            ),
+          ),
         ),
       ],
     );

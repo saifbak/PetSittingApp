@@ -48,7 +48,6 @@ class _Body extends StatelessWidget {
               AppHeading(text: 'My Availability'),
               ImageDisplayBox(
                 size: 30,
-                imgUrl: "assets/images/profile_pic.jpg",
               ),
             ],
           ),

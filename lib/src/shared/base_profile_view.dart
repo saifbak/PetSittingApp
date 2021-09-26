@@ -16,6 +16,7 @@ class BaseProfileView extends StatelessWidget {
       required this.bottomContent,
       required this.appTopBarText,
       this.user,
+      this.metaData,
       this.isEditable = false,
       this.networkImage,
       this.uploadImage,
@@ -29,6 +30,7 @@ class BaseProfileView extends StatelessWidget {
   final String? defaultAssetImage;
   final String? networkImage;
   final User? user;
+  final dynamic metaData;
   final bool isEditable;
   final VoidCallback? onClicked;
 
@@ -80,7 +82,7 @@ class BaseProfileView extends StatelessWidget {
                           VerticalSpacing((profileAvatarSize / 2) - 6),
                           Center(
                             child: Text(
-                              user?.name ?? 'Ralph Johnson',
+                              user?.name ?? '',
                               style: AppTextStyles.xLarge(
                                 color: AppColors.darkGray,
                                 weight: FontWeight.w500,
@@ -98,13 +100,35 @@ class BaseProfileView extends StatelessWidget {
                               ),
                               HorizontalSpacing(4),
                               Text(
-                                'Houston',
+                                user?.address ?? '',
                                 style: AppTextStyles.xxMedium(
                                   color: AppColors.darkGray,
                                 ),
                               ),
                             ],
                           ),
+                          VerticalSpacing(4),
+                          (metaData != null && metaData['price'] != null)
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      '\$',
+                                      style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColors.primaryColor),
+                                    ),
+                                    HorizontalSpacing(3),
+                                    Text(
+                                      metaData['price'],
+                                      style: AppTextStyles.xxMedium(
+                                        color: AppColors.darkGray,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : Container(),
                           VerticalSpacing(12),
                           centerContent,
                         ],

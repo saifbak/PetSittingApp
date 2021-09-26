@@ -9,6 +9,7 @@ class User {
   String? phone;
   double? hourlyRate;
   String? profileImg;
+  String? description;
 
   User(
       {this.id,
@@ -36,5 +37,17 @@ class User {
     data['role_id'] = this.roleId;
     data['profile_img'] = this.profileImg;
     return data;
+  }
+
+  User.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    username = json['username'];
+    email = json['email'];
+    description = json['description'];
+    profileImg = json['profile_img'];
+    phone = json['phone'];
+    address = json['address'];
+    roleId = json['role_id'];
   }
 }
