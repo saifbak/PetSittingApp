@@ -91,30 +91,51 @@ class _Body extends StatelessWidget {
             ),
           ),
         ),
-        Expanded(
-          child: ListView.separated(
-              padding:
-                  AppBaseStyles.horizontalPadding.copyWith(bottom: 16, top: 16),
-              itemBuilder: (_, index) {
-                final request = model.newJobs[index];
-                return GestureDetector(
-                  onTap: () => NavService.petDetails(
-                    arguments: PetDetailsViewArguments(
-                      request: request,
-                      role: Roles.petSitter,
-                    ),
+        model.isBusy
+            ? Expanded(
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.primaryColor,
                   ),
-                  child: AppListingCard(
-                    model,
-                    request: request,
-                    role: Role.PET_SITTER,
-                  ),
-                );
-              },
-              separatorBuilder: (_, __) => VerticalSpacing(16),
-              itemCount: model.newJobs.length),
-        ),
+                ),
+              )
+            : Expanded(
+                child: model.newJobs.length > 0
+                    ? ListView.separated(
+                        padding: AppBaseStyles.horizontalPadding
+                            .copyWith(bottom: 16, top: 16),
+                        itemBuilder: (_, index) {
+                          final request = model.newJobs[index];
+                          return GestureDetector(
+                            onTap: () => NavService.petDetails(
+                              arguments: PetDetailsViewArguments(
+                                request: request,
+                                role: Roles.petSitter,
+                              ),
+                            ),
+                            child: AppListingCard(
+                              model,
+                              request: request,
+                              role: Role.PET_SITTER,
+                            ),
+                          );
+                        },
+                        separatorBuilder: (_, __) => VerticalSpacing(16),
+                        itemCount: model.newJobs.length)
+                    : noRecord('No jobs found...'),
+              ),
       ],
+    );
+  }
+
+  Widget noRecord(String text) {
+    return Expanded(
+      child: Center(
+        child: Text(
+          text,
+          style: AppTextStyles.xLarge(color: AppColors.primaryColor),
+        ),
+      ),
     );
   }
 }

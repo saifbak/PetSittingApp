@@ -65,159 +65,97 @@ class _Body extends StatelessWidget {
           ),
         ),
         VerticalSpacing(14),
-        AppTabBar(
-          onChanged: (type) {
-            if (type == model.ownerRequests[0]) {
-              model.getOpenJobs();
-            }
-            if (type == model.ownerRequests[1]) {
-              model.getJobHistory();
-            }
-          },
-          tabs: model.ownerRequests,
-          pagesContent: [
-            model.isOpenJobLoading
-                ? Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.primaryColor,
-                    ),
-                  )
-                : model.newJobs.length > 0
-                    ? ListView.separated(
-                        padding: AppBaseStyles.horizontalPadding
-                            .copyWith(bottom: 16, top: 16),
-                        itemBuilder: (_, index) {
-                          final request = model.newJobs[index];
-                          return GestureDetector(
-                            onTap: () async {
-                              await model.getJobResponse(request.id);
-
-                              print(model.jobResponses);
-
-                              await showMaterialModalBottomSheet(
-                                  context: context,
-                                  backgroundColor: Colors.transparent,
-                                  builder: (_) {
-                                    return model.isBusy
-                                        ? Center(
-                                            child: CircularProgressIndicator(
-                                              color: AppColors.primaryColor,
-                                            ),
-                                          )
-                                        : ListingSheet(
-                                            list: model.jobResponses);
-                                    //return Text('sdsdsdds');
-                                    //await model.getJobResponse(request.id);
-                                    //return ListingSheet(list: model.petSittersList);
-                                    /* return FutureBuilder<dynamic>(
-                                  future: model.getJobResponse(request
-                                      .id), // function where you call your api
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<dynamic> snapshot) {
-                                    // AsyncSnapshot<Your object type>
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return Text('sdsd');
-                                    } else {
-                                      print("-------->coming");
-                                      print(snapshot.data);
-                                      if (snapshot.hasError)
-                                        return Center(
-                                            child: Text(
-                                                'Error: ${snapshot.error}'));
-                                      else
-                                        return Center(
-                                            child: new Text('saddsa')); // s
-                                    }
-                                  },
-                                ); */
-                                  });
-
-                              //  NavService.petDetails(
-                              //      arguments: PetDetailsViewArguments(
-                              //   request: request,
-                              //    role: Roles.petOwner,
-                              //   ));
-                            },
-                            child: AppListingCard(
-                              model,
-                              request: request,
-                              role: Role.PET_OWNER,
-                              // model: model,
-                            ),
-                          );
-                        },
-                        separatorBuilder: (_, __) => VerticalSpacing(16),
-                        itemCount: model.newJobs.length,
-                      )
-                    : noRecord('No job request submitted...'),
-            model.isHistoryJobLoading
-                ? Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.primaryColor,
-                    ),
-                  )
-                : Column(
-                    children: [
-                      VerticalSpacing(12),
-                      Container(
-                        margin: AppBaseStyles.horizontalPadding,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Colors.white,
-                        ),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(left: 16),
-                            suffixIcon: Icon(
-                              IconlyLight.filter,
-                              color: AppColors.primaryColor,
-                            ),
-                            hintText: 'Search ...',
-                            hintStyle:
-                                AppTextStyles.xMedium(color: Color(0xFF858585)),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(color: Color(0xFFE7E7E7)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(color: Color(0xFFE7E7E7)),
-                            ),
+        model.isOwner()
+            ? AppTabBar(
+                onChanged: (type) {
+                  if (type == model.ownerRequests[0]) {
+                    model.getOpenJobs();
+                  }
+                  if (type == model.ownerRequests[1]) {
+                    model.getJobHistory();
+                  }
+                },
+                tabs: model.ownerRequests,
+                pagesContent: [
+                  jobs(context),
+                  model.isHistoryJobLoading
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.primaryColor,
                           ),
+                        )
+                      : Column(
+                          children: [
+                            VerticalSpacing(12),
+                            Container(
+                              margin: AppBaseStyles.horizontalPadding,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.white,
+                              ),
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.only(left: 16),
+                                  suffixIcon: Icon(
+                                    IconlyLight.filter,
+                                    color: AppColors.primaryColor,
+                                  ),
+                                  hintText: 'Search ...',
+                                  hintStyle: AppTextStyles.xMedium(
+                                      color: Color(0xFF858585)),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide:
+                                        BorderSide(color: Color(0xFFE7E7E7)),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide:
+                                        BorderSide(color: Color(0xFFE7E7E7)),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            model.jobHistory.length > 0
+                                ? Expanded(
+                                    child: ListView.separated(
+                                        padding: AppBaseStyles.horizontalPadding
+                                            .copyWith(bottom: 16, top: 16),
+                                        itemBuilder: (_, index) {
+                                          final request =
+                                              model.jobHistory[index];
+                                          return GestureDetector(
+                                            onTap: () => NavService.petDetails(
+                                                /* arguments:
+                                                  PetDetailsViewArguments(
+                                                request: request,
+                                                role: Roles.petOwner,
+                                              ), */
+                                                ),
+                                            child: AppListingCard(
+                                              model,
+                                              request: request,
+                                              role: Role.PET_OWNER,
+                                              hideResponse: true,
+                                              showRating:
+                                                  request.assigned?['review'] !=
+                                                          null
+                                                      ? false
+                                                      : true,
+                                            ),
+                                          );
+                                        },
+                                        separatorBuilder: (_, __) =>
+                                            VerticalSpacing(16),
+                                        itemCount: model.jobHistory.length),
+                                  )
+                                : noRecord('No job completed at the moment...'),
+                          ],
                         ),
-                      ),
-                      model.jobHistory.length > 0
-                          ? Expanded(
-                              child: ListView.separated(
-                                  padding: AppBaseStyles.horizontalPadding
-                                      .copyWith(bottom: 16, top: 16),
-                                  itemBuilder: (_, index) {
-                                    final request = model.jobHistory[index];
-                                    return GestureDetector(
-                                      onTap: () => NavService.petDetails(
-                                        arguments: PetDetailsViewArguments(
-                                          request: request,
-                                          role: Roles.petOwner,
-                                        ),
-                                      ),
-                                      child: AppListingCard(
-                                        model,
-                                        request: request,
-                                        role: Role.PET_OWNER,
-                                      ),
-                                    );
-                                  },
-                                  separatorBuilder: (_, __) =>
-                                      VerticalSpacing(16),
-                                  itemCount: model.jobHistory.length),
-                            )
-                          : noRecord('No job completed at the moment...'),
-                    ],
-                  ),
-          ],
-        ),
+                ],
+              )
+            : Expanded(child: jobs(context)),
         VerticalSpacing(16),
         model.isOwner()
             ? Row(
@@ -245,5 +183,86 @@ class _Body extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget jobs(context) {
+    return model.isOpenJobLoading
+        ? Center(
+            child: CircularProgressIndicator(
+              color: AppColors.primaryColor,
+            ),
+          )
+        : model.newJobs.length > 0
+            ? ListView.separated(
+                padding: AppBaseStyles.horizontalPadding
+                    .copyWith(bottom: 16, top: 16),
+                itemBuilder: (_, index) {
+                  final request = model.newJobs[index];
+                  return GestureDetector(
+                    onTap: () async {
+                      if (model.isOwner()) {
+                        await showMaterialModalBottomSheet(
+                            context: context,
+                            backgroundColor: Colors.transparent,
+                            builder: (_) {
+                              return model.isBusy
+                                  ? Center(
+                                      child: CircularProgressIndicator(
+                                        color: AppColors.primaryColor,
+                                      ),
+                                    )
+                                  : ListingSheet(list: model.jobResponses);
+                              //return Text('sdsdsdds');
+                              //await model.getJobResponse(request.id);
+                              //return ListingSheet(list: model.petSittersList);
+                              /* return FutureBuilder<dynamic>(
+                                  future: model.getJobResponse(request
+                                      .id), // function where you call your api
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<dynamic> snapshot) {
+                                    // AsyncSnapshot<Your object type>
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return Text('sdsd');
+                                    } else {
+                                      print("-------->coming");
+                                      print(snapshot.data);
+                                      if (snapshot.hasError)
+                                        return Center(
+                                            child: Text(
+                                                'Error: ${snapshot.error}'));
+                                      else
+                                        return Center(
+                                            child: new Text('saddsa')); // s
+                                    }
+                                  },
+                                ); */
+                            });
+                      }
+
+                      await model.getJobResponse(request.id);
+
+                      print(model.jobResponses);
+
+                      //  NavService.petDetails(
+                      //      arguments: PetDetailsViewArguments(
+                      //   request: request,
+                      //    role: Roles.petOwner,
+                      //   ));
+                    },
+                    child: AppListingCard(
+                      model,
+                      request: request,
+                      role: Role.PET_OWNER,
+                      showRating: false,
+                      hideResponse: model.isOwner() ? false : true,
+                      // model: model,
+                    ),
+                  );
+                },
+                separatorBuilder: (_, __) => VerticalSpacing(16),
+                itemCount: model.newJobs.length,
+              )
+            : noRecord('No job request submitted...');
   }
 }

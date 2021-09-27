@@ -10,6 +10,9 @@ class User {
   double? hourlyRate;
   String? profileImg;
   String? description;
+  int? overallRating;
+  String? ratingFormatted;
+  List<dynamic> reviews = [];
 
   User(
       {this.id,
@@ -49,5 +52,8 @@ class User {
     phone = json['phone'];
     address = json['address'];
     roleId = json['role_id'];
+    overallRating = json['overall_rating'];
+    ratingFormatted = json['rating_formatted'];
+    reviews = json['reviews'] ?? [];
   }
 }

@@ -12,20 +12,25 @@ import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
 import 'package:whiskers_away_app/src/views/options_select/options_select_view_model.dart';
+import 'package:whiskers_away_app/src/views/user_review/user_review_view.dart';
 
 class AppListingCard extends StatelessWidget {
-  const AppListingCard(
+  AppListingCard(
     this.model, {
     required this.request,
     required this.role,
+    this.hideResponse = false,
+    this.showRating = false,
   });
+
   final model;
   final Job request;
   final Role role;
+  bool hideResponse;
+  bool showRating;
   @override
   Widget build(BuildContext context) {
     final petSitterRole = role == Role.PET_SITTER;
-
     return AppBaseCard(
       child: Column(
         children: [
@@ -106,36 +111,38 @@ class AppListingCard extends StatelessWidget {
                     ] else
                       Row(children: [
                         AppStatusVisibilityTag(text: request.jobStatus ?? ''),
-                        Container(
-                            padding: EdgeInsets.only(left: 5),
-                            child: GestureDetector(
-                              // padding: EdgeInsets.only(left: 10),
-                              onTap: () {
-                                onSubmit(context);
+                        hideResponse == false
+                            ? Container(
+                                padding: EdgeInsets.only(left: 5),
+                                child: InkWell(
+                                  // padding: EdgeInsets.only(left: 10),
+                                  onTap: () {
+                                    onSubmit(context);
 
-                                model.bottomSheetService
-                                    .showCustomSheet(variant: 'listing');
-                              },
-                              child: Icon(
-                                Icons.more_vert_rounded,
-                                size: 18,
-                                color: AppColors.primaryColor,
-                              ),
-                            ))
+                                    model.bottomSheetService
+                                        .showCustomSheet(variant: 'listing');
+                                  },
+                                  child: Icon(
+                                    Icons.more_vert_rounded,
+                                    size: 18,
+                                    color: AppColors.primaryColor,
+                                  ),
+                                ))
+                            : Container()
                       ])
                   ],
                 ),
               ),
             ],
           ),
-          if (petSitterRole || role == Role.MANAGER) ...[
+          /*  if (petSitterRole || role == Role.MANAGER) ...[
             VerticalSpacing(12),
             Text(
               request.description ?? '',
               style: AppTextStyles.xMedium(color: AppColors.gray),
             ),
           ],
-          VerticalSpacing(4),
+          VerticalSpacing(4), */
           Row(
             children: [
               Icon(
@@ -157,9 +164,42 @@ class AppListingCard extends StatelessWidget {
                   weight: FontWeight.w500,
                   color: AppColors.primaryColor,
                 ),
-              )
+              ),
             ],
-          )
+          ),
+          showRating
+              ? InkWell(
+                  child: Column(
+                    children: [
+                      VerticalSpacing(20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Icon(
+                            IconlyBold.star,
+                            size: 16,
+                            color: AppColors.primaryColor,
+                          ),
+                          HorizontalSpacing(4),
+                          Text(
+                            'Give Rating',
+                            style: AppTextStyles.xxMedium(
+                              color: AppColors.darkGray,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    NavService.userReviewView(
+                      arguments: UserReviewViewArguments(
+                        assignedJob: request,
+                      ),
+                    );
+                  },
+                )
+              : Container()
         ],
       ),
     );

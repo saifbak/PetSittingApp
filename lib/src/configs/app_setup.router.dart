@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
+import 'package:whiskers_away_app/src/views/user_review/user_review_view.dart';
 
 import '../models/Job.dart';
 import '../views/auth/login/login_view.dart';
@@ -42,6 +43,7 @@ class Routes {
   static const String paymentView = '/payment-view';
   static const String profileView = '/profile-view';
   static const String petDetailsView = '/pet-details-view';
+  static const String userReviewView = '/user-review-view';
   static const String landingView = '/landing-view';
   static const String myEmployeesView = '/my-employees-view';
   static const String employeeDetailsView = '/employee-details-view';
@@ -63,6 +65,7 @@ class Routes {
     myEmployeesView,
     employeeDetailsView,
     userProfileView,
+    userReviewView
   };
 }
 
@@ -86,6 +89,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.myEmployeesView, page: MyEmployeesView),
     RouteDef(Routes.employeeDetailsView, page: EmployeeDetailsView),
     RouteDef(Routes.userProfileView, page: UserProfileView),
+    RouteDef(Routes.userReviewView, page: UserReviewView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -192,6 +196,15 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    UserReviewView: (data) {
+      var args = data.getArgs<UserReviewViewArguments>(nullOk: false);
+
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
+        builder: (context) => UserReviewView(
+          assignedJob: args.assignedJob,
+        ),
+      );
+    },
   };
 }
 
@@ -216,4 +229,9 @@ class PetDetailsViewArguments {
 class LandingViewArguments {
   final List<NavBarItem> navBarItems;
   LandingViewArguments({required this.navBarItems});
+}
+
+class UserReviewViewArguments {
+  dynamic assignedJob;
+  UserReviewViewArguments({required this.assignedJob});
 }

@@ -39,6 +39,8 @@ class RequestSubmitViewModel extends BaseViewModel {
       ApiResult apiResult = await _apiService.sendPetRequest(payload);
 
       apiResult.when(success: (data) async {
+        print("WHENEE SUBMIT");
+        print(selectedImageFile);
         if (selectedImageFile != null) {
           await uploadImage(selectedImageFile!, data['id']);
         }

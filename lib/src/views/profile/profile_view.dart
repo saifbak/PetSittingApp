@@ -1,4 +1,5 @@
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -121,19 +122,20 @@ class _Body extends StatelessWidget {
                 MultiStyleText(
                   firstText: 'Reviews ',
                   firstTextStyle: AppTextStyles.xLarge(weight: FontWeight.w500),
-                  secondText: '(20)',
+                  secondText:
+                      '(' + model.petUser.reviews.length.toString() + ')',
                   secondTextStyle:
                       AppTextStyles.xLarge(weight: FontWeight.w300),
                 ),
                 Spacer(),
                 Text(
-                  '5.0',
+                  model.petUser.ratingFormatted!,
                   style: AppTextStyles.xxLarge(color: AppColors.gray),
                 ),
                 HorizontalSpacing(4),
                 Row(
                   children: List.generate(
-                    5,
+                    model.petUser.overallRating!,
                     (index) => Icon(
                       Icons.star,
                       size: 16,
@@ -157,9 +159,9 @@ class _Body extends StatelessWidget {
                 contentSeparator: VerticalSpacing(12),
                 readMoreCallback: (val) => model.fullReviewsDisplay = val,
                 readMoreContent: model.fullReviewsDisplay,
-                contentLength: model.reviewsList.length,
+                contentLength: model.petUser.reviews.length,
                 contentItemBuilder: (_, index) {
-                  final review = model.reviewsList[index];
+                  final review = model.petUser.reviews[index];
                   // print(review);
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,6 +169,9 @@ class _Body extends StatelessWidget {
                       Column(
                         children: [
                           ImageDisplayBox(
+                            imgUrl: review['petowner'] != null
+                                ? review['petowner']['profile_img']
+                                : null,
                             size: 30,
                           ),
                         ],
@@ -179,11 +184,15 @@ class _Body extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  review.authorName,
+                                  review['petowner'] != null
+                                      ? review['petowner']['name']
+                                      : '',
                                   style: AppTextStyles.xMedium(),
                                 ),
                                 Text(
-                                  review.date,
+                                  review['job'] != null
+                                      ? review['job']['period']
+                                      : '',
                                   style: AppTextStyles.xxSmall(
                                     color: AppColors.gray,
                                   ),
@@ -193,7 +202,7 @@ class _Body extends StatelessWidget {
                             VerticalSpacing(4),
                             Row(
                               children: List.generate(
-                                5,
+                                review['overall_rating'],
                                 (index) => Icon(
                                   Icons.star,
                                   size: 16,
@@ -202,10 +211,20 @@ class _Body extends StatelessWidget {
                               ),
                             ),
                             VerticalSpacing(4),
-                            Text(
-                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt',
-                              style: AppTextStyles.xMedium(
-                                color: AppColors.gray,
+                            InkWell(
+                              onTap: () async {
+                                await showMaterialModalBottomSheet(
+                                    context: context,
+                                    backgroundColor: Colors.transparent,
+                                    builder: (_) {
+                                      return reviewDetailDialog(_, review);
+                                    });
+                              },
+                              child: Text(
+                                review['comment'],
+                                style: AppTextStyles.xMedium(
+                                  color: AppColors.gray,
+                                ),
                               ),
                             )
                           ],
@@ -235,5 +254,144 @@ class _Body extends StatelessWidget {
           ],
         ),
         appTopBarText: 'Pet Sitter Details');
+  }
+
+  Widget reviewDetailDialog(context, review) {
+    final screenSize = MediaQuery.of(context).size;
+
+    return Container(
+      padding: const EdgeInsets.only(left: 40, right: 40, top: 35),
+      constraints: BoxConstraints(
+        maxHeight: screenSize.height * .5,
+        minHeight: screenSize.height * .5,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(24),
+        ),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: AppColors.gray,
+                    width: 2.0,
+                  ),
+                ),
+              ),
+              child: Text(
+                'Pet Sitter Review Details',
+                style: AppTextStyles.large(
+                  color: AppColors.darkGray,
+                  weight: FontWeight.w700,
+                ),
+              ),
+            ),
+            VerticalSpacing(30),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'How well did they take care of your pet?',
+                      style: AppTextStyles.xxLarge(weight: FontWeight.w500),
+                    ),
+                    VerticalSpacing(),
+                    Row(
+                      children: [
+                        Row(
+                          children: List.generate(
+                            review['question1'],
+                            (index) => Icon(
+                              Icons.star,
+                              size: 16,
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+                        ),
+                        HorizontalSpacing(),
+                        Text(
+                          '(' + review['question1'].toString() + '/5)',
+                          style: AppTextStyles.xLarge(),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+                VerticalSpacing(25.0),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Would you recommend?',
+                      style: AppTextStyles.xxLarge(weight: FontWeight.w500),
+                    ),
+                    VerticalSpacing(),
+                    Row(
+                      children: [
+                        Row(
+                          children: List.generate(
+                            review['question2'],
+                            (index) => Icon(
+                              Icons.star,
+                              size: 16,
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+                        ),
+                        HorizontalSpacing(),
+                        Text(
+                          '(' + review['question2'].toString() + '/5)',
+                          style: AppTextStyles.xLarge(),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+                VerticalSpacing(25.0),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Would you hire again?',
+                      style: AppTextStyles.xxLarge(weight: FontWeight.w500),
+                    ),
+                    VerticalSpacing(),
+                    Row(
+                      children: [
+                        Row(
+                          children: List.generate(
+                            review['question3'],
+                            (index) => Icon(
+                              Icons.star,
+                              size: 16,
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+                        ),
+                        HorizontalSpacing(),
+                        Text(
+                          '(' + review['question3'].toString() + '/5)',
+                          style: AppTextStyles.xLarge(),
+                        )
+                      ],
+                    )
+                  ],
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

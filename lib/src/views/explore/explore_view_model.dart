@@ -108,10 +108,13 @@ class ExploreViewModel extends BaseViewModel {
 
   Future<List<Job>?> getExploreJobs() async {
     setBusy(true);
-    ApiResult<List<Job>> apiResult = await _apiService.getExploreJobs();
+    ApiResult<List<Job>> apiResult = await _apiService.getJobList({
+      'status': ['NEW'],
+      'relations': ['owner', 'images']
+    });
     apiResult.when(success: (data) {
       newJobs = data;
-      print(newJobs);
+      print(newJobs[0]);
       print(data);
       setBusy(false);
     }, failure: (NetworkExceptions error) {

@@ -36,13 +36,13 @@ class _Body extends StatelessWidget {
   final GlobalKey<State> keyLoader = new GlobalKey<State>();
 
   //Controllers
-  final petCtrl = TextEditingController(text: 'Canis lupus');
-  final locationCtrl = TextEditingController(text: 'New York');
-  final ageCtrl = TextEditingController(text: '13');
-  final weightCtrl = TextEditingController(text: '6.5');
-  final breedCtrl = TextEditingController(text: 'Breed');
-  final fromDateCtrl = TextEditingController(text: '2021-09-15');
-  final toDateCtrl = TextEditingController(text: '2021-09-25');
+  final petCtrl = TextEditingController();
+  final locationCtrl = TextEditingController();
+  final ageCtrl = TextEditingController();
+  final weightCtrl = TextEditingController();
+  final breedCtrl = TextEditingController();
+  final fromDateCtrl = TextEditingController();
+  final toDateCtrl = TextEditingController();
   final descriptionCtrl =
       TextEditingController(text: 'This is test dependent on you');
 
@@ -310,37 +310,37 @@ class ImageUploadOptions extends ViewModelWidget<RequestSubmitViewModel> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Row(
-            children: [
-              Icon(
-                Icons.camera,
-                color: AppColors.primaryColor,
-              ),
-              HorizontalSpacing(4),
-              GestureDetector(
-                onTap: () {
-                  model.getFromCamera();
-                },
-                child: Text(
+          GestureDetector(
+            onTap: () {
+              model.getFromCamera();
+            },
+            child: Row(
+              children: [
+                Icon(
+                  Icons.camera,
+                  color: AppColors.primaryColor,
+                ),
+                HorizontalSpacing(4),
+                Text(
                   'Camera',
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          Row(
-            children: [
-              Icon(
-                Icons.image,
-                color: AppColors.primaryColor,
-              ),
-              HorizontalSpacing(4),
-              GestureDetector(
-                child: Text('Gallery'),
-                onTap: () {
-                  model.getFromGallery();
-                },
-              ),
-            ],
+          GestureDetector(
+            onTap: () {
+              model.getFromGallery();
+            },
+            child: Row(
+              children: [
+                Icon(
+                  Icons.image,
+                  color: AppColors.primaryColor,
+                ),
+                HorizontalSpacing(4),
+                Text('Gallery'),
+              ],
+            ),
           ),
         ],
       ),

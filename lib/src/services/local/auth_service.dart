@@ -17,6 +17,8 @@ import 'package:whiskers_away_app/src/views/my_availability/my_availability_view
 
 import 'dart:io';
 
+import 'package:whiskers_away_app/src/views/my_employees/my_employees_view.dart';
+
 class AuthService with ReactiveServiceMixin {
   ReactiveValue<User?> _user = ReactiveValue<User?>(null);
   ReactiveValue<Role?> _role = ReactiveValue<Role?>(null);
@@ -34,19 +36,23 @@ class AuthService with ReactiveServiceMixin {
   }
 
   set role(Role? val) {
+    print("ooooooooo");
+    print(val);
     _role.value = val;
   }
 
   int getRoleById() {
     Role? val = role;
-    /* print(
+    print(
       "val------",
-    ); 
-    print(val.toString());*/
+    );
+    print(val.toString());
     if (val.toString() == 'Role.PET_SITTER') {
       return 4;
     } else if (val.toString() == 'Role.PET_OWNER') {
       return 3;
+    } else if (val.toString() == 'Role.MANAGER') {
+      return 2;
     } else {
       return 4;
     }
@@ -58,6 +64,8 @@ class AuthService with ReactiveServiceMixin {
       return Role.PET_SITTER;
     } else if (roleID == 3) {
       return Role.PET_OWNER;
+    } else if (roleID == 2) {
+      return Role.MANAGER;
     } else {
       return Role.PET_OWNER;
     }
@@ -86,8 +94,25 @@ class AuthService with ReactiveServiceMixin {
             ),
             NavBarItem(
               IconlyLight.work,
-              'My Availability',
+              'My Bookings',
               MyAvailabilityView(),
+            ),
+          ],
+        ),
+      );
+    } else if (selected == Role.MANAGER) {
+      NavService.landing(
+        arguments: LandingViewArguments(
+          navBarItems: [
+            NavBarItem(
+              IconlyLight.search,
+              'Bookings',
+              HomeView(),
+            ),
+            NavBarItem(
+              IconlyLight.user2,
+              'My Employees',
+              MyEmployeesView(),
             ),
           ],
         ),
@@ -113,6 +138,17 @@ class AuthService with ReactiveServiceMixin {
       return false;
     }
     if (role == Role.PET_SITTER) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool isManager() {
+    if (role == null) {
+      return false;
+    }
+    if (role == Role.MANAGER) {
       return true;
     } else {
       return false;

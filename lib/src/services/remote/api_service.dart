@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' as DIO;
 import 'package:stacked_services/stacked_services.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/models/Job.dart';
@@ -63,10 +64,11 @@ class ApiService {
     try {
       var response = await _apiClient.postReq(
         "job/upload/image",
-        data: FormDataWrapper.instance.fromMap(data),
+        data: DIO.FormData.fromMap(data),
       );
       return ApiResult.success(data: response.data);
     } catch (e) {
+      print(e.toString());
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }
   }
@@ -76,7 +78,7 @@ class ApiService {
     try {
       var response = await _apiClient.postReq(
         "user/upload/profileimage",
-        data: FormDataWrapper.instance.fromMap(data),
+        data: DIO.FormData.fromMap(data),
       );
       return ApiResult.success(data: response.data);
     } catch (e) {
@@ -87,7 +89,7 @@ class ApiService {
   Future<ApiResult<User>> getUserDetails() async {
     try {
       ResponseWrapper response = await _apiClient.getReq("/user/details");
-
+      print(response.data);
       final User userDetails = User(
         email: response.data['email'],
         name: response.data['name'],
@@ -112,6 +114,20 @@ class ApiService {
     try {
       ResponseWrapper response =
           await _apiClient.postReq("/user/updatedetails", data: userData);
+
+      return ApiResult.success(data: response.data);
+    } catch (e) {
+      print(e.toString());
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
+    }
+  }
+
+  Future<ApiResult<dynamic>> submitReview(userData) async {
+    try {
+      ResponseWrapper response =
+          await _apiClient.postReq("/job/reviewsubmit", data: userData);
 
       return ApiResult.success(data: response.data);
     } catch (e) {
@@ -171,6 +187,8 @@ class ApiService {
       ResponseWrapper response =
           await _apiClient.postReq("/job/list", data: params);
       List<Job> jobs = response.data.map<Job>((item) {
+        print("item");
+        print(item);
         return new Job.fromJson(item);
       }).toList();
       return ApiResult.success(data: jobs);

@@ -187,7 +187,10 @@ class _Body extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       color: AppColors.whisper,
                       image: DecorationImage(
-                        image: AssetImage('assets/images/profile_pic.jpg'),
+                        image: request.owner != null
+                            ? NetworkImage(request.owner?['profile_img'])
+                            : AssetImage('assets/images/pet.jpg')
+                                as ImageProvider,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -304,8 +307,9 @@ class _Body extends StatelessWidget {
           request.id,
           {
             "description": replyCtrl.text.trim(),
-            "price" : double.parse(priceCtrl.text.trim()),
-      }, ctx);
+            "price": double.parse(priceCtrl.text.trim()),
+          },
+          ctx);
       NavService.explore();
     } catch (e) {
       /* Timer(Duration(seconds: 1), () {

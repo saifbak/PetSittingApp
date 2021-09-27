@@ -28,10 +28,10 @@ class PaymentViewModel extends BaseViewModel {
   }
 
   void init() {
-    nameCtrl = TextEditingController(text: 'Test');
-    cardCtrl = TextEditingController(text: '4242424242424242');
-    dateCtrl = TextEditingController(text: '06/2022');
-    cvcCtrl = TextEditingController(text: '314');
+    nameCtrl = TextEditingController();
+    cardCtrl = TextEditingController();
+    dateCtrl = TextEditingController();
+    cvcCtrl = TextEditingController();
   }
 
   Future<dynamic> makePayment() async {

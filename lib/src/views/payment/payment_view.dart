@@ -24,7 +24,7 @@ class PaymentView extends StatelessWidget {
       },
       builder: (_, model, __) {
         return Scaffold(
-          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: true,
           body: _Body(model),
         );
       },
@@ -40,219 +40,227 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenSize = context.screenSize();
 
-    return BaseProfileView(
-      networkImage: model.petUser.profileImg,
-      user: model.petUser,
-      bottomContent: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: AppButton(
-              text: 'Make Payment',
-              onPressed: () {
-                model.makePayment();
-              },
+    return SingleChildScrollView(
+      child: BaseProfileView(
+        networkImage: model.petUser.profileImg,
+        user: model.petUser,
+        bottomContent: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: AppButton(
+                text: 'Make Payment',
+                onPressed: () {
+                  model.makePayment();
+                },
+              ),
             ),
-          ),
-        ],
-      ),
-      centerContent: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          ],
+        ),
+        centerContent: Container(
+          child: Column(
             children: [
-              Column(
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  LabelWithContent(
-                    labelText: 'Location',
-                    contentIcon: IconlyLight.location,
-                    content: model.jobProposal['job']['location'],
-                  ),
-                  VerticalSpacing(16),
-                  LabelWithContent(
-                    labelText: 'Payment Summary',
-                    content: Column(
-                      children: [
-                        /* Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      LabelWithContent(
+                        labelText: 'Location',
+                        contentIcon: IconlyLight.location,
+                        content: model.jobProposal['job']['location'],
+                      ),
+                      VerticalSpacing(16),
+                      LabelWithContent(
+                        labelText: 'Payment Summary',
+                        content: Column(
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            /* Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '\$35 per day x 5',
+                                        style: AppTextStyles.xxMedium(
+                                          color: AppColors.darkGray,
+                                          weight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      VerticalSpacing(2),
+                                      Text(
+                                        'Rewards',
+                                        style: AppTextStyles.xxMedium(
+                                          color: AppColors.gray,
+                                          weight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  HorizontalSpacing(),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        '= \$' + model.jobProposal['price'],
+                                        style: AppTextStyles.xxMedium(
+                                          color: AppColors.darkGray,
+                                        ),
+                                      ),
+                                      VerticalSpacing(2),
+                                      Text(
+                                        '= \$10',
+                                        style: AppTextStyles.xxMedium(
+                                          color: AppColors.darkGray,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              VerticalSpacing(),
+                              Container(
+                                width: 125,
+                                child: Column(
+                                  children: [
+                                    AppDivider(),
+                                    AppDivider(),
+                                  ],
+                                ),
+                              ),
+                              VerticalSpacing(), */
+                            Row(
                               children: [
                                 Text(
-                                  '\$35 per day x 5',
+                                  'Total',
                                   style: AppTextStyles.xxMedium(
                                     color: AppColors.darkGray,
                                     weight: FontWeight.w500,
                                   ),
                                 ),
-                                VerticalSpacing(2),
-                                Text(
-                                  'Rewards',
-                                  style: AppTextStyles.xxMedium(
-                                    color: AppColors.gray,
-                                    weight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            HorizontalSpacing(),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
+                                HorizontalSpacing(44),
                                 Text(
                                   '= \$' + model.jobProposal['price'],
                                   style: AppTextStyles.xxMedium(
                                     color: AppColors.darkGray,
                                   ),
                                 ),
-                                VerticalSpacing(2),
-                                Text(
-                                  '= \$10',
-                                  style: AppTextStyles.xxMedium(
-                                    color: AppColors.darkGray,
-                                  ),
-                                ),
                               ],
-                            ),
+                            )
                           ],
                         ),
-                        VerticalSpacing(),
-                        Container(
-                          width: 125,
-                          child: Column(
-                            children: [
-                              AppDivider(),
-                              AppDivider(),
-                            ],
-                          ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      LabelWithContent(
+                        labelText: 'Date',
+                        contentIcon: IconlyLight.calendar,
+                        content: model.jobProposal['job']['period'],
+                      ),
+                      VerticalSpacing(16),
+                      /* LabelWithContent(
+                          labelText: 'Rewards',
+                          content: '\$10.00',
                         ),
-                        VerticalSpacing(), */
-                        Row(
+                        VerticalSpacing(12),
+                        AppStatusVisibilityTag(
+                          text: 'Apply Rewards',
+                          onPressed: () {},
+                        ), */
+                    ],
+                  ),
+                ],
+              ),
+              VerticalSpacing(20),
+              AppDivider(),
+              VerticalSpacing(20),
+              Container(
+                child: Form(
+                  key: model.formKey,
+                  child: Column(
+                    children: [
+                      AppTextField(
+                        validator: (val) {
+                          return DefaultValidator.required(val, "Card Name");
+                        },
+                        controller: model.nameCtrl,
+                        hintText: 'Enter name',
+                        label: 'Card Holder Name',
+                        padding: EdgeInsets.zero,
+                        labelIcon: IconlyLight.profile,
+                        endLabel: Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              'Total',
-                              style: AppTextStyles.xxMedium(
-                                color: AppColors.darkGray,
-                                weight: FontWeight.w500,
-                              ),
+                              'Powered by',
+                              style: AppTextStyles.xxSmall(),
                             ),
-                            HorizontalSpacing(44),
-                            Text(
-                              '= \$' + model.jobProposal['price'],
-                              style: AppTextStyles.xxMedium(
-                                color: AppColors.darkGray,
-                              ),
+                            HorizontalSpacing(4),
+                            Image.asset(
+                              'assets/images/stripe_logo.png',
+                              width: 35,
                             ),
                           ],
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  LabelWithContent(
-                    labelText: 'Date',
-                    contentIcon: IconlyLight.calendar,
-                    content: model.jobProposal['job']['period'],
-                  ),
-                  VerticalSpacing(16),
-                  /* LabelWithContent(
-                    labelText: 'Rewards',
-                    content: '\$10.00',
-                  ),
-                  VerticalSpacing(12),
-                  AppStatusVisibilityTag(
-                    text: 'Apply Rewards',
-                    onPressed: () {},
-                  ), */
-                ],
-              ),
-            ],
-          ),
-          VerticalSpacing(20),
-          AppDivider(),
-          VerticalSpacing(20),
-          Form(
-            key: model.formKey,
-            child: Column(
-              children: [
-                AppTextField(
-                  validator: (val) {
-                    return DefaultValidator.required(val, "Card Name");
-                  },
-                  controller: model.nameCtrl,
-                  hintText: 'Enter name',
-                  label: 'Card Holder Name',
-                  padding: EdgeInsets.zero,
-                  labelIcon: IconlyLight.profile,
-                  endLabel: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'Powered by',
-                        style: AppTextStyles.xxSmall(),
+                        ),
                       ),
-                      HorizontalSpacing(4),
-                      Image.asset(
-                        'assets/images/stripe_logo.png',
-                        width: 35,
+                      AppTextField(
+                        controller: model.cardCtrl,
+                        hintText: 'Enter number',
+                        label: 'Card Number',
+                        padding: EdgeInsets.zero,
+                        labelIcon: IconlyLight.wallet,
+                        validator: (val) {
+                          return DefaultValidator.required(val, "Card Number");
+                        },
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: AppTextField(
+                              controller: model.dateCtrl,
+                              hintText: 'MM',
+                              label: 'Exp. Date',
+                              padding: EdgeInsets.zero,
+                              labelIcon: IconlyLight.calendar,
+                              bottomSpacing: false,
+                              validator: (val) {
+                                return DefaultValidator.required(
+                                    val, "Card Expiry");
+                              },
+                            ),
+                          ),
+                          HorizontalSpacing(16),
+                          Expanded(
+                            child: AppTextField(
+                              controller: model.cvcCtrl,
+                              hintText: 'XXX',
+                              label: 'CVV',
+                              padding: EdgeInsets.zero,
+                              labelIcon: IconlyLight.wallet,
+                              bottomSpacing: false,
+                              validator: (val) {
+                                return DefaultValidator.required(
+                                    val, "Card CVV");
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
-                AppTextField(
-                  controller: model.cardCtrl,
-                  hintText: 'Enter number',
-                  label: 'Card Number',
-                  padding: EdgeInsets.zero,
-                  labelIcon: IconlyLight.wallet,
-                  validator: (val) {
-                    return DefaultValidator.required(val, "Card Number");
-                  },
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: AppTextField(
-                        controller: model.dateCtrl,
-                        hintText: 'MM',
-                        label: 'Exp. Date',
-                        padding: EdgeInsets.zero,
-                        labelIcon: IconlyLight.calendar,
-                        bottomSpacing: false,
-                        validator: (val) {
-                          return DefaultValidator.required(val, "Card Expiry");
-                        },
-                      ),
-                    ),
-                    HorizontalSpacing(16),
-                    Expanded(
-                      child: AppTextField(
-                        controller: model.cvcCtrl,
-                        hintText: 'XXX',
-                        label: 'CVV',
-                        padding: EdgeInsets.zero,
-                        labelIcon: IconlyLight.wallet,
-                        bottomSpacing: false,
-                        validator: (val) {
-                          return DefaultValidator.required(val, "Card CVV");
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
+        appTopBarText: 'Payment',
       ),
-      appTopBarText: 'Payment',
     );
   }
 }

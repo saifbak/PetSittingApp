@@ -147,12 +147,23 @@ class HomeViewModel extends BaseViewModel {
   getOpenJobs() async {
     setLoading('open', true);
 
-    ApiResult<List<Job>> apiResult = await getJobs({
-      'status': ['NEW', 'IN_PROGRESS'],
-      'role_id': 3,
-      'user_id': _authService.user!.id,
-      'relations': ['owner', 'images']
-    });
+    Map<String, dynamic> payload = {};
+
+    if (_authService.isOwner()) {
+      payload = {
+        'status': ['NEW', 'IN_PROGRESS'],
+        'role_id': 3,
+        'user_id': _authService.user!.id,
+        'relations': ['owner', 'images', 'reviews']
+      };
+    } else {
+      payload = {
+        'status': ['NEW', 'IN_PROGRESS', 'COMPELETED'],
+        'relations': ['owner', 'images']
+      };
+    }
+
+    ApiResult<List<Job>> apiResult = await getJobs(payload);
 
     apiResult.when(success: (data) {
       newJobs = data;
@@ -169,7 +180,7 @@ class HomeViewModel extends BaseViewModel {
       'status': ['COMPELETED'],
       'role_id': 3,
       'user_id': _authService.user!.id,
-      'relations': ['owner', 'images', 'assigned.petsitter']
+      'relations': ['owner', 'images', 'assigned.petsitter', 'assigned.review']
     });
 
     apiResult.when(success: (data) {

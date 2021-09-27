@@ -119,7 +119,7 @@ class BaseProfileView extends StatelessWidget {
                                           fontWeight: FontWeight.w600,
                                           color: AppColors.primaryColor),
                                     ),
-                                    HorizontalSpacing(3),
+                                    HorizontalSpacing(4),
                                     Text(
                                       metaData['price'],
                                       style: AppTextStyles.xxMedium(
