@@ -21,9 +21,6 @@ class SignUpViewModel extends BaseViewModel {
 
   Future<dynamic> signup(Map<String, dynamic> payload, ctx) async {
     setBusy(true);
-    print(payload);
-    print('===> description -> payload');
-    print(payload['description']);
     try {
       dialogService.showCustomDialog(
           variant: 'spinner', barrierDismissible: true);
@@ -35,9 +32,8 @@ class SignUpViewModel extends BaseViewModel {
         phone: payload['phone'],
         address: payload['address'],
         username: payload['username'],
-        description: payload['description'] != null
-            ? payload['description']
-            : "",
+        description:
+            payload['description'] != null ? payload['description'] : "",
         roleId: _authService.getRoleById(),
       );
       ApiResult apiResult = await _apiService.register(user);
@@ -84,5 +80,10 @@ class SignUpViewModel extends BaseViewModel {
 
   bool isPetSitter() {
     return _authService.isPetSitter();
+  }
+
+  setSignUser(Map<String, dynamic> user) {
+    _authService.signupUser = user;
+    notifyListeners();
   }
 }

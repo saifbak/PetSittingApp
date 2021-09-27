@@ -95,7 +95,7 @@ class _Body extends StatelessWidget {
                     fullWidth: true,
                     onPressed: () {
                       if (model.termsAccepted) {
-                        NavService.payment();
+                        model.signup();
                       }
                     },
                     isDisabled: model.termsAccepted == false,
@@ -158,5 +158,13 @@ class TermsAgreementCheck extends ViewModelWidget<TermsConditionsViewModel> {
         ),
       ],
     );
+  }
+
+  Future<void> onSubmit() async {
+    try {} catch (e) {
+      /* Timer(Duration(seconds: 1), () {
+      model.showErrorAlert(e);
+    }); */
+    }
   }
 }

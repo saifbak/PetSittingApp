@@ -8,6 +8,7 @@ import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.router.dart';
 import 'package:whiskers_away_app/src/core/validators/default_validator.dart';
+import 'package:whiskers_away_app/src/models/User.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/services/remote/network_exceptions.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
@@ -131,15 +132,15 @@ class _Body extends StatelessWidget {
               ),
               model.isPetSitter()
                   ? AppTextField(
-                controller: descriptionCtrl,
-                hintText: 'Profile Description',
-                label: 'Profile Description',
-                textInputType: TextInputType.text,
-                maxLines: 4,
-                validator: (val) {
-                  return DefaultValidator.required(val, "Description");
-                },
-              )
+                      controller: descriptionCtrl,
+                      hintText: 'Profile Description',
+                      label: 'Profile Description',
+                      textInputType: TextInputType.text,
+                      maxLines: 4,
+                      validator: (val) {
+                        return DefaultValidator.required(val, "Description");
+                      },
+                    )
                   : Container(),
               VerticalSpacing(screenSize.height * .025),
               Row(
@@ -206,22 +207,42 @@ class _Body extends StatelessWidget {
   }
 
   Future<void> onSubmit(ctx) async {
-    try {
+    /* User user = User(
+      email: emailCtrl.text.trim(),
+      password: passwordCtrl.text.trim(),
+      username: usernameCtrl.text.trim(),
+      name: nameCtrl.text.trim(),
+      address: addressCtrl.text.trim(),
+      description: model.isPetSitter() ? descriptionCtrl.text.trim() : null,
+      phone: phoneCtrl.text.trim(),
+    ); */
+
+    model.setSignUser({
+      "email": emailCtrl.text.trim(),
+      "password": passwordCtrl.text.trim(),
+      "username": usernameCtrl.text.trim(),
+      "name": nameCtrl.text.trim(),
+      "address": addressCtrl.text.trim(),
+      "description": model.isPetSitter() ? descriptionCtrl.text.trim() : null,
+      "phone": phoneCtrl.text.trim(),
+    });
+
+    NavService.termsConditions();
+
+    /* try {
       await model.signup({
         "email": emailCtrl.text.trim(),
         "password": passwordCtrl.text.trim(),
         "username": usernameCtrl.text.trim(),
         "name": nameCtrl.text.trim(),
         "address": addressCtrl.text.trim(),
-        "description": model.isPetSitter()
-            ? descriptionCtrl.text.trim()
-            : null,
+        "description": model.isPetSitter() ? descriptionCtrl.text.trim() : null,
         "phone": phoneCtrl.text.trim(),
       }, ctx);
     } catch (e) {
       /* Timer(Duration(seconds: 1), () {
         model.showErrorAlert(e);
       }); */
-    }
+    } */
   }
 }

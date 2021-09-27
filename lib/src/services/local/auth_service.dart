@@ -22,17 +22,26 @@ import 'package:whiskers_away_app/src/views/my_employees/my_employees_view.dart'
 class AuthService with ReactiveServiceMixin {
   ReactiveValue<User?> _user = ReactiveValue<User?>(null);
   ReactiveValue<Role?> _role = ReactiveValue<Role?>(null);
+  ReactiveValue<Map<String, dynamic>> _signupUser =
+      ReactiveValue<Map<String, dynamic>>({});
 
   User? get user => _user.value;
   Role? get role => _role.value;
+  Map<String, dynamic> get signupUser => _signupUser.value;
 
   AuthService() {
-    listenToReactiveValues([_user, _role]);
+    listenToReactiveValues([_user, _role, _signupUser]);
   }
 
   set user(User? user) {
     _user.value = user;
     role = getAuthSelectedRole();
+  }
+
+  set signupUser(Map<String, dynamic> user) {
+    print("useruseruser");
+    print(user);
+    _signupUser.value = user;
   }
 
   set role(Role? val) {
