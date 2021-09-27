@@ -200,22 +200,53 @@ class _Body extends StatelessWidget {
                   final request = model.newJobs[index];
                   return GestureDetector(
                     onTap: () async {
-                      if (model.isOwner()) {
-                        await showMaterialModalBottomSheet(
-                            context: context,
-                            backgroundColor: Colors.transparent,
-                            builder: (_) {
-                              return model.isBusy
-                                  ? Center(
-                                      child: CircularProgressIndicator(
-                                        color: AppColors.primaryColor,
-                                      ),
-                                    )
-                                  : ListingSheet(list: model.jobResponses);
-                              //return Text('sdsdsdds');
-                              //await model.getJobResponse(request.id);
-                              //return ListingSheet(list: model.petSittersList);
-                              /* return FutureBuilder<dynamic>(
+                      print(model.jobResponses);
+
+                      //  NavService.petDetails(
+                      //      arguments: PetDetailsViewArguments(
+                      //   request: request,
+                      //    role: Roles.petOwner,
+                      //   ));
+                    },
+                    child: AppListingCard(
+                      model,
+                      request: request,
+                      role: Role.PET_OWNER,
+                      showRating: false,
+                      hideResponse: model.isOwner() ? false : true,
+                      bottomSheetCallback: showBottomSheet(request, context),
+                      // model: model,
+                    ),
+                  );
+                },
+                separatorBuilder: (_, __) => VerticalSpacing(16),
+                itemCount: model.newJobs.length,
+              )
+            : noRecord('No job request submitted...');
+  }
+
+  Function showBottomSheet(request, context) {
+    return () async {
+      await model.getJobResponse(request.id).then((value) => null);
+
+      if (model.isOwner()) {
+        await showMaterialModalBottomSheet(
+            context: context,
+            backgroundColor: Colors.transparent,
+            builder: (_) {
+              return model.isBusy
+                  ? Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.primaryColor,
+                        ),
+                      ),
+                    )
+                  : ListingSheet(list: model.jobResponses);
+              //return Text('sdsdsdds');
+              //await model.getJobResponse(request.id);
+              //return ListingSheet(list: model.petSittersList);
+              /* return FutureBuilder<dynamic>(
                                   future: model.getJobResponse(request
                                       .id), // function where you call your api
                                   builder: (BuildContext context,
@@ -237,32 +268,8 @@ class _Body extends StatelessWidget {
                                     }
                                   },
                                 ); */
-                            });
-                      }
-
-                      await model.getJobResponse(request.id);
-
-                      print(model.jobResponses);
-
-                      //  NavService.petDetails(
-                      //      arguments: PetDetailsViewArguments(
-                      //   request: request,
-                      //    role: Roles.petOwner,
-                      //   ));
-                    },
-                    child: AppListingCard(
-                      model,
-                      request: request,
-                      role: Role.PET_OWNER,
-                      showRating: false,
-                      hideResponse: model.isOwner() ? false : true,
-                      // model: model,
-                    ),
-                  );
-                },
-                separatorBuilder: (_, __) => VerticalSpacing(16),
-                itemCount: model.newJobs.length,
-              )
-            : noRecord('No job request submitted...');
+            });
+      }
+    };
   }
 }

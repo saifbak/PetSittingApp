@@ -202,6 +202,7 @@ class HomeViewModel extends BaseViewModel {
     ApiResult<dynamic> apiResult = await _apiService.getJobResponses(jobID);
     apiResult.when(success: (data) {
       jobResponses = data;
+      print(jobResponses);
       setBusy(false);
     }, failure: (NetworkExceptions error) {
       setBusy(false);

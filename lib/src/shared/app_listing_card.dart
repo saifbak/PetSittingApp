@@ -21,11 +21,13 @@ class AppListingCard extends StatelessWidget {
     required this.role,
     this.hideResponse = false,
     this.showRating = false,
+    this.bottomSheetCallback,
   });
 
   final model;
   final Job request;
   final Role role;
+  Function? bottomSheetCallback;
   bool hideResponse;
   bool showRating;
   @override
@@ -42,7 +44,7 @@ class AppListingCard extends StatelessWidget {
                   NavService.petDetails(
                       arguments: PetDetailsViewArguments(
                     request: request,
-                    role: Roles.petOwner,
+                    role: petSitterRole ? Roles.petSitter : Roles.petOwner,
                   ));
                 },
                 child: ImageDisplayBox(
@@ -61,7 +63,8 @@ class AppListingCard extends StatelessWidget {
                         NavService.petDetails(
                             arguments: PetDetailsViewArguments(
                           request: request,
-                          role: Roles.petOwner,
+                          role:
+                              petSitterRole ? Roles.petSitter : Roles.petOwner,
                         ));
                       },
                       child: Column(
@@ -114,13 +117,14 @@ class AppListingCard extends StatelessWidget {
                         hideResponse == false
                             ? Container(
                                 padding: EdgeInsets.only(left: 5),
-                                child: InkWell(
+                                child: GestureDetector(
                                   // padding: EdgeInsets.only(left: 10),
                                   onTap: () {
-                                    onSubmit(context);
-
-                                    model.bottomSheetService
-                                        .showCustomSheet(variant: 'listing');
+                                    //onSubmit(context);
+                                    print(bottomSheetCallback);
+                                    if (bottomSheetCallback != null) {
+                                      bottomSheetCallback!();
+                                    }
                                   },
                                   child: Icon(
                                     Icons.more_vert_rounded,

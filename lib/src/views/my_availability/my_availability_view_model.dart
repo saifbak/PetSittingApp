@@ -30,10 +30,7 @@ class MyAvailabilityViewModel extends BaseViewModel {
 
   Future<List<Job>?> getAllBookings() async {
     setBusy(true);
-    ApiResult<List<Job>> apiResult = await _apiService.getJobList({
-      'status': ['COMPELETED'],
-      'relations': ['owner', 'images']
-    });
+    ApiResult<List<Job>> apiResult = await _apiService.completedJobs();
     apiResult.when(success: (data) {
       jobBookings = data;
       //print(newJobs[0]);

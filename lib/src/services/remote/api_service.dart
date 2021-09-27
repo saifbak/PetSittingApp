@@ -200,6 +200,38 @@ class ApiService {
     }
   }
 
+  Future<ApiResult<List<Job>>> completedJobs() async {
+    try {
+      ResponseWrapper response = await _apiClient.getReq("/job/completed");
+      List<Job> jobs = response.data.map<Job>((item) {
+        return new Job.fromJson(item);
+      }).toList();
+      return ApiResult.success(data: jobs);
+    } catch (e) {
+      print(e);
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
+    }
+  }
+
+  Future<ApiResult<List<dynamic>>> getAllEmployees() async {
+    try {
+      ResponseWrapper response = await _apiClient.getReq("/employees");
+      List<dynamic> employees = response.data.map<dynamic>((item) {
+        //return new Job.fromJson(item);
+        return item;
+      }).toList();
+      print(employees);
+      return ApiResult.success(data: employees);
+    } catch (e) {
+      print(e);
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
+    }
+  }
+
   Future<ApiResult<List<Job>>> getExploreJobs() async {
     try {
       ResponseWrapper response =
