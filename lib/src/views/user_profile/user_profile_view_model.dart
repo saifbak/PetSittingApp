@@ -17,7 +17,7 @@ class UserProfileViewModel extends BaseViewModel {
   final _authService = locator<AuthService>();
   final _apiService = locator<ApiService>();
   final formKey = GlobalKey<FormState>();
-  late TextEditingController addressCtrl, nameCtrl, phoneCtrl, hourlRateCtrl;
+  late TextEditingController addressCtrl, nameCtrl, phoneCtrl, descriptionCtrl;
   File? _selectedImageFile;
 
   Future<dynamic> updateUserDetails(userData) async {
@@ -26,6 +26,7 @@ class UserProfileViewModel extends BaseViewModel {
       _authService.user!.name = data['name'];
       _authService.user!.address = data['address'];
       _authService.user!.phone = data['phone'];
+      _authService.user!.description = data['description'];
       //_authService.user!.hourlyRate = data['hourlyRate'];
       if (selectedImageFile != null) {
         await uploadImage(selectedImageFile!);
@@ -47,7 +48,11 @@ class UserProfileViewModel extends BaseViewModel {
     nameCtrl = TextEditingController(text: user!.name);
     phoneCtrl = TextEditingController(text: user!.phone);
     addressCtrl = TextEditingController(text: user!.address);
-    hourlRateCtrl = TextEditingController(text: user!.hourlyRate.toString());
+    descriptionCtrl = TextEditingController(text: user!.description);
+
+    print('description');
+    print(user!.description);
+    // hourlRateCtrl = TextEditingController(text: user!.hourlyRate.toString());
   }
 
   User? get user {
@@ -70,6 +75,7 @@ class UserProfileViewModel extends BaseViewModel {
     } */
     XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
+      imageQuality: 20,
       //maxWidth: 1800,
       //maxHeight: 1800,
     );

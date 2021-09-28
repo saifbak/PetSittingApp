@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart' as Dio;
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
@@ -11,9 +12,13 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:whiskers_away_app/src/services/remote/api_result.dart';
 import 'package:whiskers_away_app/src/services/remote/network_exceptions.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
+import 'package:intl/intl.dart';
 
 class RequestSubmitViewModel extends BaseViewModel {
   List<String> get petSittingOptions => ['Own home', "Sitter's home"];
+  late TextEditingController fromDateCtrl, toDateCtrl;
+  DateTime selectedDate = DateTime.now();
+
   final _apiService = locator<ApiService>();
   final _authService = locator<AuthService>();
   final dialogService = locator<DialogService>();
@@ -106,6 +111,7 @@ class RequestSubmitViewModel extends BaseViewModel {
   getFromGallery() async {
     XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
+      imageQuality: 20,
       //maxWidth: 1800,
       //maxHeight: 1800,
     );
@@ -118,11 +124,33 @@ class RequestSubmitViewModel extends BaseViewModel {
   getFromCamera() async {
     XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.camera,
+      imageQuality: 20,
       //maxWidth: 1800,
       //maxHeight: 1800,
     );
     if (pickedFile != null) {
       selectedImageFile = File(pickedFile.path);
     }
+  }
+
+  void init() {
+    fromDateCtrl = TextEditingController(
+        text: DateFormat("yyyy-MM-dd").format(selectedDate).toString());
+    toDateCtrl = TextEditingController(
+        text: DateFormat("yyyy-MM-dd").format(selectedDate).toString());
+  }
+
+  datePicker(BuildContext ctx) async {
+    final DateTime? selected = await showDatePicker(
+      context: ctx,
+      initialDate: selectedDate,
+      firstDate: DateTime(2010),
+      lastDate: DateTime(2025),
+    );
+    if (selected != null && selected != selectedDate) {
+      selectedDate = selected;
+    }
+
+    print(DateFormat("yyyy-MM-dd").format(selectedDate).toString());
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
@@ -13,6 +14,7 @@ import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/payment/payment_view_model.dart';
 import 'package:whiskers_away_app/src/views/payment/widgets/label_with_content.dart';
+import 'package:intl/intl.dart';
 
 class PaymentView extends StatelessWidget {
   @override
@@ -141,7 +143,7 @@ class _Body extends StatelessWidget {
                                     weight: FontWeight.w500,
                                   ),
                                 ),
-                                HorizontalSpacing(44),
+                                HorizontalSpacing(60),
                                 Text(
                                   '= \$' + model.jobProposal['price'],
                                   style: AppTextStyles.xxMedium(
@@ -224,7 +226,7 @@ class _Body extends StatelessWidget {
                           Expanded(
                             child: AppTextField(
                               controller: model.dateCtrl,
-                              hintText: 'MM',
+                              hintText: 'MM/YYYY',
                               label: 'Exp. Date',
                               padding: EdgeInsets.zero,
                               labelIcon: IconlyLight.calendar,
@@ -232,6 +234,23 @@ class _Body extends StatelessWidget {
                               validator: (val) {
                                 return DefaultValidator.required(
                                     val, "Card Expiry");
+                              },
+                              onTap: () {
+                                DatePicker.showDatePicker(
+                                  context,
+                                  showTitleActions: true,
+                                  onChanged: (date) {
+                                    model.dateCtrl.text = DateFormat("MM/yyyy")
+                                        .format(date)
+                                        .toString();
+                                    print(
+                                        'change ${DateFormat("MM/yyyy").format(date).toString()}');
+                                  },
+                                  onConfirm: (date) {
+                                    print(
+                                        'From Date ${DateFormat("yyyy-MM-dd").format(date).toString()}');
+                                  },
+                                );
                               },
                             ),
                           ),

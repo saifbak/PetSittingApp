@@ -57,7 +57,7 @@ class PetSitterCard extends StatelessWidget {
                   ],
                 ),
                 // Text('Total Bookings'),
-                VerticalSpacing(2),
+                VerticalSpacing(14),
                 Row(
                   children: [
                     /* Icon(

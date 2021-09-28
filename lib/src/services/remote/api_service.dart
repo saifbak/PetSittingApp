@@ -49,6 +49,7 @@ class ApiService {
         address: response.data['address'],
         phone: response.data['phone'],
         id: response.data['id'],
+        description: response.data['description'],
         roleId: response.data['role_id'],
         profileImg: response.data['profile_img'],
       );

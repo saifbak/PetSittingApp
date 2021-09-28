@@ -16,7 +16,7 @@ import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/auth/login/login_view_model.dart';
 
-class LoginView extends StatelessWidget {
+class ForgotView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoginViewModel>.nonReactive(
@@ -49,6 +49,17 @@ class _Body extends StatelessWidget {
 
     return ListView(
       children: [
+        Align(
+          alignment: Alignment.topLeft,
+          child: IconButton(
+            onPressed: () => NavService.popOut,
+            splashRadius: 24,
+            padding: EdgeInsets.only(left: 30),
+            constraints: BoxConstraints(),
+            icon: Icon(Icons.arrow_back_ios),
+            color: AppColors.primaryColor,
+          ),
+        ),
         VerticalSpacing(context.topSpace()),
         Center(child: AppLogo(width: screenSize.width / 2.5)),
         VerticalSpacing(screenSize.height * .05),
@@ -65,41 +76,26 @@ class _Body extends StatelessWidget {
                   return DefaultValidator.required(val, "Email/Username");
                 },
               ),
-              AppTextField(
-                controller: passwordCtrl,
-                hintText: 'Enter your password',
-                label: 'Password',
-                prefixIcon: IconlyLight.lock,
-                hasPasswordEye: true,
-                validator: (val) {
-                  return DefaultValidator.required(val, "Password");
-                },
-              ),
               Padding(
                 padding: AppBaseStyles.horizontalPadding,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        NavService.forgot();
-                      },
-                      child: Text(
-                        'Forgot Password ?',
-                        style: AppTextStyles.xMedium(
-                          color: AppColors.primaryColor,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                // child: Row(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [
+                //     Text(
+                //       'Forgot Password ?',
+                //       style: AppTextStyles.xMedium(
+                //         color: AppColors.primaryColor,
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ),
               VerticalSpacing(screenSize.height * .05),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AppButton(
-                      text: 'Log In',
+                      text: 'Submit',
                       horizontalPadding: 50,
                       onPressed: () {
                         if (!formKey.currentState!.validate()) {
@@ -136,12 +132,12 @@ class _Body extends StatelessWidget {
                       }),
                 ],
               ),
-              VerticalSpacing(24),
-              MultiStyleText(
-                firstText: 'Don\'t have an account? ',
-                secondText: 'Sign Up',
-                onPressed: NavService.signupReplace,
-              ),
+              // VerticalSpacing(24),
+              // MultiStyleText(
+              //   firstText: 'Don\'t have an account? ',
+              //   secondText: 'Sign Up',
+              //   onPressed: NavService.signupReplace,
+              // ),
             ],
           ),
         )

@@ -12,7 +12,7 @@ import 'package:whiskers_away_app/src/styles/app_colors.dart';
 
 import 'package:whiskers_away_app/src/services/remote/api_service.dart';
 
-class LoginViewModel extends BaseViewModel {
+class ForgotViewModel extends BaseViewModel {
   final dialogService = locator<DialogService>();
   final _authService = locator<AuthService>();
   final _apiService = locator<ApiService>();
@@ -40,7 +40,7 @@ class LoginViewModel extends BaseViewModel {
 
       setBusy(false);
     } catch (e) {
-      setBusy(false); 
+      setBusy(false);
     }
   }
 

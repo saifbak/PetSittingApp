@@ -35,9 +35,6 @@ class _Body extends StatelessWidget {
   // final formKey = GlobalKey<FormState>();
 
   final UserProfileViewModel model;
-  // final addressCtrl = TextEditingController();
-  // final nameCtrl = TextEditingController();
-  // final phoneCtrl = TextEditingController();
   _Body(this.model);
   @override
   Widget build(BuildContext context) {
@@ -64,6 +61,7 @@ class _Body extends StatelessWidget {
           "name": model.nameCtrl.text.trim(),
           "address": model.addressCtrl.text.trim(),
           "phone": model.phoneCtrl.text.trim(),
+          "description": model.descriptionCtrl.text.trim(),
           /* "hourlyRate": model.isPetSitter()
               ? double.parse(model.hourlRateCtrl.text.trim())
               : null, */
@@ -109,12 +107,12 @@ class _Body extends StatelessWidget {
             ),
             model.isPetSitter()
                 ? AppTextField(
-                    controller: model.hourlRateCtrl,
+                    controller: model.descriptionCtrl,
                     padding: noPadding,
-                    hintText: 'Enter your hourly rate',
-                    label: 'Hourly Rate',
-                    prefixIcon: IconlyLight.wallet,
-                    textInputType: TextInputType.phone,
+                    hintText: 'Profile Description',
+                    label: 'Profile Description',
+                    textInputType: TextInputType.text,
+                    maxLines: 4,
                   )
                 : Container(),
             AppButton(

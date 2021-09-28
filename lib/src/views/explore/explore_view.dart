@@ -91,15 +91,8 @@ class _Body extends StatelessWidget {
             ),
           ),
         ),
-        model.isBusy
+        !model.isBusy
             ? Expanded(
-                child: Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.primaryColor,
-                  ),
-                ),
-              )
-            : Expanded(
                 child: model.newJobs.length > 0
                     ? ListView.separated(
                         padding: AppBaseStyles.horizontalPadding
@@ -122,20 +115,35 @@ class _Body extends StatelessWidget {
                         },
                         separatorBuilder: (_, __) => VerticalSpacing(16),
                         itemCount: model.newJobs.length)
-                    : noRecord('No jobs found...'),
-              ),
+                    : Expanded(
+                        child: Center(
+                          child: Text(
+                            "No Records Found...",
+                            style: AppTextStyles.xLarge(
+                                color: AppColors.primaryColor),
+                          ),
+                        ),
+                      ),
+              )
+            : Expanded(
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.primaryColor,
+                  ),
+                ),
+              )
       ],
     );
   }
 
-  Widget noRecord(String text) {
-    return Expanded(
-      child: Center(
-        child: Text(
-          text,
-          style: AppTextStyles.xLarge(color: AppColors.primaryColor),
-        ),
-      ),
-    );
-  }
+  // Widget noRecord(String text) {
+  //   return Expanded(
+  //     child: Center(
+  //       child: Text(
+  //         text,
+  //         style: AppTextStyles.xLarge(color: AppColors.primaryColor),
+  //       ),
+  //     ),
+  //   );
+  // }
 }

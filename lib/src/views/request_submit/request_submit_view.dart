@@ -1,5 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
@@ -13,12 +15,14 @@ import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/request_submit/request_submit_view_model.dart';
+// import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class RequestSubmitView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<RequestSubmitViewModel>.reactive(
       viewModelBuilder: () => RequestSubmitViewModel(),
+      onModelReady: (model) => model.init(),
       builder: (_, model, __) {
         return Scaffold(
           body: _Body(model),
@@ -43,15 +47,12 @@ class _Body extends StatelessWidget {
   final breedCtrl = TextEditingController();
   final fromDateCtrl = TextEditingController();
   final toDateCtrl = TextEditingController();
-  final descriptionCtrl =
-      TextEditingController(text: 'This is test dependent on you');
+  final descriptionCtrl = TextEditingController();
 
   _Body(this.model);
-
   @override
   Widget build(BuildContext context) {
     final screenSize = context.screenSize();
-
     return Column(
       children: [
         AppTopBar(text: 'Submit a Request'),
@@ -165,7 +166,23 @@ class _Body extends StatelessWidget {
                         padding: EdgeInsets.zero,
                         suffixIcon: IconlyLight.calendar,
                         //readOnlyField: true,
-                        onTap: () {},
+                        onTap: () {
+                          DatePicker.showDatePicker(
+                            context,
+                            showTitleActions: true,
+                            onChanged: (date) {
+                              fromDateCtrl.text = DateFormat("yyyy-MM-dd")
+                                  .format(date)
+                                  .toString();
+                              print('change $date in time zone ' +
+                                  date.timeZoneOffset.inHours.toString());
+                            },
+                            onConfirm: (date) {
+                              print(
+                                  'From Date ${DateFormat("yyyy-MM-dd").format(date).toString()}');
+                            },
+                          );
+                        },
                       ),
                     ),
                     HorizontalSpacing(14),
@@ -177,7 +194,24 @@ class _Body extends StatelessWidget {
                         padding: EdgeInsets.zero,
                         suffixIcon: IconlyLight.calendar,
                         //readOnlyField: true,
-                        onTap: () {},
+                        onTap: () {
+                          DatePicker.showDatePicker(
+                            context,
+                            showTitleActions: true,
+                            onChanged: (date) {
+                              toDateCtrl.text = DateFormat("yyyy-MM-dd")
+                                  .format(date)
+                                  .toString();
+                              print('change $date in time zone ' +
+                                  date.timeZoneOffset.inHours.toString());
+                            },
+                            onConfirm: (date) {
+                              print(
+                                  'confirm ${DateFormat("yyyy-MM-dd").format(date).toString()}');
+                            },
+                          );
+                          // model.datePicker(context);
+                        },
                       ),
                     )
                   ],
@@ -216,6 +250,10 @@ class _Body extends StatelessWidget {
   }
 
   Future<void> onSubmit(ctx) async {
+    print('from date');
+    print(fromDateCtrl);
+    print('to date');
+    print(toDateCtrl);
     try {
       await model.sendPetRequest({
         "pet_name": petCtrl.text.trim(),

@@ -13,6 +13,7 @@ import 'package:whiskers_away_app/src/views/user_review/user_review_view.dart';
 
 import '../models/Job.dart';
 import '../views/auth/login/login_view.dart';
+import '../views/auth/forgot/forgot_view.dart';
 import '../views/auth/signup/signup_view.dart';
 import '../views/employee_details/employee_details_view.dart';
 import '../views/explore/explore_view.dart';
@@ -34,6 +35,7 @@ class Routes {
   static const String splashView = '/';
   static const String onBoardingView = '/on-boarding-view';
   static const String loginView = '/login-view';
+  static const String forgotView = '/forgot-view';
   static const String signUpView = '/sign-up-view';
   static const String optionsSelectView = '/options-select-view';
   static const String homeView = '/home-view';
@@ -52,6 +54,7 @@ class Routes {
     splashView,
     onBoardingView,
     loginView,
+    forgotView,
     signUpView,
     optionsSelectView,
     homeView,
@@ -76,6 +79,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.splashView, page: SplashView),
     RouteDef(Routes.onBoardingView, page: OnBoardingView),
     RouteDef(Routes.loginView, page: LoginView),
+    RouteDef(Routes.forgotView, page: ForgotView),
     RouteDef(Routes.signUpView, page: SignUpView),
     RouteDef(Routes.optionsSelectView, page: OptionsSelectView),
     RouteDef(Routes.homeView, page: HomeView),
@@ -109,6 +113,12 @@ class StackedRouter extends RouterBase {
     LoginView: (data) {
       return MaterialPageRoute<MaterialRoute<dynamic>>(
         builder: (context) => LoginView(),
+        settings: data,
+      );
+    },
+    ForgotView: (data) {
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
+        builder: (context) => ForgotView(),
         settings: data,
       );
     },

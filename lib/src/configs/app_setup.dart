@@ -8,6 +8,7 @@ import 'package:whiskers_away_app/src/services/local/job_resp_services.dart';
 import 'package:whiskers_away_app/src/services/local/keyboard_service.dart';
 import 'package:whiskers_away_app/src/services/remote/api_service.dart';
 import 'package:whiskers_away_app/src/views/auth/login/login_view.dart';
+import 'package:whiskers_away_app/src/views/auth/forgot/forgot_view.dart';
 import 'package:whiskers_away_app/src/views/auth/signup/signup_view.dart';
 import 'package:whiskers_away_app/src/views/employee_details/employee_details_view.dart';
 import 'package:whiskers_away_app/src/views/home/home_view.dart';
@@ -30,6 +31,7 @@ import 'package:whiskers_away_app/src/views/user_review/user_review_view.dart';
     MaterialRoute(page: SplashView, initial: true),
     MaterialRoute(page: OnBoardingView),
     MaterialRoute(page: LoginView),
+    MaterialRoute(page: ForgotView),
     MaterialRoute(page: SignUpView),
     MaterialRoute(page: OptionsSelectView),
     MaterialRoute(page: HomeView),

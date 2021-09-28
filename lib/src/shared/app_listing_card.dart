@@ -145,8 +145,8 @@ class AppListingCard extends StatelessWidget {
               request.description ?? '',
               style: AppTextStyles.xMedium(color: AppColors.gray),
             ),
-          ],
-          VerticalSpacing(4), */
+          ], */
+          VerticalSpacing(4),
           Row(
             children: [
               Icon(
@@ -155,6 +155,7 @@ class AppListingCard extends StatelessWidget {
                 color: AppColors.primaryColor,
               ),
               HorizontalSpacing(4),
+              // VerticalSpacing(2),
               Text(
                 request.location ?? '',
                 style: AppTextStyles.xxMedium(

@@ -202,7 +202,9 @@ class _Body extends StatelessWidget {
                             VerticalSpacing(4),
                             Row(
                               children: List.generate(
-                                review['overall_rating'],
+                                review['overall_rating'] > 0
+                                    ? review['overall_rating']
+                                    : [],
                                 (index) => Icon(
                                   Icons.star,
                                   size: 16,
@@ -221,7 +223,9 @@ class _Body extends StatelessWidget {
                                     });
                               },
                               child: Text(
-                                review['comment'],
+                                review['comment'] != null
+                                    ? review['comment']
+                                    : '',
                                 style: AppTextStyles.xMedium(
                                   color: AppColors.gray,
                                 ),
@@ -242,7 +246,7 @@ class _Body extends StatelessWidget {
             AppButton(
               text: 'Approve',
               fullWidth: true,
-              onPressed: NavService.termsConditions,
+              onPressed: () => {NavService.payment()},
             ),
             HorizontalSpacing(18),
             AppButton(
