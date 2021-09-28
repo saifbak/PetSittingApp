@@ -59,36 +59,36 @@ class _Body extends StatelessWidget {
           ),
         ),
         VerticalSpacing(14),
-        Container(
-          margin: AppBaseStyles.horizontalPadding,
-          height: 40,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: Colors.white,
-            boxShadow: [
-              AppUtils.boxShadow1(),
-            ],
-          ),
-          child: TextField(
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.only(left: 16),
-              suffixIcon: Icon(
-                IconlyLight.filter,
-                color: AppColors.primaryColor,
-              ),
-              hintText: 'Search ...',
-              hintStyle: AppTextStyles.xMedium(color: Color(0xFF858585)),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Color(0xFFE7E7E7)),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Color(0xFFE7E7E7)),
-              ),
-            ),
-          ),
-        ),
+        // Container(
+        //   margin: AppBaseStyles.horizontalPadding,
+        //   height: 40,
+        //   decoration: BoxDecoration(
+        //     borderRadius: BorderRadius.circular(8),
+        //     color: Colors.white,
+        //     boxShadow: [
+        //       AppUtils.boxShadow1(),
+        //     ],
+        //   ),
+        //   child: TextField(
+        //     decoration: InputDecoration(
+        //       contentPadding: EdgeInsets.only(left: 16),
+        //       suffixIcon: Icon(
+        //         IconlyLight.filter,
+        //         color: AppColors.primaryColor,
+        //       ),
+        //       hintText: 'Search ...',
+        //       hintStyle: AppTextStyles.xMedium(color: Color(0xFF858585)),
+        //       enabledBorder: OutlineInputBorder(
+        //         borderRadius: BorderRadius.circular(8),
+        //         borderSide: BorderSide(color: Color(0xFFE7E7E7)),
+        //       ),
+        //       focusedBorder: OutlineInputBorder(
+        //         borderRadius: BorderRadius.circular(8),
+        //         borderSide: BorderSide(color: Color(0xFFE7E7E7)),
+        //       ),
+        //     ),
+        //   ),
+        // ),
         model.isBusy
             ? Expanded(
                 child: Center(

@@ -3,7 +3,6 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
-import 'package:whiskers_away_app/src/models/User.dart';
 import 'package:whiskers_away_app/src/services/local/auth_service.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/services/remote/api_result.dart';
@@ -14,27 +13,25 @@ import 'package:whiskers_away_app/src/services/remote/api_service.dart';
 
 class ForgotViewModel extends BaseViewModel {
   final dialogService = locator<DialogService>();
-  final _authService = locator<AuthService>();
   final _apiService = locator<ApiService>();
 
-  Future<dynamic> login(Map<String, dynamic> payload, ctx) async {
+  Future<dynamic> forgot(Map<String, dynamic> payload, ctx) async {
     setBusy(true);
     try {
       dialogService.showCustomDialog(
           variant: 'spinner', barrierDismissible: true);
 
-      ApiResult apiResult = await _apiService.login(payload);
+      ApiResult apiResult = await _apiService.forgotPass(payload);
 
       Navigator.of(ctx, rootNavigator: true).pop();
-      // SnackbarService().showSnackbar(message: "Successful Login");
 
       apiResult.when(success: (data) {
         print(data);
-        _authService.user = data;
-        _authService.navigateHomeScreen();
-        AppUtils.toastShow("Successful Login");
+        NavService.login();
+        AppUtils.toastShow("Password reset request sent successfully.");
       }, failure: (NetworkExceptions error) {
-        AppUtils.toastShow("Login Unsuccessful !");
+        NavService.login();
+        AppUtils.toastShow("Request unsuccessful !");
         showErrorAlert(error);
       });
 

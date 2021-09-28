@@ -112,28 +112,38 @@ class AppListingCard extends StatelessWidget {
                         ],
                       ),
                     ] else
-                      Row(children: [
-                        AppStatusVisibilityTag(text: request.jobStatus ?? ''),
-                        hideResponse == false
-                            ? Container(
-                                padding: EdgeInsets.only(left: 5),
-                                child: GestureDetector(
-                                  // padding: EdgeInsets.only(left: 10),
-                                  onTap: () {
-                                    //onSubmit(context);
-                                    print(bottomSheetCallback);
-                                    if (bottomSheetCallback != null) {
-                                      bottomSheetCallback!();
-                                    }
-                                  },
+                      GestureDetector(
+                        onTap: () {
+                          print(bottomSheetCallback);
+                          if (bottomSheetCallback != null) {
+                            bottomSheetCallback!();
+                          }
+                        },
+                        child: Row(children: [
+                          AppStatusVisibilityTag(text: request.jobStatus ?? ''),
+                          hideResponse == false
+                              ? Container(
+                                  padding: EdgeInsets.only(left: 5),
                                   child: Icon(
                                     Icons.more_vert_rounded,
                                     size: 18,
                                     color: AppColors.primaryColor,
                                   ),
-                                ))
-                            : Container()
-                      ])
+                                  // child: GestureDetector(
+                                  //   // padding: EdgeInsets.only(left: 10),
+                                  //   onTap: () {
+                                  //     //onSubmit(context);
+                                  //     print(bottomSheetCallback);
+                                  //     if (bottomSheetCallback != null) {
+                                  //       bottomSheetCallback!();
+                                  //     }
+                                  //   },
+
+                                  // )
+                                )
+                              : Container()
+                        ]),
+                      )
                   ],
                 ),
               ),

@@ -61,6 +61,19 @@ class ApiService {
     }
   }
 
+  Future<ApiResult<dynamic>> forgotPass(
+      Map<String, dynamic> forgotPassRequest) async {
+    try {
+      ResponseWrapper response =
+          await _apiClient.postReq("/password/reset", data: forgotPassRequest);
+      return ApiResult.success(data: response.data);
+    } catch (e) {
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
+    }
+  }
+
   Future<ApiResult<dynamic>> uploadJobImage(Map<String, dynamic> data) async {
     try {
       var response = await _apiClient.postReq(

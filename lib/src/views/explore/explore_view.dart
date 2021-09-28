@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
@@ -40,6 +42,35 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenSize = context.screenSize();
 
+    // contains(obj, query) {
+    //   var check = query.toLowerCase();
+    //   var name = obj.name;
+    //   if (name.toLowerCase().includes(check)) {
+    //     return true;
+    //   }
+    //   return false;
+    // }
+
+    handleSearch(text) async {
+      print(text);
+      // var filteredData = [];
+      // String query = text;
+      // // let obj = {};
+      // var filterr;
+      // filteredData =
+      //     await filterr(model.newJobs, (obj) => {contains(obj, query)});
+      // if (filteredData.length == 0) {
+      //   Timer(Duration(seconds: 1), () {
+      //     print(text);
+      //   });
+
+      //   // setTimeout(() => {
+      //   //   Toast.show(`${Languages.nosearchTipster} ${text}`);
+      //   // }, 1500)
+      // }
+      // setSearchState(filteredData);
+    }
+
     return Column(
       children: [
         VerticalSpacing(context.topSpace() + screenSize.height * .05),
@@ -72,6 +103,7 @@ class _Body extends StatelessWidget {
             ],
           ),
           child: TextField(
+            onChanged: (e) => handleSearch(e),
             decoration: InputDecoration(
               contentPadding: EdgeInsets.only(left: 16),
               suffixIcon: Icon(

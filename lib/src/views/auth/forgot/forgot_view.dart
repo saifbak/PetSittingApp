@@ -14,13 +14,13 @@ import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
-import 'package:whiskers_away_app/src/views/auth/login/login_view_model.dart';
+import 'package:whiskers_away_app/src/views/auth/forgot/forgot_view_modal.dart';
 
 class ForgotView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<LoginViewModel>.nonReactive(
-      viewModelBuilder: () => LoginViewModel(),
+    return ViewModelBuilder<ForgotViewModel>.nonReactive(
+      viewModelBuilder: () => ForgotViewModel(),
       builder: (_, model, __) {
         return Scaffold(
           body: _Body(model),
@@ -31,7 +31,7 @@ class ForgotView extends StatelessWidget {
 }
 
 class _Body extends StatelessWidget {
-  final LoginViewModel model;
+  final ForgotViewModel model;
 
   final formKey = GlobalKey<FormState>();
   AutovalidateMode autoValidate = AutovalidateMode.disabled;
@@ -39,7 +39,6 @@ class _Body extends StatelessWidget {
 
   //Controllers
   final emailCtrl = TextEditingController();
-  final passwordCtrl = TextEditingController();
 
   _Body(this.model);
 
@@ -147,9 +146,8 @@ class _Body extends StatelessWidget {
 
   Future<void> onSubmit(ctx) async {
     try {
-      await model.login({
-        "username": emailCtrl.text.trim(),
-        "password": passwordCtrl.text.trim(),
+      await model.forgot({
+        "email": emailCtrl.text.trim(),
       }, ctx);
     } catch (e) {
       /* Timer(Duration(seconds: 1), () {
