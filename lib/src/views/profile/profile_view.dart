@@ -50,6 +50,8 @@ class _Body extends StatelessWidget {
     Map<String, dynamic> additionalDetails = {
       'price': model.userDetails['price']
     };
+    print('Review modal data =>');
+    print(model.petUser.reviews.length > 0 ? 'full' : 'empty');
 
     return BaseProfileView(
         networkImage: model.petUser.profileImg,
@@ -146,99 +148,104 @@ class _Body extends StatelessWidget {
               ],
             ),
             VerticalSpacing(),
-            AnimatedContainer(
-              duration: Duration(milliseconds: 500),
-              padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
-              height: model.fullReviewsDisplay ? 175 * 1.75 : 175,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColors.whisper),
-              ),
-              child: ReadMoreScrollableContent(
-                toggleBehaviour: true,
-                contentSeparator: VerticalSpacing(12),
-                readMoreCallback: (val) => model.fullReviewsDisplay = val,
-                readMoreContent: model.fullReviewsDisplay,
-                contentLength: model.petUser.reviews.length,
-                contentItemBuilder: (_, index) {
-                  final review = model.petUser.reviews[index];
-                  // print(review);
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        children: [
-                          ImageDisplayBox(
-                            imgUrl: review['petowner'] != null
-                                ? review['petowner']['profile_img']
-                                : null,
-                            size: 30,
-                          ),
-                        ],
-                      ),
-                      HorizontalSpacing(),
-                      Expanded(
-                        child: Column(
+            model.petUser.reviews.length > 0
+                ? AnimatedContainer(
+                    duration: Duration(milliseconds: 500),
+                    padding:
+                        const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+                    height: model.fullReviewsDisplay ? 175 * 1.75 : 175,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: AppColors.whisper),
+                    ),
+                    child: ReadMoreScrollableContent(
+                      toggleBehaviour: true,
+                      contentSeparator: VerticalSpacing(12),
+                      readMoreCallback: (val) => model.fullReviewsDisplay = val,
+                      readMoreContent: model.fullReviewsDisplay,
+                      contentLength: model.petUser.reviews.length,
+                      contentItemBuilder: (_, index) {
+                        final review = model.petUser.reviews[index];
+                        // print(review);
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            Column(
                               children: [
-                                Text(
-                                  review['petowner'] != null
-                                      ? review['petowner']['name']
-                                      : '',
-                                  style: AppTextStyles.xMedium(),
-                                ),
-                                Text(
-                                  review['job'] != null
-                                      ? review['job']['period']
-                                      : '',
-                                  style: AppTextStyles.xxSmall(
-                                    color: AppColors.gray,
-                                  ),
+                                ImageDisplayBox(
+                                  imgUrl: review['petowner'] != null
+                                      ? review['petowner']['profile_img']
+                                      : null,
+                                  size: 30,
                                 ),
                               ],
                             ),
-                            VerticalSpacing(4),
-                            Row(
-                              children: List.generate(
-                                review['overall_rating'] > 0
-                                    ? review['overall_rating']
-                                    : [],
-                                (index) => Icon(
-                                  Icons.star,
-                                  size: 16,
-                                  color: AppColors.primaryColor,
-                                ),
+                            HorizontalSpacing(),
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        review['petowner'] != null
+                                            ? review['petowner']['name']
+                                            : '',
+                                        style: AppTextStyles.xMedium(),
+                                      ),
+                                      Text(
+                                        review['job'] != null
+                                            ? review['job']['period']
+                                            : '',
+                                        style: AppTextStyles.xxSmall(
+                                          color: AppColors.gray,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  VerticalSpacing(4),
+                                  Row(
+                                    children: List.generate(
+                                      review['overall_rating'] > 0
+                                          ? review['overall_rating']
+                                          : [],
+                                      (index) => Icon(
+                                        Icons.star,
+                                        size: 16,
+                                        color: AppColors.primaryColor,
+                                      ),
+                                    ),
+                                  ),
+                                  VerticalSpacing(4),
+                                  InkWell(
+                                    onTap: () async {
+                                      await showMaterialModalBottomSheet(
+                                          context: context,
+                                          backgroundColor: Colors.transparent,
+                                          builder: (_) {
+                                            return reviewDetailDialog(
+                                                _, review);
+                                          });
+                                    },
+                                    child: Text(
+                                      review['comment'] != null
+                                          ? review['comment']
+                                          : '',
+                                      style: AppTextStyles.xMedium(
+                                        color: AppColors.gray,
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
-                            VerticalSpacing(4),
-                            InkWell(
-                              onTap: () async {
-                                await showMaterialModalBottomSheet(
-                                    context: context,
-                                    backgroundColor: Colors.transparent,
-                                    builder: (_) {
-                                      return reviewDetailDialog(_, review);
-                                    });
-                              },
-                              child: Text(
-                                review['comment'] != null
-                                    ? review['comment']
-                                    : '',
-                                style: AppTextStyles.xMedium(
-                                  color: AppColors.gray,
-                                ),
-                              ),
-                            )
                           ],
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
+                        );
+                      },
+                    ),
+                  )
+                : Text('No reviews yet'),
           ],
         ),
         bottomContent: Row(

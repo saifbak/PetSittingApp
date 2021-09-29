@@ -15,6 +15,7 @@ import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/explore/explore_view_model.dart';
+import 'package:whiskers_away_app/src/views/explore/search_widget/search_bar.dart';
 import 'package:whiskers_away_app/src/views/options_select/options_select_view_model.dart';
 
 class ExploreView extends StatelessWidget {
@@ -36,12 +37,25 @@ class ExploreView extends StatelessWidget {
 
 class _Body extends StatelessWidget {
   final ExploreViewModel model;
-  const _Body(this.model);
+  _Body(this.model);
+
+  bool? get mounted => null;
+
+  String query = '';
+  Timer? debouncer;
+  void debounce(
+    VoidCallback callback, {
+    Duration duration = const Duration(milliseconds: 1000),
+  }) {
+    if (debouncer != null) {
+      debouncer!.cancel();
+    }
+    debouncer = Timer(duration, callback);
+  }
 
   @override
   Widget build(BuildContext context) {
     final screenSize = context.screenSize();
-
     // contains(obj, query) {
     //   var check = query.toLowerCase();
     //   var name = obj.name;
@@ -92,37 +106,7 @@ class _Body extends StatelessWidget {
           ),
         ),
         VerticalSpacing(14),
-        Container(
-          margin: AppBaseStyles.horizontalPadding,
-          height: 40,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: Colors.white,
-            boxShadow: [
-              AppUtils.boxShadow1(),
-            ],
-          ),
-          child: TextField(
-            onChanged: (e) => handleSearch(e),
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.only(left: 16),
-              suffixIcon: Icon(
-                IconlyLight.filter,
-                color: AppColors.primaryColor,
-              ),
-              hintText: 'Search ...',
-              hintStyle: AppTextStyles.xMedium(color: Color(0xFF858585)),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Color(0xFFE7E7E7)),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Color(0xFFE7E7E7)),
-              ),
-            ),
-          ),
-        ),
+        buildSearch(),
         !model.isBusy
             ? Expanded(
                 child: model.newJobs.length > 0
@@ -168,14 +152,21 @@ class _Body extends StatelessWidget {
     );
   }
 
-  // Widget noRecord(String text) {
-  //   return Expanded(
-  //     child: Center(
-  //       child: Text(
-  //         text,
-  //         style: AppTextStyles.xLarge(color: AppColors.primaryColor),
-  //       ),
-  //     ),
-  //   );
-  // }
+  Widget buildSearch() => SearchWidget(
+        text: query,
+        hintText: 'Title or Author Name',
+        onChanged: searchBook,
+      );
+  Future searchBook(String query) async => debounce(() async {
+        print(query);
+        // final books = await BooksApi.getBooks(query);
+
+        // if (!mounted!) return;
+
+        // setState(() {
+        //   this.query = query;
+        //   this.books = books;
+        // });
+      });
+
 }
