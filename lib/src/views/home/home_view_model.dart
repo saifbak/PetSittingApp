@@ -54,6 +54,7 @@ class HomeViewModel extends BaseViewModel {
   final _authService = locator<AuthService>();
   final _apiService = locator<ApiService>();
   final _jobService = locator<JobService>();
+  List<Job> _filteredJobs = [];
   List<Job> _newJobs = [];
   List<Job> _jobHistory = [];
   List<Map<String, dynamic>> _jobResponses = [];
@@ -173,6 +174,35 @@ class HomeViewModel extends BaseViewModel {
     });
   }
 
+  getFilteredJobs() async {
+    setLoading('open', true);
+
+    Map<String, dynamic> payload = {};
+
+    if (_authService.isOwner()) {
+      payload = {
+        'status': ['NEW', 'IN_PROGRESS'],
+        'role_id': 3,
+        'user_id': _authService.user!.id,
+        'relations': ['owner', 'images', 'reviews']
+      };
+    } else {
+      payload = {
+        'status': ['NEW', 'IN_PROGRESS', 'COMPELETED'],
+        'relations': ['owner', 'images']
+      };
+    }
+
+    ApiResult<List<Job>> apiResult = await getJobs(payload);
+
+    apiResult.when(success: (data) {
+      filteredJobs = data;
+      setLoading('open', false);
+    }, failure: (NetworkExceptions error) {
+      setLoading('open', false);
+    });
+  }
+
   getJobHistory() async {
     setLoading('history', true);
 
@@ -218,12 +248,22 @@ class HomeViewModel extends BaseViewModel {
     return _newJobs;
   }
 
+  List<Job> get filteredJobs {
+    return _filteredJobs;
+  }
+
   List<Map<String, dynamic>> get jobResponses {
     return _jobResponses;
   }
 
   set newJobs(List<Job> val) {
     _newJobs = val;
+    _jobService.jobs = val;
+    notifyListeners();
+  }
+
+  set filteredJobs(List<Job> val) {
+    _filteredJobs = val;
     _jobService.jobs = val;
     notifyListeners();
   }
