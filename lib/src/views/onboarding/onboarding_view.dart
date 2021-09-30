@@ -35,7 +35,9 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = context.screenSize();
-
+    final pageContent = model.isPetSitter()
+        ? model.onBoardingContent[0]
+        : model.onBoardingContent[1];
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -66,59 +68,47 @@ class _Body extends StatelessWidget {
         ),
         VerticalSpacing(screenSize.height * .025),
         Expanded(
-          child: PageView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: model.onBoardingContent.length,
-            onPageChanged: (currentIndex) {
-              model.pageIndex = currentIndex;
-            },
-            itemBuilder: (_, index) {
-              final pageContent = model.onBoardingContent[index];
-
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              width: screenSize.width / 1.35,
+              child: Image.asset(
+                pageContent['imgUrl'],
+              ),
+            ),
+            AppBaseCard(
+              margin: EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: screenSize.height * .025,
+              ),
+              padding: EdgeInsets.all(20),
+              child: Column(
                 children: [
-                  Container(
-                    width: screenSize.width / 1.35,
-                    child: Image.asset(
-                      pageContent['imgUrl'],
-                    ),
+                  Text(
+                    pageContent['card_heading'],
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.xxLarge(weight: FontWeight.w700),
                   ),
-                  AppBaseCard(
-                    margin: EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: screenSize.height * .025,
-                    ),
-                    padding: EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        Text(
-                          pageContent['card_heading'],
-                          textAlign: TextAlign.center,
-                          style: AppTextStyles.xxLarge(weight: FontWeight.w700),
-                        ),
-                        VerticalSpacing(10),
-                        Text(
-                          pageContent['card_about_app_text'],
-                          textAlign: TextAlign.center,
-                          style: AppTextStyles.xxMedium(),
-                        ),
-                        VerticalSpacing(10),
-                        AppDivider(),
-                        VerticalSpacing(10),
-                        Text(
-                          pageContent['card_desc'],
-                          textAlign: TextAlign.center,
-                          style: AppTextStyles.xxMedium(),
-                        )
-                      ],
-                    ),
+                  VerticalSpacing(10),
+                  Text(
+                    pageContent['card_about_app_text'],
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.xxMedium(),
+                  ),
+                  VerticalSpacing(10),
+                  AppDivider(),
+                  VerticalSpacing(10),
+                  Text(
+                    pageContent['card_desc'],
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.xxMedium(),
                   )
                 ],
-              );
-            },
-          ),
-        ),
+              ),
+            )
+          ],
+        )),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 36),
           child: Row(
@@ -138,41 +128,8 @@ class _Body extends StatelessWidget {
             ],
           ),
         ),
-        // VerticalSpacing(screenSize.height * .04),
-        // SizedBox(
-        //   height: model.pageIndicatorSize,
-        //   child: ListView.separated(
-        //     scrollDirection: Axis.horizontal,
-        //     shrinkWrap: true,
-        //     itemBuilder: (_, index) {
-        //       return _IndicatorCircle(index);
-        //     },
-        //     separatorBuilder: (_, __) => HorizontalSpacing(),
-        //     itemCount: model.onBoardingContent.length,
-        //   ),
-        // ),
         AppSpacing(context).bottomSpacing,
       ],
     );
   }
 }
-
-// class _IndicatorCircle extends ViewModelWidget<OnBoardingViewModel> {
-//   final int index;
-//   _IndicatorCircle(this.index);
-
-//   @override
-//   Widget build(BuildContext context, OnBoardingViewModel model) {
-//     return AnimatedContainer(
-//       decoration: BoxDecoration(
-//         color: index == model.pageIndex
-//             ? AppColors.primaryColor
-//             : AppColors.whisper,
-//         shape: BoxShape.circle,
-//       ),
-//       duration: Duration(milliseconds: 200),
-//       width: model.pageIndicatorSize,
-//       height: model.pageIndicatorSize,
-//     );
-//   }
-// }

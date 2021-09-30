@@ -141,8 +141,8 @@ class _Body extends StatelessWidget {
                     Expanded(
                       child: AppTextField(
                         controller: weightCtrl,
-                        hintText: 'Enter weight',
-                        textInputType: TextInputType.phone,
+                        hintText: 'Enter weight in lbs',
+                        // textInputType: TextInputType.phone,
                         label: 'Weight',
                         padding: EdgeInsets.zero,
                         validator: (val) {

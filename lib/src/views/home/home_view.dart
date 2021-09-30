@@ -26,7 +26,7 @@ class HomeView extends StatelessWidget {
       viewModelBuilder: () => HomeViewModel(),
       onModelReady: (model) {
         model.getOpenJobs();
-        model.getFilteredJobs();
+        // model.getFilteredJobs();
       },
       builder: (_, model, __) {
         return Scaffold(
@@ -77,7 +77,7 @@ class _Body extends StatelessWidget {
                 onChanged: (type) {
                   if (type == model.ownerRequests[0]) {
                     model.getOpenJobs();
-                    model.getFilteredJobs();
+                    // model.getFilteredJobs();
                   }
                   if (type == model.ownerRequests[1]) {
                     model.getJobHistory();
@@ -94,37 +94,37 @@ class _Body extends StatelessWidget {
                         )
                       : Column(
                           children: [
-                            VerticalSpacing(12),
-                            Container(
-                              margin: AppBaseStyles.horizontalPadding,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Colors.white,
-                              ),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.only(left: 16),
-                                  suffixIcon: Icon(
-                                    IconlyLight.filter,
-                                    color: AppColors.primaryColor,
-                                  ),
-                                  hintText: 'Search ...',
-                                  hintStyle: AppTextStyles.xMedium(
-                                      color: Color(0xFF858585)),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide:
-                                        BorderSide(color: Color(0xFFE7E7E7)),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide:
-                                        BorderSide(color: Color(0xFFE7E7E7)),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            // VerticalSpacing(12),
+                            // Container(
+                            //   margin: AppBaseStyles.horizontalPadding,
+                            //   height: 40,
+                            //   decoration: BoxDecoration(
+                            //     borderRadius: BorderRadius.circular(8),
+                            //     color: Colors.white,
+                            //   ),
+                            //   child: TextField(
+                            //     decoration: InputDecoration(
+                            //       contentPadding: EdgeInsets.only(left: 16),
+                            //       suffixIcon: Icon(
+                            //         IconlyLight.filter,
+                            //         color: AppColors.primaryColor,
+                            //       ),
+                            //       hintText: 'Search ...',
+                            //       hintStyle: AppTextStyles.xMedium(
+                            //           color: Color(0xFF858585)),
+                            //       enabledBorder: OutlineInputBorder(
+                            //         borderRadius: BorderRadius.circular(8),
+                            //         borderSide:
+                            //             BorderSide(color: Color(0xFFE7E7E7)),
+                            //       ),
+                            //       focusedBorder: OutlineInputBorder(
+                            //         borderRadius: BorderRadius.circular(8),
+                            //         borderSide:
+                            //             BorderSide(color: Color(0xFFE7E7E7)),
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
                             model.jobHistory.length > 0
                                 ? Expanded(
                                     child: ListView.separated(
@@ -197,35 +197,35 @@ class _Body extends StatelessWidget {
           )
         : Column(
             children: [
-              VerticalSpacing(12),
-              Container(
-                margin: AppBaseStyles.horizontalPadding,
-                height: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Colors.white,
-                ),
-                child: TextField(
-                  onChanged: (text) => {_filteredJobs(text)},
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.only(left: 16),
-                    suffixIcon: Icon(
-                      IconlyLight.filter,
-                      color: AppColors.primaryColor,
-                    ),
-                    hintText: 'Search ...',
-                    hintStyle: AppTextStyles.xMedium(color: Color(0xFF858585)),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: Color(0xFFE7E7E7)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: Color(0xFFE7E7E7)),
-                    ),
-                  ),
-                ),
-              ),
+              // VerticalSpacing(12),
+              // Container(
+              //   margin: AppBaseStyles.horizontalPadding,
+              //   height: 40,
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(8),
+              //     color: Colors.white,
+              //   ),
+              //   child: TextField(
+              //     onChanged: (text) => {_filteredJobs(text)},
+              //     decoration: InputDecoration(
+              //       contentPadding: EdgeInsets.only(left: 16),
+              //       suffixIcon: Icon(
+              //         IconlyLight.filter,
+              //         color: AppColors.primaryColor,
+              //       ),
+              //       hintText: 'Search ...',
+              //       hintStyle: AppTextStyles.xMedium(color: Color(0xFF858585)),
+              //       enabledBorder: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(8),
+              //         borderSide: BorderSide(color: Color(0xFFE7E7E7)),
+              //       ),
+              //       focusedBorder: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(8),
+              //         borderSide: BorderSide(color: Color(0xFFE7E7E7)),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               model.newJobs.length > 0
                   ? Expanded(
                       child: ListView.separated(
@@ -259,40 +259,40 @@ class _Body extends StatelessWidget {
                         itemCount: model.newJobs.length,
                       ),
                     )
-                  : model.filteredJobs.length > 0
-                      ? Expanded(
-                          child: ListView.separated(
-                            padding: AppBaseStyles.horizontalPadding
-                                .copyWith(bottom: 16, top: 16),
-                            itemBuilder: (_, index) {
-                              final request = model.filteredJobs[index];
-                              return GestureDetector(
-                                onTap: () async {
-                                  print(model.jobResponses);
+                  // : model.filteredJobs.length > 0
+                  //     ? Expanded(
+                  //         child: ListView.separated(
+                  //           padding: AppBaseStyles.horizontalPadding
+                  //               .copyWith(bottom: 16, top: 16),
+                  //           itemBuilder: (_, index) {
+                  //             final request = model.filteredJobs[index];
+                  //             return GestureDetector(
+                  //               onTap: () async {
+                  //                 print(model.jobResponses);
 
-                                  //  NavService.petDetails(
-                                  //      arguments: PetDetailsViewArguments(
-                                  //   request: request,
-                                  //    role: Roles.petOwner,
-                                  //   ));
-                                },
-                                child: AppListingCard(
-                                  model,
-                                  request: request,
-                                  role: Role.PET_OWNER,
-                                  showRating: false,
-                                  hideResponse: model.isOwner() ? false : true,
-                                  bottomSheetCallback:
-                                      showBottomSheet(request, context),
-                                  // model: model,
-                                ),
-                              );
-                            },
-                            separatorBuilder: (_, __) => VerticalSpacing(16),
-                            itemCount: model.filteredJobs.length,
-                          ),
-                        )
-                      : noRecord('No job request submitted...')
+                  //                 //  NavService.petDetails(
+                  //                 //      arguments: PetDetailsViewArguments(
+                  //                 //   request: request,
+                  //                 //    role: Roles.petOwner,
+                  //                 //   ));
+                  //               },
+                  //               child: AppListingCard(
+                  //                 model,
+                  //                 request: request,
+                  //                 role: Role.PET_OWNER,
+                  //                 showRating: false,
+                  //                 hideResponse: model.isOwner() ? false : true,
+                  //                 bottomSheetCallback:
+                  //                     showBottomSheet(request, context),
+                  //                 // model: model,
+                  //               ),
+                  //             );
+                  //           },
+                  //           separatorBuilder: (_, __) => VerticalSpacing(16),
+                  //           itemCount: model.filteredJobs.length,
+                  //         ),
+                  //       )
+                  : noRecord('No job request submitted...')
             ],
           );
   }

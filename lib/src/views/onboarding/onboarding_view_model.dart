@@ -1,6 +1,10 @@
 import 'package:stacked/stacked.dart';
+import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
+import 'package:whiskers_away_app/src/services/local/auth_service.dart';
 
 class OnBoardingViewModel extends BaseViewModel {
+  final _authService = locator<AuthService>();
+
   List<Map<String, dynamic>> get onBoardingContent => [
         {
           'bg_imgUrl': 'assets/images/bg_img_2.png',
@@ -27,6 +31,10 @@ class OnBoardingViewModel extends BaseViewModel {
   set pageIndex(int val) {
     _pageIndex = val;
     notifyListeners();
+  }
+
+  bool isPetSitter() {
+    return _authService.isPetSitter();
   }
 
   // double get pageIndicatorSize => 8;
