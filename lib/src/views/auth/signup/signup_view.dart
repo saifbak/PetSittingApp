@@ -111,15 +111,15 @@ class _Body extends StatelessWidget {
                   return DefaultValidator.required(val, "Phone");
                 },
               ),
-              AppTextField(
-                controller: addressCtrl,
-                hintText: 'Enter your address',
-                label: 'Address',
-                prefixIcon: IconlyLight.location,
-                validator: (val) {
-                  return DefaultValidator.required(val, "Address");
-                },
-              ),
+              // AppTextField(
+              //   controller: addressCtrl,
+              //   hintText: 'Enter your address',
+              //   label: 'Address',
+              //   prefixIcon: IconlyLight.location,
+              //   validator: (val) {
+              //     return DefaultValidator.required(val, "Address");
+              //   },
+              // ),
               AppTextField(
                 controller: passwordCtrl,
                 hintText: 'Enter your password',
