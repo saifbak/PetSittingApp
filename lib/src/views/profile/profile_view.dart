@@ -1,9 +1,7 @@
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:whiskers_away_app/src/models/User.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_divider.dart';
@@ -15,7 +13,6 @@ import 'package:whiskers_away_app/src/shared/read_more_scrollable_content.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
-import 'package:whiskers_away_app/src/views/payment/widgets/label_with_content.dart';
 import 'package:whiskers_away_app/src/views/profile/profile_view_model.dart';
 
 class ProfileView extends StatelessWidget {

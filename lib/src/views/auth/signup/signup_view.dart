@@ -258,18 +258,6 @@ class _Body extends StatelessWidget {
   }
 
   Future<void> onSubmit(ctx) async {
-    var data;
-    if (model.selectedImageFile != null) {
-      final data = {
-        'license_img': Dio.MultipartFile.fromBytes(
-          model.selectedImageFile!.readAsBytesSync(),
-          filename: model.selectedImageFile!.path.split('/').last,
-        ),
-      };
-    }
-    print('dat===>');
-    print(data);
-
     model.setSignUser({
       "email": emailCtrl.text.trim(),
       "password": passwordCtrl.text.trim(),
@@ -277,11 +265,11 @@ class _Body extends StatelessWidget {
       "name": nameCtrl.text.trim(),
       "address": addressCtrl.text.trim(),
       "description": model.isPetSitter() ? descriptionCtrl.text.trim() : null,
-      "license_image": data,
       "phone": phoneCtrl.text.trim(),
       "location": model.locationCtrl.text,
-      // "location":
+      "license_img": model.selectedImageFile!
     });
+    // model.uploadImage(model.selectedImageFile!);
 
     NavService.termsConditions();
   }
