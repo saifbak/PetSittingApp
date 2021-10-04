@@ -21,7 +21,14 @@ class SignUpViewModel extends BaseViewModel {
   final dialogService = locator<DialogService>();
   final _apiService = locator<ApiService>();
   final _authService = locator<AuthService>();
-  late TextEditingController locationCtrl;
+  late TextEditingController locationCtrl,
+      emailCtrl,
+      passwordCtrl,
+      nameCtrl,
+      usernameCtrl,
+      addressCtrl,
+      phoneCtrl,
+      descriptionCtrl;
 
   bool _imageUploadDisplay = false;
   bool imageUploadLoading = false;
@@ -49,6 +56,13 @@ class SignUpViewModel extends BaseViewModel {
 
   init() {
     locationCtrl = TextEditingController(text: '0');
+    emailCtrl = TextEditingController();
+    passwordCtrl = TextEditingController();
+    nameCtrl = TextEditingController();
+    usernameCtrl = TextEditingController();
+    addressCtrl = TextEditingController();
+    phoneCtrl = TextEditingController();
+    descriptionCtrl = TextEditingController();
   }
 
   handleLocationChange(value) {

@@ -58,12 +58,9 @@ class TermsConditionsViewModel extends BaseViewModel {
           filename: payload['license_img'].path.split('/').last,
         ),
       };
-      print(data);
       final res = await _apiService.uploadLicenseImage(data);
       res.when(
         success: (data) async {
-          print('Success==>');
-          print(data['url']);
           if (data['url'] != null) {
             User user = new User(
                 name: payload['name'],
@@ -86,7 +83,6 @@ class TermsConditionsViewModel extends BaseViewModel {
             apiResult.when(success: (data) {
               showSuccessAlert();
               AppUtils.toastShow("User Registered Successfully");
-              print(data);
             }, failure: (NetworkExceptions error) {
               AppUtils.toastShow("Unsuccessful Registration !");
               showErrorAlert(error);
@@ -94,17 +90,15 @@ class TermsConditionsViewModel extends BaseViewModel {
           }
           notifyListeners();
         },
-        failure: (error) {},
+        failure: (error) {
+          print(error.toString());
+        },
       );
-
-      print("payload");
-      print(payload);
 
       setBusy(false);
     } catch (e) {
       NavService.popOut;
 
-      print(e.toString());
       setBusy(false);
     }
   }

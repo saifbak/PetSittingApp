@@ -51,13 +51,6 @@ class _Body extends StatelessWidget {
   final GlobalKey<State> keyLoader = new GlobalKey<State>();
 
   //Controllers
-  final emailCtrl = TextEditingController();
-  final passwordCtrl = TextEditingController();
-  final nameCtrl = TextEditingController();
-  final usernameCtrl = TextEditingController();
-  final addressCtrl = TextEditingController();
-  final phoneCtrl = TextEditingController();
-  final descriptionCtrl = TextEditingController();
 
   _Body(this.model);
 
@@ -75,7 +68,7 @@ class _Body extends StatelessWidget {
           child: Column(
             children: [
               AppTextField(
-                controller: nameCtrl,
+                controller: model.nameCtrl,
                 hintText: 'Enter your full name',
                 label: 'Full Name',
                 prefixIcon: IconlyLight.profile,
@@ -84,7 +77,7 @@ class _Body extends StatelessWidget {
                 },
               ),
               AppTextField(
-                controller: usernameCtrl,
+                controller: model.usernameCtrl,
                 hintText: 'Enter your username',
                 label: 'Username',
                 prefixIcon: IconlyLight.profile,
@@ -93,7 +86,7 @@ class _Body extends StatelessWidget {
                 },
               ),
               AppTextField(
-                controller: emailCtrl,
+                controller: model.emailCtrl,
                 hintText: 'Enter your email address',
                 label: 'Email',
                 prefixIcon: IconlyLight.message,
@@ -108,7 +101,7 @@ class _Body extends StatelessWidget {
                 },
               ),
               AppTextField(
-                controller: phoneCtrl,
+                controller: model.phoneCtrl,
                 hintText: 'Enter your phone number',
                 label: 'Phone Number',
                 prefixIcon: IconlyLight.call,
@@ -129,7 +122,7 @@ class _Body extends StatelessWidget {
               //   },
               // ),
               AppTextField(
-                controller: passwordCtrl,
+                controller: model.passwordCtrl,
                 hintText: 'Enter your password',
                 label: 'Password',
                 prefixIcon: IconlyLight.lock,
@@ -145,7 +138,7 @@ class _Body extends StatelessWidget {
                         // HorizontalSpacing(16),
                         AppTextField(
                           padding: EdgeInsets.zero,
-                          controller: descriptionCtrl,
+                          controller: model.descriptionCtrl,
                           hintText: 'Profile Description',
                           label: 'Profile Description',
                           textInputType: TextInputType.text,
@@ -259,13 +252,14 @@ class _Body extends StatelessWidget {
 
   Future<void> onSubmit(ctx) async {
     model.setSignUser({
-      "email": emailCtrl.text.trim(),
-      "password": passwordCtrl.text.trim(),
-      "username": usernameCtrl.text.trim(),
-      "name": nameCtrl.text.trim(),
-      "address": addressCtrl.text.trim(),
-      "description": model.isPetSitter() ? descriptionCtrl.text.trim() : null,
-      "phone": phoneCtrl.text.trim(),
+      "email": model.emailCtrl.text.trim(),
+      "password": model.passwordCtrl.text.trim(),
+      "username": model.usernameCtrl.text.trim(),
+      "name": model.nameCtrl.text.trim(),
+      "address": model.addressCtrl.text.trim(),
+      "description":
+          model.isPetSitter() ? model.descriptionCtrl.text.trim() : null,
+      "phone": model.phoneCtrl.text.trim(),
       "location": model.locationCtrl.text,
       "license_img": model.selectedImageFile!
     });
