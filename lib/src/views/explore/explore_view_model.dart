@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
 import 'package:whiskers_away_app/src/models/Job.dart';
@@ -54,6 +55,9 @@ class ExploreViewModel extends BaseViewModel {
   final _jobService = locator<JobService>();
 
   List<Job> _exploreJobs = [];
+  List<Job> _filteredJobs = [];
+
+  TextEditingController searchController = TextEditingController();
 
   List<Job> get requestsList => [
         /* Request(
@@ -114,7 +118,6 @@ class ExploreViewModel extends BaseViewModel {
     });
     apiResult.when(success: (data) {
       newJobs = data;
-      print(newJobs[0]);
       print(data);
       setBusy(false);
     }, failure: (NetworkExceptions error) {
@@ -127,8 +130,33 @@ class ExploreViewModel extends BaseViewModel {
   }
 
   set newJobs(List<Job> val) {
-    _exploreJobs = val;
-    _jobService.jobs = val;
+    _exploreJobs = val.toList();
+    _filteredJobs = val.toList();
+    _jobService.jobs = val.toList();
     notifyListeners();
+  }
+
+  List<Job> get filteredJobs {
+    return _filteredJobs;
+  }
+
+  set filteredJobs(List<Job> val) {
+    _filteredJobs = val;
+    notifyListeners();
+  }
+
+  searchResult(String text) {
+    final regex = RegExp("^.*($text).*\$", caseSensitive: false);
+
+    if (text.isEmpty) {
+      filteredJobs = newJobs.toList();
+      return;
+    }
+
+    List<Job> searchedJobs = newJobs.where((job) {
+      return regex.hasMatch(job.petName);
+    }).toList();
+
+    filteredJobs = searchedJobs;
   }
 }

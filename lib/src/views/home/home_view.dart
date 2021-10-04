@@ -94,45 +94,48 @@ class _Body extends StatelessWidget {
                         )
                       : Column(
                           children: [
-                            // VerticalSpacing(12),
-                            // Container(
-                            //   margin: AppBaseStyles.horizontalPadding,
-                            //   height: 40,
-                            //   decoration: BoxDecoration(
-                            //     borderRadius: BorderRadius.circular(8),
-                            //     color: Colors.white,
-                            //   ),
-                            //   child: TextField(
-                            //     decoration: InputDecoration(
-                            //       contentPadding: EdgeInsets.only(left: 16),
-                            //       suffixIcon: Icon(
-                            //         IconlyLight.filter,
-                            //         color: AppColors.primaryColor,
-                            //       ),
-                            //       hintText: 'Search ...',
-                            //       hintStyle: AppTextStyles.xMedium(
-                            //           color: Color(0xFF858585)),
-                            //       enabledBorder: OutlineInputBorder(
-                            //         borderRadius: BorderRadius.circular(8),
-                            //         borderSide:
-                            //             BorderSide(color: Color(0xFFE7E7E7)),
-                            //       ),
-                            //       focusedBorder: OutlineInputBorder(
-                            //         borderRadius: BorderRadius.circular(8),
-                            //         borderSide:
-                            //             BorderSide(color: Color(0xFFE7E7E7)),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
-                            model.jobHistory.length > 0
+                            VerticalSpacing(12),
+                            Container(
+                              margin: AppBaseStyles.horizontalPadding,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.white,
+                              ),
+                              child: TextField(
+                                onChanged: (val) =>
+                                    model.searchResult('history', val),
+                                controller: model.historyJobSearchController,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.only(left: 16),
+                                  suffixIcon: Icon(
+                                    IconlyLight.filter,
+                                    color: AppColors.primaryColor,
+                                  ),
+                                  hintText: 'Search ...',
+                                  hintStyle: AppTextStyles.xMedium(
+                                      color: Color(0xFF858585)),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide:
+                                        BorderSide(color: Color(0xFFE7E7E7)),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide:
+                                        BorderSide(color: Color(0xFFE7E7E7)),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            model.jobHistoryFiltered.length > 0
                                 ? Expanded(
                                     child: ListView.separated(
                                         padding: AppBaseStyles.horizontalPadding
                                             .copyWith(bottom: 16, top: 16),
                                         itemBuilder: (_, index) {
                                           final request =
-                                              model.jobHistory[index];
+                                              model.jobHistoryFiltered[index];
                                           return GestureDetector(
                                             onTap: () =>
                                                 NavService.petDetails(),
@@ -151,7 +154,8 @@ class _Body extends StatelessWidget {
                                         },
                                         separatorBuilder: (_, __) =>
                                             VerticalSpacing(16),
-                                        itemCount: model.jobHistory.length),
+                                        itemCount:
+                                            model.jobHistoryFiltered.length),
                                   )
                                 : noRecord('No job completed at the moment...'),
                           ],
@@ -197,46 +201,45 @@ class _Body extends StatelessWidget {
           )
         : Column(
             children: [
-              // VerticalSpacing(12),
-              // Container(
-              //   margin: AppBaseStyles.horizontalPadding,
-              //   height: 40,
-              //   decoration: BoxDecoration(
-              //     borderRadius: BorderRadius.circular(8),
-              //     color: Colors.white,
-              //   ),
-              //   child: TextField(
-              //     onChanged: (text) => {_filteredJobs(text)},
-              //     decoration: InputDecoration(
-              //       contentPadding: EdgeInsets.only(left: 16),
-              //       suffixIcon: Icon(
-              //         IconlyLight.filter,
-              //         color: AppColors.primaryColor,
-              //       ),
-              //       hintText: 'Search ...',
-              //       hintStyle: AppTextStyles.xMedium(color: Color(0xFF858585)),
-              //       enabledBorder: OutlineInputBorder(
-              //         borderRadius: BorderRadius.circular(8),
-              //         borderSide: BorderSide(color: Color(0xFFE7E7E7)),
-              //       ),
-              //       focusedBorder: OutlineInputBorder(
-              //         borderRadius: BorderRadius.circular(8),
-              //         borderSide: BorderSide(color: Color(0xFFE7E7E7)),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              model.newJobs.length > 0
+              VerticalSpacing(12),
+              Container(
+                margin: AppBaseStyles.horizontalPadding,
+                height: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Colors.white,
+                ),
+                child: TextField(
+                  controller: model.openJobSearchController,
+                  onChanged: (val) => model.searchResult('open', val),
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(left: 16),
+                    suffixIcon: Icon(
+                      IconlyLight.filter,
+                      color: AppColors.primaryColor,
+                    ),
+                    hintText: 'Search ...',
+                    hintStyle: AppTextStyles.xMedium(color: Color(0xFF858585)),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(color: Color(0xFFE7E7E7)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(color: Color(0xFFE7E7E7)),
+                    ),
+                  ),
+                ),
+              ),
+              model.newJobsFiltered.length > 0
                   ? Expanded(
                       child: ListView.separated(
                         padding: AppBaseStyles.horizontalPadding
                             .copyWith(bottom: 16, top: 16),
                         itemBuilder: (_, index) {
-                          final request = model.newJobs[index];
+                          final request = model.newJobsFiltered[index];
                           return GestureDetector(
                             onTap: () async {
-                              print(model.jobResponses);
-
                               //  NavService.petDetails(
                               //      arguments: PetDetailsViewArguments(
                               //   request: request,
@@ -256,7 +259,7 @@ class _Body extends StatelessWidget {
                           );
                         },
                         separatorBuilder: (_, __) => VerticalSpacing(16),
-                        itemCount: model.newJobs.length,
+                        itemCount: model.newJobsFiltered.length,
                       ),
                     )
                   // : model.filteredJobs.length > 0

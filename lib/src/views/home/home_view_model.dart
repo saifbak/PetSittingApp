@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
@@ -56,8 +57,13 @@ class HomeViewModel extends BaseViewModel {
   final _jobService = locator<JobService>();
   List<Job> _filteredJobs = [];
   List<Job> _newJobs = [];
+  List<Job> _newJobsFiltered = [];
   List<Job> _jobHistory = [];
+  List<Job> _jobHistoryFiltered = [];
   List<Map<String, dynamic>> _jobResponses = [];
+
+  TextEditingController openJobSearchController = TextEditingController();
+  TextEditingController historyJobSearchController = TextEditingController();
 
   Map<String, dynamic> loading = {'open': false, 'history': false};
 
@@ -259,6 +265,7 @@ class HomeViewModel extends BaseViewModel {
   set newJobs(List<Job> val) {
     _newJobs = val;
     _jobService.jobs = val;
+    newJobsFiltered = val;
     notifyListeners();
   }
 
@@ -296,6 +303,50 @@ class HomeViewModel extends BaseViewModel {
 
   set jobHistory(List<Job> val) {
     _jobHistory = val;
+    jobHistoryFiltered = val;
     notifyListeners();
+  }
+
+  set newJobsFiltered(List<Job> val) {
+    _newJobsFiltered = val.toList();
+    notifyListeners();
+  }
+
+  List<Job> get newJobsFiltered {
+    return _newJobsFiltered;
+  }
+
+  set jobHistoryFiltered(List<Job> val) {
+    _jobHistoryFiltered = val.toList();
+    notifyListeners();
+  }
+
+  List<Job> get jobHistoryFiltered {
+    return _jobHistoryFiltered;
+  }
+
+  searchResult(String type, String text) {
+    final regex = RegExp("^.*($text).*\$", caseSensitive: false);
+    List<Job> selectedJobs =
+        type == 'open' ? newJobs.toList() : jobHistory.toList();
+
+    if (text.isEmpty) {
+      if (type == 'open') {
+        newJobsFiltered = newJobs;
+      } else {
+        jobHistoryFiltered = jobHistory;
+      }
+      return;
+    }
+
+    List<Job> searchedJobs = selectedJobs.where((job) {
+      return regex.hasMatch(job.petName);
+    }).toList();
+
+    if (type == 'open') {
+      newJobsFiltered = searchedJobs;
+    } else {
+      jobHistoryFiltered = searchedJobs;
+    }
   }
 }

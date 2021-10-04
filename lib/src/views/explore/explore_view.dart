@@ -51,26 +51,6 @@ class _Body extends StatelessWidget {
     //   return false;
     // }
 
-    // handleSearch(text) async {
-    //   print(text);
-    //   // var filteredData = [];
-    //   // String query = text;
-    //   // // let obj = {};
-    //   // var filterr;
-    //   // filteredData =
-    //   //     await filterr(model.newJobs, (obj) => {contains(obj, query)});
-    //   // if (filteredData.length == 0) {
-    //   //   Timer(Duration(seconds: 1), () {
-    //   //     print(text);
-    //   //   });
-
-    //   //   // setTimeout(() => {
-    //   //   //   Toast.show(`${Languages.nosearchTipster} ${text}`);
-    //   //   // }, 1500)
-    //   // }
-    //   // setSearchState(filteredData);
-    // }
-
     return Column(
       children: [
         VerticalSpacing(context.topSpace() + screenSize.height * .05),
@@ -92,45 +72,46 @@ class _Body extends StatelessWidget {
           ),
         ),
         VerticalSpacing(14),
-        // Container(
-        //   margin: AppBaseStyles.horizontalPadding,
-        //   height: 40,
-        //   decoration: BoxDecoration(
-        //     borderRadius: BorderRadius.circular(8),
-        //     color: Colors.white,
-        //     boxShadow: [
-        //       AppUtils.boxShadow1(),
-        //     ],
-        //   ),
-        //   child: TextField(
-        //     onChanged: (e) => handleSearch(e),
-        //     decoration: InputDecoration(
-        //       contentPadding: EdgeInsets.only(left: 16),
-        //       suffixIcon: Icon(
-        //         IconlyLight.filter,
-        //         color: AppColors.primaryColor,
-        //       ),
-        //       hintText: 'Search ...',
-        //       hintStyle: AppTextStyles.xMedium(color: Color(0xFF858585)),
-        //       enabledBorder: OutlineInputBorder(
-        //         borderRadius: BorderRadius.circular(8),
-        //         borderSide: BorderSide(color: Color(0xFFE7E7E7)),
-        //       ),
-        //       focusedBorder: OutlineInputBorder(
-        //         borderRadius: BorderRadius.circular(8),
-        //         borderSide: BorderSide(color: Color(0xFFE7E7E7)),
-        //       ),
-        //     ),
-        //   ),
-        // ),
+        Container(
+          margin: AppBaseStyles.horizontalPadding,
+          height: 40,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.white,
+            boxShadow: [
+              AppUtils.boxShadow1(),
+            ],
+          ),
+          child: TextField(
+            controller: model.searchController,
+            onChanged: (e) => handleSearch(e),
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 16),
+              suffixIcon: Icon(
+                IconlyLight.filter,
+                color: AppColors.primaryColor,
+              ),
+              hintText: 'Search ...',
+              hintStyle: AppTextStyles.xMedium(color: Color(0xFF858585)),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: Color(0xFFE7E7E7)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: Color(0xFFE7E7E7)),
+              ),
+            ),
+          ),
+        ),
         !model.isBusy
             ? Expanded(
-                child: model.newJobs.length > 0
+                child: model.filteredJobs.length > 0
                     ? ListView.separated(
                         padding: AppBaseStyles.horizontalPadding
                             .copyWith(bottom: 16, top: 16),
                         itemBuilder: (_, index) {
-                          final request = model.newJobs[index];
+                          final request = model.filteredJobs[index];
                           return GestureDetector(
                             onTap: () => NavService.petDetails(
                               arguments: PetDetailsViewArguments(
@@ -146,7 +127,8 @@ class _Body extends StatelessWidget {
                           );
                         },
                         separatorBuilder: (_, __) => VerticalSpacing(16),
-                        itemCount: model.newJobs.length)
+                        itemCount: model.filteredJobs.length,
+                      )
                     : Expanded(
                         child: Center(
                           child: Text(
@@ -166,6 +148,11 @@ class _Body extends StatelessWidget {
               )
       ],
     );
+  }
+
+  handleSearch(String text) {
+    model.filteredJobs.clear();
+    model.searchResult(text);
   }
 
   // Widget noRecord(String text) {
