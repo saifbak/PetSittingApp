@@ -100,6 +100,23 @@ class ApiService {
     }
   }
 
+  Future<ApiResult<dynamic>> uploadLicenseImage(
+      Map<String, dynamic> data) async {
+    try {
+      print('Payload data == >');
+      print(data);
+      var response = await _apiClient.postReq(
+        "/upload/licenseimage",
+        data: DIO.FormData.fromMap(data),
+      );
+      print('response.data===>');
+      print(response.data);
+      return ApiResult.success(data: response.data);
+    } catch (e) {
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
+
   Future<ApiResult<User>> getUserDetails() async {
     try {
       ResponseWrapper response = await _apiClient.getReq("/user/details");

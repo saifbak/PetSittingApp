@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart' as Dio;
 import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
@@ -51,34 +52,52 @@ class TermsConditionsViewModel extends BaseViewModel {
 
       Map<String, dynamic> payload = _authService.signupUser;
 
+      final data = {
+        'license_img': Dio.MultipartFile.fromBytes(
+          payload['license_img'].readAsBytesSync(),
+          filename: payload['license_img'].path.split('/').last,
+        ),
+      };
+      print(data);
+      final res = await _apiService.uploadLicenseImage(data);
+      res.when(
+        success: (data) async {
+          print('Success==>');
+          print(data['url']);
+          if (data['url'] != null) {
+            User user = new User(
+                name: payload['name'],
+                email: payload['email'],
+                password: payload['password'],
+                phone: payload['phone'],
+                address: payload['address'],
+                username: payload['username'],
+                description: payload['description'] != null
+                    ? payload['description']
+                    : "",
+                roleId: _authService.getRoleById(),
+                licenseImg: data['url']);
+            ApiResult apiResult = await _apiService.register(user);
+
+            NavService.popOut;
+            // Navigator.of(ctx, rootNavigator: true).pop();
+
+            apiResult.when(success: (data) {
+              showSuccessAlert();
+              AppUtils.toastShow("User Registered Successfully");
+              print(data);
+            }, failure: (NetworkExceptions error) {
+              AppUtils.toastShow("Unsuccessful Registration !");
+              showErrorAlert(error);
+            });
+          }
+          notifyListeners();
+        },
+        failure: (error) {},
+      );
+
       print("payload");
       print(payload);
-
-      User user = new User(
-        name: payload['name'],
-        email: payload['email'],
-        password: payload['password'],
-        phone: payload['phone'],
-        address: payload['address'],
-        username: payload['username'],
-        description:
-            payload['description'] != null ? payload['description'] : "",
-        roleId: _authService.getRoleById(),
-      );
-      ApiResult apiResult = await _apiService.register(user);
-
-      NavService.popOut;
-
-      // Navigator.of(ctx, rootNavigator: true).pop();
-
-      apiResult.when(success: (data) {
-        showSuccessAlert();
-        AppUtils.toastShow("User Registered Successfully");
-        print(data);
-      }, failure: (NetworkExceptions error) {
-        AppUtils.toastShow("Unsuccessful Registration !");
-        showErrorAlert(error);
-      });
 
       setBusy(false);
     } catch (e) {

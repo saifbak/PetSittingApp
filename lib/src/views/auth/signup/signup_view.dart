@@ -259,18 +259,6 @@ class _Body extends StatelessWidget {
   }
 
   Future<void> onSubmit(ctx) async {
-    var data;
-    if (model.selectedImageFile != null) {
-      final data = {
-        'license_img': Dio.MultipartFile.fromBytes(
-          model.selectedImageFile!.readAsBytesSync(),
-          filename: model.selectedImageFile!.path.split('/').last,
-        ),
-      };
-    }
-    print('dat===>');
-    print(data);
-
     model.setSignUser({
       "email": emailCtrl.text.trim(),
       "password": passwordCtrl.text.trim(),
@@ -278,11 +266,10 @@ class _Body extends StatelessWidget {
       "name": nameCtrl.text.trim(),
       "address": addressCtrl.text.trim(),
       "description": model.isPetSitter() ? descriptionCtrl.text.trim() : null,
-      "license_image": data,
       "phone": phoneCtrl.text.trim(),
-      // "location": locationCtrl,
-      // "location":
+      "license_img": model.selectedImageFile!
     });
+    // model.uploadImage(model.selectedImageFile!);
 
     NavService.termsConditions();
   }
@@ -365,7 +352,6 @@ class RadioCheck extends ViewModelWidget<SignUpViewModel> {
                 value: SingingCharacter.yes,
                 groupValue: _character,
                 onChanged: (SingingCharacter? value) {
-                  model.locationCtrl.text = value as String;
                   print('Yes ===>');
                   print(value);
                   // setState(() { _character = value; });
@@ -380,7 +366,6 @@ class RadioCheck extends ViewModelWidget<SignUpViewModel> {
                 value: SingingCharacter.no,
                 groupValue: _character,
                 onChanged: (SingingCharacter? value) {
-                  model.locationCtrl.text = value as String;
                   print('No ===>');
                   print(value);
                   // setState(() { _character = value; });

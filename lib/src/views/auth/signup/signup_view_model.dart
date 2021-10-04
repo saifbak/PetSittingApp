@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:dio/dio.dart' as Dio;
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
@@ -26,48 +27,63 @@ class SignUpViewModel extends BaseViewModel {
   bool imageUploadLoading = false;
   late File? _selectedImageFile;
 
-  Future<dynamic> signup(Map<String, dynamic> payload, ctx) async {
-    setBusy(true);
-    print('payload[licenseImg]===>');
-    print(payload['licenseImg']);
-    print(payload['license_image']);
-    print('location controller===>');
-    print(locationCtrl);
-    try {
-      dialogService.showCustomDialog(
-          variant: 'spinner', barrierDismissible: true);
-
-      User user = new User(
-        name: payload['name'],
-        email: payload['email'],
-        password: payload['password'],
-        phone: payload['phone'],
-        address: payload['address'],
-        username: payload['username'],
-        licenseImg: payload['licenseImg'],
-        description:
-            payload['description'] != null ? payload['description'] : "",
-        roleId: _authService.getRoleById(),
-        location: locationCtrl.text.trim(),
-      );
-
-      ApiResult apiResult = await _apiService.register(user);
-
-      apiResult.when(success: (data) {
-        showSuccessAlert();
-        AppUtils.toastShow("User Registered Successfully");
+  Future<void> uploadImage(File image) async {
+    final data = {
+      'profile_img': Dio.MultipartFile.fromBytes(
+        image.readAsBytesSync(),
+        filename: image.path.split('/').last,
+      ),
+    };
+    print(data);
+    final res = await _apiService.uploadLicenseImage(data);
+    res.when(
+      success: (data) {
+        print('Success==>');
         print(data);
-      }, failure: (NetworkExceptions error) {
-        AppUtils.toastShow("Unsuccessful Registration !");
-        showErrorAlert(error);
-      });
-
-      setBusy(false);
-    } catch (e) {
-      print(e.toString());
-      setBusy(false);
-    }
+        // _authService.user!.licenseImg = data['license_img'];
+        notifyListeners();
+      },
+      failure: (error) {},
+    );
   }
+
+  // Future<dynamic> signup(Map<String, dynamic> payload, ctx) async {
+  //   setBusy(true);
+  //   try {
+  //     dialogService.showCustomDialog(
+  //         variant: 'spinner', barrierDismissible: true);
+
+  //     User user = new User(
+  //       name: payload['name'],
+  //       email: payload['email'],
+  //       password: payload['password'],
+  //       phone: payload['phone'],
+  //       address: payload['address'],
+  //       username: payload['username'],
+  //       licenseImg: payload['licenseImg'],
+  //       description:
+  //           payload['description'] != null ? payload['description'] : "",
+  //       roleId: _authService.getRoleById(),
+  //       location: locationCtrl.text.trim(),
+  //     );
+
+  //     ApiResult apiResult = await _apiService.register(user);
+
+  //     apiResult.when(success: (data) {
+  //       showSuccessAlert();
+  //       AppUtils.toastShow("User Registered Successfully");
+  //       print(data);
+  //     }, failure: (NetworkExceptions error) {
+  //       AppUtils.toastShow("Unsuccessful Registration !");
+  //       showErrorAlert(error);
+  //     });
+
+  //     setBusy(false);
+  //   } catch (e) {
+  //     print(e.toString());
+  //     setBusy(false);
+  //   }
+  // }
 
   showErrorAlert(e) {
     dialogService.showDialog(
@@ -114,25 +130,6 @@ class SignUpViewModel extends BaseViewModel {
     imageUploadDisplay = true;
     notifyListeners();
   }
-
-  // Future<void> uploadImage(File image) async {
-  //   final data = {
-  //     'license_img': Dio.MultipartFile.fromBytes(
-  //       image.readAsBytesSync(),
-  //       filename: image.path.split('/').last,
-  //     ),
-  //   };
-  //   final res = await _apiService.uploadProfileImage(data);
-  //   res.when(
-  //     success: (data) {
-  //       // _authService.user!.profileImg = data['license_img'];
-  //       notifyListeners();
-  //       //imagePath = data['image_path'];
-  //       //profileImage = data['image_url'];
-  //     },
-  //     failure: (error) {},
-  //   );
-  // }
 
   getFromGallery() async {
     XFile? pickedFile = await ImagePicker().pickImage(
