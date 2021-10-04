@@ -13,6 +13,8 @@ class User {
   int? overallRating;
   String? ratingFormatted;
   List<dynamic> reviews = [];
+  String? licenseImg;
+  String? location;
 
   User(
       {this.id,
@@ -25,7 +27,9 @@ class User {
       this.hourlyRate,
       this.roleId,
       this.description,
-      this.profileImg});
+      this.profileImg,
+      this.licenseImg,
+      this.location});
 
   dynamic toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -39,6 +43,8 @@ class User {
     data['description'] = this.description;
     data['role_id'] = this.roleId;
     data['profile_img'] = this.profileImg;
+    data['license_img'] = this.licenseImg;
+    data['location'] = this.location;
     return data;
   }
 
@@ -49,7 +55,9 @@ class User {
     email = json['email'];
     description = json['description'];
     profileImg = json['profile_img'];
+    licenseImg = json['license_img'];
     phone = json['phone'];
+    location = json['location'];
     address = json['address'];
     roleId = json['role_id'];
     overallRating = json['overall_rating'];
