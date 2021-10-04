@@ -34,6 +34,7 @@ class SignUpView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<SignUpViewModel>.reactive(
       viewModelBuilder: () => SignUpViewModel(),
+      onModelReady: (model) => model.init(),
       builder: (_, model, __) {
         return Scaffold(
           body: _Body(model),
@@ -54,11 +55,9 @@ class _Body extends StatelessWidget {
   final passwordCtrl = TextEditingController();
   final nameCtrl = TextEditingController();
   final usernameCtrl = TextEditingController();
-  final locationCtrl = TextEditingController();
   final addressCtrl = TextEditingController();
   final phoneCtrl = TextEditingController();
   final descriptionCtrl = TextEditingController();
-  // final locationCtrl = TextEditingController();
 
   _Body(this.model);
 
@@ -118,7 +117,7 @@ class _Body extends StatelessWidget {
                   return DefaultValidator.required(val, "Phone");
                 },
               ),
-              RadioCheck(),
+              buildRadioButton(),
               // DropDown(),
               // AppTextField(
               //   controller: addressCtrl,
@@ -280,11 +279,57 @@ class _Body extends StatelessWidget {
       "description": model.isPetSitter() ? descriptionCtrl.text.trim() : null,
       "license_image": data,
       "phone": phoneCtrl.text.trim(),
-      // "location": locationCtrl,
+      "location": model.locationCtrl.text,
       // "location":
     });
 
     NavService.termsConditions();
+  }
+
+  Widget buildRadioButton() {
+    return Column(
+      children: <Widget>[
+        Container(
+          alignment: Alignment.topLeft,
+          padding: EdgeInsets.only(left: 22),
+          child: Text('Live in New Jersey?',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
+              textAlign: TextAlign.left),
+        ),
+        Container(
+          padding: EdgeInsets.only(left: 10),
+          child: Row(
+            children: <Widget>[
+              Radio<String>(
+                  activeColor: AppColors.primaryColor,
+                  value: "1",
+                  groupValue: model.locationCtrl.text,
+                  onChanged: model.handleLocationChange),
+              Text(
+                'Yes',
+                style: new TextStyle(fontSize: 17.0),
+              ),
+              Radio<String>(
+                activeColor: AppColors.primaryColor,
+                value: "0",
+                groupValue: model.locationCtrl.text,
+                onChanged: model.handleLocationChange,
+              ),
+              Text(
+                'No',
+                style: new TextStyle(
+                  fontSize: 17.0,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }
 
@@ -333,69 +378,5 @@ class ImageUploadOptions extends ViewModelWidget<SignUpViewModel> {
         ],
       ),
     ));
-  }
-}
-
-enum SingingCharacter { yes, no }
-final locationCtrl = TextEditingController();
-
-class RadioCheck extends ViewModelWidget<SignUpViewModel> {
-  SingingCharacter? _character = SingingCharacter.no;
-  @override
-  Widget build(BuildContext context, SignUpViewModel model) {
-    return Column(
-      children: <Widget>[
-        Container(
-          alignment: Alignment.topLeft,
-          padding: EdgeInsets.only(left: 22),
-          child: Text('Live in New Jersey?',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
-              textAlign: TextAlign.left),
-        ),
-        Container(
-          padding: EdgeInsets.only(left: 10),
-          child: Row(
-            children: <Widget>[
-              Radio<SingingCharacter>(
-                activeColor: AppColors.primaryColor,
-                value: SingingCharacter.yes,
-                groupValue: _character,
-                onChanged: (SingingCharacter? value) {
-                  model.locationCtrl.text = value as String;
-                  print('Yes ===>');
-                  print(value);
-                  // setState(() { _character = value; });
-                },
-              ),
-              Text(
-                'Yes',
-                style: new TextStyle(fontSize: 17.0),
-              ),
-              Radio<SingingCharacter>(
-                activeColor: AppColors.primaryColor,
-                value: SingingCharacter.no,
-                groupValue: _character,
-                onChanged: (SingingCharacter? value) {
-                  model.locationCtrl.text = value as String;
-                  print('No ===>');
-                  print(value);
-                  // setState(() { _character = value; });
-                },
-              ),
-              Text(
-                'No',
-                style: new TextStyle(
-                  fontSize: 17.0,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
   }
 }

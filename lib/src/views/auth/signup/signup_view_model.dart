@@ -20,8 +20,8 @@ class SignUpViewModel extends BaseViewModel {
   final dialogService = locator<DialogService>();
   final _apiService = locator<ApiService>();
   final _authService = locator<AuthService>();
+  late TextEditingController locationCtrl;
 
-  final locationCtrl = TextEditingController();
   bool _imageUploadDisplay = false;
   bool imageUploadLoading = false;
   late File? _selectedImageFile;
@@ -67,6 +67,15 @@ class SignUpViewModel extends BaseViewModel {
       print(e.toString());
       setBusy(false);
     }
+  }
+
+  init() {
+    locationCtrl = TextEditingController(text: '0');
+  }
+
+  handleLocationChange(value) {
+    locationCtrl.text = value ?? '';
+    notifyListeners();
   }
 
   showErrorAlert(e) {

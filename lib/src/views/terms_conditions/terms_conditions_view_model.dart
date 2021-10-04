@@ -58,6 +58,7 @@ class TermsConditionsViewModel extends BaseViewModel {
         name: payload['name'],
         email: payload['email'],
         password: payload['password'],
+        location: payload['location'],
         phone: payload['phone'],
         address: payload['address'],
         username: payload['username'],
