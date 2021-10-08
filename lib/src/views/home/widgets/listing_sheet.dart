@@ -46,6 +46,7 @@ class ListingSheet extends StatelessWidget {
             VerticalSpacing(4),
             Text('Available Pet Sitters for this request'),
             VerticalSpacing(8),
+            // ignore: unnecessary_null_comparison
             list.length > 0
                 ? Expanded(
                     child: ListView.separated(

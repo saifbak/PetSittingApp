@@ -21,6 +21,7 @@ class SignUpViewModel extends BaseViewModel {
   final dialogService = locator<DialogService>();
   final _apiService = locator<ApiService>();
   final _authService = locator<AuthService>();
+  late File? _selectedImageFile;
   late TextEditingController locationCtrl,
       emailCtrl,
       passwordCtrl,
@@ -32,7 +33,6 @@ class SignUpViewModel extends BaseViewModel {
 
   bool _imageUploadDisplay = false;
   bool imageUploadLoading = false;
-  late File? _selectedImageFile;
 
   Future<void> uploadImage(File image) async {
     final data = {
@@ -69,43 +69,43 @@ class SignUpViewModel extends BaseViewModel {
     locationCtrl.text = value ?? '';
     notifyListeners();
   }
-  // Future<dynamic> signup(Map<String, dynamic> payload, ctx) async {
-  //   setBusy(true);
-  //   try {
-  //     dialogService.showCustomDialog(
-  //         variant: 'spinner', barrierDismissible: true);
 
-  //     User user = new User(
-  //       name: payload['name'],
-  //       email: payload['email'],
-  //       password: payload['password'],
-  //       phone: payload['phone'],
-  //       address: payload['address'],
-  //       username: payload['username'],
-  //       licenseImg: payload['licenseImg'],
-  //       description:
-  //           payload['description'] != null ? payload['description'] : "",
-  //       roleId: _authService.getRoleById(),
-  //       location: locationCtrl.text.trim(),
-  //     );
+  Future<dynamic> signup(Map<String, dynamic> payload, ctx) async {
+    setBusy(true);
+    try {
+      dialogService.showCustomDialog(
+          variant: 'spinner', barrierDismissible: true);
+      User user = new User(
+        name: payload['name'],
+        email: payload['email'],
+        password: payload['password'],
+        phone: payload['phone'],
+        address: payload['address'],
+        username: payload['username'],
+        licenseImg: payload['licenseImg'],
+        description:
+            payload['description'] != null ? payload['description'] : "",
+        roleId: _authService.getRoleById(),
+        location: locationCtrl.text.trim(),
+      );
 
-  //     ApiResult apiResult = await _apiService.register(user);
+      ApiResult apiResult = await _apiService.register(user);
 
-  //     apiResult.when(success: (data) {
-  //       showSuccessAlert();
-  //       AppUtils.toastShow("User Registered Successfully");
-  //       print(data);
-  //     }, failure: (NetworkExceptions error) {
-  //       AppUtils.toastShow("Unsuccessful Registration !");
-  //       showErrorAlert(error);
-  //     });
+      apiResult.when(success: (data) {
+        showSuccessAlert();
+        AppUtils.toastShow("User Registered Successfully");
+        print(data);
+      }, failure: (NetworkExceptions error) {
+        AppUtils.toastShow("Unsuccessful Registration !");
+        showErrorAlert(error);
+      });
 
-  //     setBusy(false);
-  //   } catch (e) {
-  //     print(e.toString());
-  //     setBusy(false);
-  //   }
-  // }
+      setBusy(false);
+    } catch (e) {
+      print(e.toString());
+      setBusy(false);
+    }
+  }
 
   showErrorAlert(e) {
     dialogService.showDialog(
@@ -148,7 +148,7 @@ class SignUpViewModel extends BaseViewModel {
 
   File? get selectedImageFile => _selectedImageFile;
   set selectedImageFile(File? val) {
-    _selectedImageFile = val;
+    _selectedImageFile = (val != null ? val : []) as File?;
     imageUploadDisplay = true;
     notifyListeners();
   }

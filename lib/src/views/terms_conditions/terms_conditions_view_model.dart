@@ -52,48 +52,70 @@ class TermsConditionsViewModel extends BaseViewModel {
 
       Map<String, dynamic> payload = _authService.signupUser;
 
-      final data = {
-        'license_img': Dio.MultipartFile.fromBytes(
-          payload['license_img'].readAsBytesSync(),
-          filename: payload['license_img'].path.split('/').last,
-        ),
-      };
-      final res = await _apiService.uploadLicenseImage(data);
-      res.when(
-        success: (data) async {
-          if (data['url'] != null) {
-            User user = new User(
-                name: payload['name'],
-                email: payload['email'],
-                password: payload['password'],
-                phone: payload['phone'],
-                address: payload['address'],
-                location: payload['location'],
-                username: payload['username'],
-                description: payload['description'] != null
-                    ? payload['description']
-                    : "",
-                roleId: _authService.getRoleById(),
-                licenseImg: data['url']);
-            ApiResult apiResult = await _apiService.register(user);
+      if (_authService.isPetSitter()) {
+        final data = {
+          'license_img': Dio.MultipartFile.fromBytes(
+            payload['license_img'].readAsBytesSync(),
+            filename: payload['license_img'].path.split('/').last,
+          ),
+        };
+        final res = await _apiService.uploadLicenseImage(data);
+        res.when(
+          success: (data) async {
+            if (data['url'] != null) {
+              User user = new User(
+                  name: payload['name'],
+                  email: payload['email'],
+                  password: payload['password'],
+                  phone: payload['phone'],
+                  address: payload['address'],
+                  location: payload['location'],
+                  username: payload['username'],
+                  description: payload['description'] != null
+                      ? payload['description']
+                      : "",
+                  roleId: _authService.getRoleById(),
+                  licenseImg: data['url'] != null ? data['url'] : []);
+              ApiResult apiResult = await _apiService.register(user);
 
-            NavService.popOut;
-            // Navigator.of(ctx, rootNavigator: true).pop();
-
-            apiResult.when(success: (data) {
-              showSuccessAlert();
-              AppUtils.toastShow("User Registered Successfully");
-            }, failure: (NetworkExceptions error) {
-              AppUtils.toastShow("Unsuccessful Registration !");
-              showErrorAlert(error);
-            });
-          }
-          notifyListeners();
-        },
-        failure: (error) {
-          print(error.toString());
-        },
-      );
+              NavService.popOut;
+              apiResult.when(success: (data) {
+                showSuccessAlert();
+                AppUtils.toastShow("User Registered Successfully");
+              }, failure: (NetworkExceptions error) {
+                AppUtils.toastShow("Unsuccessful Registration !");
+                showErrorAlert(error);
+              });
+            }
+            notifyListeners();
+          },
+          failure: (error) {
+            print(error.toString());
+          },
+        );
+      } else {
+        User user = new User(
+            name: payload['name'],
+            email: payload['email'],
+            password: payload['password'],
+            phone: payload['phone'],
+            address: payload['address'],
+            location: payload['location'],
+            username: payload['username'],
+            description:
+                payload['description'] != null ? payload['description'] : "",
+            roleId: _authService.getRoleById(),
+            licenseImg: '');
+        ApiResult apiResult = await _apiService.register(user);
+        NavService.popOut;
+        apiResult.when(success: (data) {
+          showSuccessAlert();
+          AppUtils.toastShow("User Registered Successfully");
+        }, failure: (NetworkExceptions error) {
+          AppUtils.toastShow("Unsuccessful Registration !");
+          showErrorAlert(error);
+        });
+      }
 
       setBusy(false);
     } catch (e) {

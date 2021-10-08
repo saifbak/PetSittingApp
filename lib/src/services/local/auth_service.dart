@@ -39,23 +39,23 @@ class AuthService with ReactiveServiceMixin {
   }
 
   set signupUser(Map<String, dynamic> user) {
-    print("useruseruser");
-    print(user);
+    // print("useruseruser");
+    // print(user);
     _signupUser.value = user;
   }
 
   set role(Role? val) {
-    print("ooooooooo");
-    print(val);
+    // print("ooooooooo");
+    // print(val);
     _role.value = val;
   }
 
   int getRoleById() {
     Role? val = role;
-    print(
-      "val------",
-    );
-    print(val.toString());
+    // print(
+    //   "val------",
+    // );
+    // print(val.toString());
     if (val.toString() == 'Role.PET_SITTER') {
       return 4;
     } else if (val.toString() == 'Role.PET_OWNER') {

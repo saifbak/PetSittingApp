@@ -5,7 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
+import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
+import 'package:whiskers_away_app/src/core/validators/default_validator.dart';
 import 'package:whiskers_away_app/src/models/Job.dart';
+import 'package:whiskers_away_app/src/services/local/auth_service.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_textfield.dart';
@@ -17,6 +20,8 @@ import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
 import 'package:whiskers_away_app/src/views/options_select/options_select_view_model.dart';
 import 'package:whiskers_away_app/src/views/per_details/pet_details_view_model.dart';
+
+final _authService = locator<AuthService>();
 
 class PetDetailsView extends StatelessWidget {
   final Job request;
@@ -232,6 +237,7 @@ class _Body extends StatelessWidget {
               ),
               VerticalSpacing(12),
               Text(request.description ?? ''),
+              VerticalSpacing(42),
             ],
           ),
         ),
@@ -239,8 +245,8 @@ class _Body extends StatelessWidget {
           SingleChildScrollView(
               child: Column(
             children: [
-              VerticalSpacing(0),
-              Padding(
+              // VerticalSpacing(20),
+              Container(
                 padding: AppBaseStyles.horizontalPadding,
                 child: AppTextField(
                   controller: replyCtrl,
@@ -249,11 +255,11 @@ class _Body extends StatelessWidget {
                   maxLines: 4,
                   padding: EdgeInsets.zero,
                   // validator: (val) {
-                  //   return DefaultValidator.required(val, "Full Name");
+                  //   return DefaultValidator.required(val, "your reply");
                   // },
                 ),
               ),
-              Padding(
+              Container(
                 padding: AppBaseStyles.horizontalPadding,
                 child: AppTextField(
                   controller: priceCtrl,
@@ -261,14 +267,14 @@ class _Body extends StatelessWidget {
                   label: '',
                   maxLines: 1,
                   padding: EdgeInsets.zero,
-                  textInputType: TextInputType.number,
+                  // textInputType: TextInputType.numberWithOptions(),
                   // validator: (val) {
-                  //   return DefaultValidator.required(val, "Full Name");
+                  //   return DefaultValidator.required(val, "price");
                   // },
                 ),
               ),
               // AppSpacing(context).bottomSpacing,
-              VerticalSpacing(12),
+              // VerticalSpacing(12),
               Padding(
                 padding: AppBaseStyles.horizontalPadding,
                 child: Row(
@@ -310,7 +316,7 @@ class _Body extends StatelessWidget {
             "price": double.parse(priceCtrl.text.trim()),
           },
           ctx);
-      NavService.explore();
+      _authService.navigateHomeScreen();
     } catch (e) {
       /* Timer(Duration(seconds: 1), () {
         model.showErrorAlert(e);

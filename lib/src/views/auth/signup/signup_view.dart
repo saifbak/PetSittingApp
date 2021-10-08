@@ -171,7 +171,7 @@ class _Body extends StatelessWidget {
                                         ),
                                         VerticalSpacing(),
                                         Text(
-                                          'Add license image',
+                                          'Add Pet Sitting Insurance',
                                           style: AppTextStyles.xxLarge(
                                               color: AppColors.primaryColor),
                                         )
@@ -261,7 +261,7 @@ class _Body extends StatelessWidget {
           model.isPetSitter() ? model.descriptionCtrl.text.trim() : null,
       "phone": model.phoneCtrl.text.trim(),
       "location": model.locationCtrl.text,
-      "license_img": model.selectedImageFile!
+      "license_img": model.isPetSitter() ? model.selectedImageFile! : null,
     });
     // model.uploadImage(model.selectedImageFile!);
 
