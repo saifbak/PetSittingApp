@@ -167,7 +167,7 @@ class AppListingCard extends StatelessWidget {
               HorizontalSpacing(4),
               // VerticalSpacing(2),
               Text(
-                request.location ?? '',
+                request.location != null ? request.location.toString() : '',
                 style: AppTextStyles.xxMedium(
                   color: AppColors.darkGray,
                 ),

@@ -73,14 +73,16 @@ class PetSitterCard extends StatelessWidget {
                       ),
                     ), */
                     Spacer(),
-                    Icon(
-                      IconlyBold.location,
-                      size: 16,
-                      color: AppColors.primaryColor,
-                    ),
+                    petSitter['petsitter']['address'] != null
+                        ? Icon(
+                            IconlyBold.location,
+                            size: 16,
+                            color: AppColors.primaryColor,
+                          )
+                        : Container(),
                     HorizontalSpacing(4),
                     Text(
-                      petSitter['petsitter']['address'],
+                      petSitter['petsitter']['address'] ?? '',
                       style: AppTextStyles.xxMedium(
                         color: AppColors.darkGray,
                       ),

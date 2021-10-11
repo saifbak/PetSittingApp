@@ -14,7 +14,7 @@ class User {
   String? ratingFormatted;
   List<dynamic> reviews = [];
   String? licenseImg;
-  String? location;
+  dynamic? location;
 
   User(
       {this.id,

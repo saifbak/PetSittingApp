@@ -152,7 +152,9 @@ class _Body extends StatelessWidget {
                               ),
                               HorizontalSpacing(4),
                               Text(
-                                request.location ?? '',
+                                request.location != null
+                                    ? request.location.toString()
+                                    : '',
                                 style: AppTextStyles.xMedium(
                                   color: Colors.white,
                                   weight: FontWeight.w500,
