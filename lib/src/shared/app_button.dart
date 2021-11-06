@@ -16,6 +16,7 @@ class AppButton extends StatelessWidget {
     this.horizontalPadding = 20,
     this.child,
     this.isDisabled = false,
+    this.dangerColor = false,
   });
 
   final AppButtonType type;
@@ -25,6 +26,7 @@ class AppButton extends StatelessWidget {
   final double? horizontalPadding;
   final Widget? child;
   final bool? isDisabled;
+  final bool? dangerColor;
 
   @override
   Widget build(BuildContext context) {
@@ -55,10 +57,16 @@ class AppButton extends StatelessWidget {
               ? Colors.transparent.withOpacity(1)
               : Colors.transparent.withOpacity(0.4),
           borderRadius: borderRadius,
-          gradient: LinearGradient(colors: [
-            Color(0xFF4ECEAF),
-            Color(0xFF63DFC1),
-          ]),
+          gradient: LinearGradient(
+              colors: dangerColor!
+                  ? [
+                      Color(0xFFB22222),
+                      Color(0xFF8B0000),
+                    ]
+                  : [
+                      Color(0xFF4ECEAF),
+                      Color(0xFF63DFC1),
+                    ]),
         ),
       ),
     );

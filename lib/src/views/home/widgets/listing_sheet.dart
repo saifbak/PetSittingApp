@@ -71,9 +71,10 @@ class ListingSheet extends StatelessWidget {
                 : Expanded(
                     child: Center(
                       child: Text(
-                        'No any request found yet!',
+                        'No sitters have responded yet, check back soon!',
                         style:
                             AppTextStyles.xLarge(color: AppColors.primaryColor),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),

@@ -14,6 +14,7 @@ class User {
   String? ratingFormatted;
   List<dynamic> reviews = [];
   String? licenseImg;
+  int? isActive;
   dynamic? location;
 
   User(
@@ -29,7 +30,8 @@ class User {
       this.description,
       this.profileImg,
       this.licenseImg,
-      this.location});
+      this.location,
+      this.isActive});
 
   dynamic toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -45,6 +47,7 @@ class User {
     data['profile_img'] = this.profileImg;
     data['license_img'] = this.licenseImg;
     data['location'] = this.location;
+    data['is_active'] = this.isActive;
     return data;
   }
 
@@ -63,5 +66,6 @@ class User {
     overallRating = json['overall_rating'];
     ratingFormatted = json['rating_formatted'];
     reviews = json['reviews'] ?? [];
+    isActive = json['is_active'];
   }
 }

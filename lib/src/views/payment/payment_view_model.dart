@@ -7,6 +7,8 @@ import 'package:whiskers_away_app/src/services/local/job_service.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/services/remote/api_result.dart';
 import 'package:whiskers_away_app/src/services/remote/api_service.dart';
+import 'package:whiskers_away_app/src/services/remote/network_exceptions.dart';
+import 'package:whiskers_away_app/src/styles/app_colors.dart';
 
 class PaymentViewModel extends BaseViewModel {
   final dialogService = locator<DialogService>();
@@ -53,10 +55,10 @@ class PaymentViewModel extends BaseViewModel {
     /* print(paymentDetails);
     return; */
     setBusy(true);
-    dialogService.showCustomDialog(
-      variant: 'payment',
-      barrierDismissible: true,
-    );
+    // dialogService.showCustomDialog(
+    //   variant: 'payment',
+    //   barrierDismissible: true,
+    // );
     ApiResult apiResult = await _apiService.createPayment(paymentDetails);
     apiResult.when(success: (data) async {
       NavService.popOut;
@@ -69,12 +71,28 @@ class PaymentViewModel extends BaseViewModel {
       } */
       setBusy(false);
       dialogService.showCustomDialog(variant: 'payment');
+
+      print('Data');
+      print(data);
+
       //_authService.navigateHomeScreen();
     }, failure: (err) {
+      // dialogService.showCustomDialog(variant: 'payment');
+      // showErrorAlert(err);
       setBusy(false);
       NavService.popOut;
+      print('Error');
       print(err);
       //NavService.optionsSelect();
     });
   }
+
+  // showErrorAlert(e) {
+  //   dialogService.showCustomDialog(
+  //     title: 'Payment Fail',
+  //     description: NetworkExceptions.getErrorMessage(e),
+  //     // buttonTitle: 'Cancel',
+  //     // buttonTitleColor: AppColors.primaryColor,
+  //   );
+  // }
 }

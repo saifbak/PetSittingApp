@@ -166,15 +166,6 @@ class _Body extends StatelessWidget {
                         content: model.jobProposal['job']['period'],
                       ),
                       VerticalSpacing(16),
-                      /* LabelWithContent(
-                          labelText: 'Rewards',
-                          content: '\$10.00',
-                        ),
-                        VerticalSpacing(12),
-                        AppStatusVisibilityTag(
-                          text: 'Apply Rewards',
-                          onPressed: () {},
-                        ), */
                     ],
                   ),
                 ],
@@ -205,8 +196,8 @@ class _Body extends StatelessWidget {
                             ),
                             HorizontalSpacing(4),
                             Image.asset(
-                              'assets/images/stripe_logo.png',
-                              width: 35,
+                              'assets/images/autorizedotnet.png',
+                              width: 40,
                             ),
                           ],
                         ),

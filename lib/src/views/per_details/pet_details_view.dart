@@ -6,6 +6,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
+import 'package:whiskers_away_app/src/configs/app_setup.router.dart';
 import 'package:whiskers_away_app/src/core/validators/default_validator.dart';
 import 'package:whiskers_away_app/src/models/Job.dart';
 import 'package:whiskers_away_app/src/services/local/auth_service.dart';
@@ -62,8 +63,8 @@ class _Body extends StatelessWidget {
   final priceCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    print('request id==>');
-    print(request.id);
+    print('request params ==>');
+    print(request);
     final screenSize = context.screenSize();
 
     return Column(
@@ -134,13 +135,43 @@ class _Body extends StatelessWidget {
                               weight: FontWeight.w500,
                             ),
                           ),
-                          VerticalSpacing(4),
-                          Text(
-                            '${request.weight} lbs',
-                            style: AppTextStyles.xxLarge(
-                              color: Colors.white,
-                              weight: FontWeight.w500,
-                            ),
+                          // VerticalSpacing(4),
+                          // Text(
+                          //   '${request.weight} lbs',
+                          //   style: AppTextStyles.xxLarge(
+                          //     color: Colors.white,
+                          //     weight: FontWeight.w500,
+                          //   ),
+                          // ),
+                          VerticalSpacing(6),
+                          Row(
+                            children: [
+                              // Icon(
+                              //   IconlyBold.location,
+                              //   size: 16,
+                              //   color: Colors.white,
+                              // ),
+                              // HorizontalSpacing(4),
+                              Text(
+                                '${request.weight} lbs',
+                                style: AppTextStyles.xxLarge(
+                                  color: Colors.white,
+                                  weight: FontWeight.w500,
+                                ),
+                              ),
+                              Spacer(),
+                              Text(
+                                request.sittingat == 0
+                                    ? 'Owner\'s home'
+                                    : request.sittingat == 1
+                                        ? 'Sitter\'s home'
+                                        : '',
+                                style: AppTextStyles.xMedium(
+                                  color: Colors.white,
+                                  weight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
                           ),
                           VerticalSpacing(6),
                           Row(
@@ -169,7 +200,7 @@ class _Body extends StatelessWidget {
                                 ),
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -194,8 +225,8 @@ class _Body extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       color: AppColors.whisper,
                       image: DecorationImage(
-                        image: request.owner != null
-                            ? NetworkImage(request.owner?['profile_img'])
+                        image: request.owner?['profile_img'] != null
+                            ? NetworkImage(request.owner!['profile_img'])
                             : AssetImage('assets/images/pet.jpg')
                                 as ImageProvider,
                         fit: BoxFit.cover,
@@ -213,7 +244,7 @@ class _Body extends StatelessWidget {
                           children: [
                             Text(
                               request.owner != null
-                                  ? request.owner!['name']
+                                  ? request.owner!['name'].toString()
                                   : '',
                               style: AppTextStyles.xLarge(
                                 weight: FontWeight.w500,
@@ -229,7 +260,9 @@ class _Body extends StatelessWidget {
                           ],
                         ),
                         Text(
-                          request.period ?? '',
+                          request.period != null
+                              ? request.period.toString()
+                              : '',
                           style: AppTextStyles.xMedium(),
                         )
                       ],
@@ -238,7 +271,9 @@ class _Body extends StatelessWidget {
                 ],
               ),
               VerticalSpacing(12),
-              Text(request.description ?? ''),
+              Text(request.description != null
+                  ? request.description.toString()
+                  : ''),
               VerticalSpacing(42),
             ],
           ),
@@ -301,13 +336,109 @@ class _Body extends StatelessWidget {
                 ),
               ),
               VerticalSpacing(),
-              AppSpacing(context).bottomSpacing,
             ],
           ))
         ],
+        VerticalSpacing(16),
+        // model.isOwner()
+        //     ? request.isedit == 0
+        //         ? Row(
+        //             mainAxisAlignment: MainAxisAlignment.center,
+        //             children: [
+        //               // request.jobStatus != 'NEW'
+        //               //     ? AppButton(
+        //               //         text: 'Delete',
+        //               //         horizontalPadding: 30,
+        //               //         onPressed: NavService.requestSubmit,
+        //               //         dangerColor: true,
+        //               //       )
+        //               //     : Container(),
+        //               // HorizontalSpacing(16),
+        //               AppButton(
+        //                 text: 'Edit',
+        //                 horizontalPadding: 30,
+        //                 onPressed: () {
+        //                   NavService.editsubmittedrequest(
+        //                       arguments: EditRequestArguments(
+        //                           request: request, role: Roles.petOwner));
+        //                 },
+        //               ),
+        //             ],
+        //           )
+        //         : Row(
+        //             mainAxisAlignment: MainAxisAlignment.center,
+        //             children: [
+        //               request.isedit == 1
+        //                   ? AppButton(
+        //                       text: 'Delete',
+        //                       horizontalPadding: 30,
+        //                       onPressed: () {
+        //                         onDelete(context);
+        //                       },
+        //                       dangerColor: true,
+        //                     )
+        //                   : Container(),
+        //               // HorizontalSpacing(16),
+        //               //     AppButton(
+        //               //         text: 'Edit',
+        //               //         horizontalPadding: 30,
+        //               //         onPressed: NavService.requestSubmit,
+        //               //       )
+        //               //    ,
+        //             ],
+        //           )
+        //     : Container(),
+        // AppSpacing(context).bottomSpacing,
+        AppSpacing(context).bottomSpacing,
       ],
     );
   }
+
+// && request.isedit == 0 && request.jobStatus == 'NEW'
+//   ? Row(
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: [
+//                   // request.jobStatus != 'NEW'
+//                   //     ? AppButton(
+//                   //         text: 'Delete',
+//                   //         horizontalPadding: 30,
+//                   //         onPressed: NavService.requestSubmit,
+//                   //         dangerColor: true,
+//                   //       )
+//                   //     : Container(),
+//                   // HorizontalSpacing(16),
+//                   AppButton(
+//                     text: 'Edit',
+//                     horizontalPadding: 30,
+//                     onPressed: NavService.requestSubmit,
+//                   ),
+//                 ],
+//               )
+//             : model.isOwner() &&
+//                     request.isedit == 1 &&
+//                     request.jobStatus != 'NEW'
+//                 ? Row(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     children: [
+//                       request.jobStatus != 'NEW'
+//                           ? AppButton(
+//                               text: 'Delete',
+//                               horizontalPadding: 30,
+//                               onPressed: () {
+//                                 onDelete(context);
+//                               },
+//                               dangerColor: true,
+//                             )
+//                           : Container(),
+//                       // HorizontalSpacing(16),
+//                       //     AppButton(
+//                       //         text: 'Edit',
+//                       //         horizontalPadding: 30,
+//                       //         onPressed: NavService.requestSubmit,
+//                       //       )
+//                       //    ,
+//                     ],
+//                   )
 
   Future<void> onSubmit(ctx) async {
     try {
@@ -318,6 +449,19 @@ class _Body extends StatelessWidget {
             "price": double.parse(priceCtrl.text.trim()),
           },
           ctx);
+      _authService.navigateHomeScreen();
+    } catch (e) {
+      /* Timer(Duration(seconds: 1), () {
+        model.showErrorAlert(e);
+      }); */
+    }
+  }
+
+  Future<void> onDelete(ctx) async {
+    try {
+      await model.deleteJob({
+        "job_id": request.id,
+      }, ctx);
       _authService.navigateHomeScreen();
     } catch (e) {
       /* Timer(Duration(seconds: 1), () {

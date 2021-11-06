@@ -262,7 +262,9 @@ class _Body extends StatelessWidget {
       "phone": model.phoneCtrl.text.trim(),
       "location": model.locationCtrl.text,
       "license_img": model.isPetSitter() ? model.selectedImageFile! : null,
+      "is_active": model.isPetSitter() ? 0 : 1,
     });
+    // is_active: pet sitter 0 wrna 1
     // model.uploadImage(model.selectedImageFile!);
 
     NavService.termsConditions();

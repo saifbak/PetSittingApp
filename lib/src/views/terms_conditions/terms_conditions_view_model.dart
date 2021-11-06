@@ -71,6 +71,7 @@ class TermsConditionsViewModel extends BaseViewModel {
                   address: payload['address'],
                   location: payload['location'],
                   username: payload['username'],
+                  isActive: payload['is_active'],
                   description: payload['description'] != null
                       ? payload['description']
                       : "",
@@ -102,6 +103,7 @@ class TermsConditionsViewModel extends BaseViewModel {
             address: payload['address'],
             location: payload['location'],
             username: payload['username'],
+            isActive: payload['is_active'],
             description:
                 payload['description'] != null ? payload['description'] : "",
             roleId: _authService.getRoleById(),

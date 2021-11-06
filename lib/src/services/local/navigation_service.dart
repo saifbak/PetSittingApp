@@ -44,6 +44,11 @@ class NavService {
   static Future<dynamic>? requestSubmit({dynamic arguments}) =>
       _navigationService!
           .navigateTo(Routes.requestSubmitView, arguments: arguments);
+
+  static Future<dynamic>? editsubmittedrequest({dynamic arguments}) =>
+      _navigationService!
+          .navigateTo(Routes.editsubmittedrequestview, arguments: arguments);
+
   static Future<dynamic>? termsConditions({dynamic arguments}) =>
       _navigationService!.navigateTo(
         Routes.termsConditionsView,
@@ -53,8 +58,10 @@ class NavService {
       _navigationService!.navigateTo(Routes.paymentView, arguments: arguments);
   static Future<dynamic>? profile({dynamic arguments}) =>
       _navigationService!.navigateTo(Routes.profileView, arguments: arguments);
+
   static Future<dynamic>? petDetails({dynamic arguments}) => _navigationService!
       .navigateTo(Routes.petDetailsView, arguments: arguments);
+
   static Future<dynamic>? userReviewView({dynamic arguments}) =>
       _navigationService!
           .navigateTo(Routes.userReviewView, arguments: arguments);

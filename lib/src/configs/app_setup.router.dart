@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
+import 'package:whiskers_away_app/src/views/edit_submitted_request/edit_sunmitted_request_view_modal.dart';
 import 'package:whiskers_away_app/src/views/user_review/user_review_view.dart';
 
 import '../models/Job.dart';
@@ -27,6 +28,7 @@ import '../views/payment/payment_view.dart';
 import '../views/per_details/pet_details_view.dart';
 import '../views/profile/profile_view.dart';
 import '../views/request_submit/request_submit_view.dart';
+import '../views/edit_submitted_request/edit_submitted_request_view.dart';
 import '../views/splash/splash_view.dart';
 import '../views/terms_conditions/terms_conditions_view.dart';
 import '../views/user_profile/user_profile_view.dart';
@@ -41,6 +43,7 @@ class Routes {
   static const String homeView = '/home-view';
   static const String exploreView = '/explore-view';
   static const String requestSubmitView = '/request-submit-view';
+  static const String editsubmittedrequestview = '/edit-submitted-request-view';
   static const String termsConditionsView = '/terms-conditions-view';
   static const String paymentView = '/payment-view';
   static const String profileView = '/profile-view';
@@ -68,7 +71,8 @@ class Routes {
     myEmployeesView,
     employeeDetailsView,
     userProfileView,
-    userReviewView
+    userReviewView,
+    editsubmittedrequestview
   };
 }
 
@@ -85,6 +89,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.homeView, page: HomeView),
     RouteDef(Routes.exploreView, page: ExploreView),
     RouteDef(Routes.requestSubmitView, page: RequestSubmitView),
+    RouteDef(Routes.editsubmittedrequestview, page: EditSubmittedRequestView),
     RouteDef(Routes.termsConditionsView, page: TermsConditionsView),
     RouteDef(Routes.paymentView, page: PaymentView),
     RouteDef(Routes.profileView, page: ProfileView),
@@ -149,6 +154,16 @@ class StackedRouter extends RouterBase {
     RequestSubmitView: (data) {
       return MaterialPageRoute<MaterialRoute<dynamic>>(
         builder: (context) => RequestSubmitView(),
+        settings: data,
+      );
+    },
+    EditSubmittedRequestView: (data) {
+      var args = data.getArgs<EditRequestArguments>(nullOk: false);
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
+        builder: (context) => EditSubmittedRequestView(
+          request: args.request,
+          role: args.role,
+        ),
         settings: data,
       );
     },
@@ -233,6 +248,12 @@ class PetDetailsViewArguments {
   final Job request;
   final Roles role;
   PetDetailsViewArguments({required this.request, required this.role});
+}
+
+class EditRequestArguments {
+  final Job request;
+  final Roles role;
+  EditRequestArguments({required this.request, required this.role});
 }
 
 /// LandingView arguments holder class

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
+import 'package:whiskers_away_app/src/models/Job.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/services/remote/api_service.dart';
 import 'package:whiskers_away_app/src/services/local/auth_service.dart';
@@ -13,10 +14,17 @@ import 'package:whiskers_away_app/src/services/remote/network_exceptions.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:intl/intl.dart';
 
-class RequestSubmitViewModel extends BaseViewModel {
+class EditSubmittedRequestViewModel extends BaseViewModel {
   List<String> get petSittingOptions => ['Own home', "Sitter's home"];
-  late TextEditingController fromDateCtrl, toDateCtrl;
   DateTime selectedDate = DateTime.now();
+  late TextEditingController fromDateCtrl,
+      toDateCtrl,
+      petCtrl,
+      locationCtrl,
+      ageCtrl,
+      weightCtrl,
+      breedCtrl,
+      descriptionCtrl;
 
   final _apiService = locator<ApiService>();
   final _authService = locator<AuthService>();
@@ -33,7 +41,7 @@ class RequestSubmitViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> sendPetRequest(Map<String, dynamic> payload, ctx) async {
+  Future<void> sendEditSubmitRequest(Map<String, dynamic> payload, ctx) async {
     setBusy(true);
     try {
       print('Payloadd');
@@ -42,13 +50,13 @@ class RequestSubmitViewModel extends BaseViewModel {
           variant: 'spinner', barrierDismissible: true);
 
       payload['petowner_id'] = _authService.user!.id;
-      ApiResult apiResult = await _apiService.sendPetRequest(payload);
+      ApiResult apiResult = await _apiService.sendEditSubmitPetRequest(payload);
 
       apiResult.when(success: (data) async {
-        print("WHENEE SUBMIT");
+        print("WHEN EDIT REQUEST SUBMIT");
         print(selectedImageFile);
         if (selectedImageFile != null) {
-          await uploadImage(selectedImageFile!, data['id']);
+          await updateImage(selectedImageFile!, data['id']);
         }
         setBusy(false);
         NavService.home();
@@ -139,6 +147,26 @@ class RequestSubmitViewModel extends BaseViewModel {
         text: DateFormat("yyyy-MM-dd").format(selectedDate).toString());
     toDateCtrl = TextEditingController(
         text: DateFormat("yyyy-MM-dd").format(selectedDate).toString());
+    petCtrl = TextEditingController();
+    locationCtrl = TextEditingController();
+    ageCtrl = TextEditingController();
+    weightCtrl = TextEditingController();
+    breedCtrl = TextEditingController();
+    descriptionCtrl = TextEditingController();
+    print('description');
+    print(job?.breed);
+  }
+
+  consolelog() {
+    print('checking the whole jobs==>');
+    print(job);
+  }
+
+  // consolelog();
+  // hourlRateCtrl = TextEditingController(text: user!.hourlyRate.toString());
+
+  Job? get job {
+    return this._authService.job;
   }
 
   datePicker(BuildContext ctx) async {
@@ -153,5 +181,28 @@ class RequestSubmitViewModel extends BaseViewModel {
     }
 
     print(DateFormat("yyyy-MM-dd").format(selectedDate).toString());
+  }
+
+  Future<void> updateImage(File image, jobID) async {
+    imageUploadLoading = true;
+
+    final data = {
+      'image': Dio.MultipartFile.fromBytes(
+        image.readAsBytesSync(),
+        filename: image.path.split('/').last,
+      ),
+      'job_id': jobID
+    };
+    final res = await _apiService.updateJobImage(data);
+    res.when(
+      success: (data) {
+        imageUploadLoading = false;
+        //imagePath = data['image_path'];
+        //profileImage = data['image_url'];
+      },
+      failure: (error) {
+        imageUploadLoading = false;
+      },
+    );
   }
 }

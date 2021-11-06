@@ -3,6 +3,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.router.dart';
 import 'package:whiskers_away_app/src/core/enums/role_enum.dart';
+import 'package:whiskers_away_app/src/models/Job.dart';
 import 'package:whiskers_away_app/src/models/User.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/models/wrappers/response_wrapper.dart';
@@ -22,20 +23,27 @@ import 'package:whiskers_away_app/src/views/my_employees/my_employees_view.dart'
 class AuthService with ReactiveServiceMixin {
   ReactiveValue<User?> _user = ReactiveValue<User?>(null);
   ReactiveValue<Role?> _role = ReactiveValue<Role?>(null);
+  ReactiveValue<Job?> _jobs = ReactiveValue<Job?>(null);
   ReactiveValue<Map<String, dynamic>> _signupUser =
       ReactiveValue<Map<String, dynamic>>({});
 
   User? get user => _user.value;
   Role? get role => _role.value;
+  Job? get job => _jobs.value;
   Map<String, dynamic> get signupUser => _signupUser.value;
 
   AuthService() {
-    listenToReactiveValues([_user, _role, _signupUser]);
+    listenToReactiveValues([_user, _role, _jobs, _signupUser]);
   }
 
   set user(User? user) {
     _user.value = user;
     role = getAuthSelectedRole();
+  }
+
+  set job(Job? val) {
+    _jobs.value = val;
+    // role = getAuthSelectedRole();
   }
 
   set signupUser(Map<String, dynamic> user) {
@@ -45,8 +53,7 @@ class AuthService with ReactiveServiceMixin {
   }
 
   set role(Role? val) {
-    // print("ooooooooo");
-    // print(val);
+
     _role.value = val;
   }
 

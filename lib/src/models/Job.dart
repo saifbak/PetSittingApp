@@ -13,6 +13,8 @@ class Job {
   String? jobStatus;
   String? period;
   String? publicImage;
+  int? sittingat;
+  int? isedit;
   Map<String, dynamic>? owner;
   Map<String, dynamic>? assigned;
   List<Map<String, dynamic>>? proposals;
@@ -29,7 +31,9 @@ class Job {
       this.breed,
       this.description,
       this.jobStatus,
-      this.status});
+      this.status,
+      this.sittingat,
+      this.isedit});
 
   Job.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -47,6 +51,8 @@ class Job {
     period = json['period'];
     owner = json['owner'];
     assigned = json['assigned'];
+    sittingat = json['sittingat'];
+    isedit = json['isedit'];
     proposals = json['proposals'];
     publicImage = json['public_image'];
   }
@@ -65,6 +71,8 @@ class Job {
     data['description'] = this.description;
     data['status'] = this.status;
     data['public_image'] = this.publicImage;
+    data['sittingat'] = this.sittingat;
+    data['isedit'] = this.isedit;
     return data;
   }
 }

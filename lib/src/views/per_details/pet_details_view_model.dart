@@ -44,6 +44,30 @@ class PetDetailsViewModel extends BaseViewModel {
     }
   }
 
+  Future<dynamic> deleteJob(data, ctx) async {
+    setBusy(true);
+    try {
+      dialogService.showCustomDialog(
+          variant: 'spinner', barrierDismissible: true);
+
+      // payload['petowner_id'] = _authService.user!.id;
+      ApiResult apiResult = await _apiService.deleteJob(data);
+
+      apiResult.when(success: (data) {
+        AppUtils.toastShow("Yor Proposal has been submitted");
+      }, failure: (NetworkExceptions error) {
+        AppUtils.toastShow("Yor Proposal has not been submitted !");
+        showErrorAlert(error);
+        //NetworkExceptions.getErrorMessage(error);
+      });
+
+      setBusy(false);
+    } catch (e) {
+      print(e.toString());
+      setBusy(false);
+    }
+  }
+
   showErrorAlert(e) {
     dialogService.showDialog(
       title: 'Error Occured',
@@ -51,5 +75,9 @@ class PetDetailsViewModel extends BaseViewModel {
       buttonTitle: 'Cancel',
       buttonTitleColor: AppColors.primaryColor,
     );
+  }
+
+  bool isOwner() {
+    return _authService.isOwner();
   }
 }

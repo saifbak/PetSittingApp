@@ -171,8 +171,8 @@ class _Body extends StatelessWidget {
                               children: [
                                 ImageDisplayBox(
                                   imgUrl: review['petowner'] != null
-                                      ? review['petowner']['profile_img']
-                                      : null,
+                                      ? review['petowner']!['profile_img']
+                                      : AssetImage('assets/images/pet.jpg'),
                                   size: 30,
                                 ),
                               ],

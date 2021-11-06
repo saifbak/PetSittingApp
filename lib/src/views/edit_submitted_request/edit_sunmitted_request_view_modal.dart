@@ -6,6 +6,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/core/validators/default_validator.dart';
+import 'package:whiskers_away_app/src/models/Job.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_textfield.dart';
@@ -14,18 +15,27 @@ import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
+import 'package:whiskers_away_app/src/views/edit_submitted_request/edit_submitted_request_view.dart';
+import 'package:whiskers_away_app/src/views/options_select/options_select_view_model.dart';
 import 'package:whiskers_away_app/src/views/request_submit/request_submit_view_model.dart';
 // import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
-class RequestSubmitView extends StatelessWidget {
+class EditSubmittedRequestView extends StatelessWidget {
+  final Job request;
+  final Roles role;
+
+  const EditSubmittedRequestView({
+    required this.request,
+    required this.role,
+  });
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<RequestSubmitViewModel>.reactive(
-      viewModelBuilder: () => RequestSubmitViewModel(),
+    return ViewModelBuilder<EditSubmittedRequestViewModel>.reactive(
+      viewModelBuilder: () => EditSubmittedRequestViewModel(),
       onModelReady: (model) => model.init(),
       builder: (_, model, __) {
         return Scaffold(
-          body: _Body(model),
+          body: _Body(model, request, role),
         );
       },
     );
@@ -33,33 +43,39 @@ class RequestSubmitView extends StatelessWidget {
 }
 
 class _Body extends StatelessWidget {
-  final RequestSubmitViewModel model;
+  final EditSubmittedRequestViewModel model;
+  final Job request;
+  final Roles role;
 
   final formKey = GlobalKey<FormState>();
   AutovalidateMode autoValidate = AutovalidateMode.disabled;
   final GlobalKey<State> keyLoader = new GlobalKey<State>();
 
   //Controllers
-  final petCtrl = TextEditingController();
-  final locationCtrl = TextEditingController();
-  final ageCtrl = TextEditingController();
-  final weightCtrl = TextEditingController();
-  final breedCtrl = TextEditingController();
-  final fromDateCtrl = TextEditingController();
-  final toDateCtrl = TextEditingController();
-  final descriptionCtrl = TextEditingController();
 
-  _Body(this.model);
+  _Body(this.model, this.request, this.role);
   @override
   Widget build(BuildContext context) {
     final screenSize = context.screenSize();
-
+    print('request params edit submit ==>');
+    print(request.id);
     print('model.selectedIndex');
     print(model.selectedIndex);
+    print('Role.petOwner');
+    print(role);
+
+    // final petCtrl = TextEditingController(text: request.petName);
+    // final locationCtrl = TextEditingController(text: request.location);
+    // final ageCtrl = TextEditingController(text: request.age.toString());
+    // final weightCtrl = TextEditingController(text: request.weight);
+    // final breedCtrl = TextEditingController(text: request.breed);
+    // final fromDateCtrl = TextEditingController(text: request.fromDate);
+    // final toDateCtrl = TextEditingController(text: request.toDate);
+    // final descriptionCtrl = TextEditingController(text: request.description);
 
     return Column(
       children: [
-        AppTopBar(text: 'Submit a Request'),
+        AppTopBar(text: 'Edit Submitted Request'),
         VerticalSpacing(16),
         Form(
           key: formKey,
@@ -110,7 +126,7 @@ class _Body extends StatelessWidget {
                 PetSittingPlace(),
                 VerticalSpacing(20),
                 AppTextField(
-                  controller: petCtrl,
+                  controller: model.petCtrl,
                   hintText: 'Enter pet name',
                   label: 'Pet Name',
                   padding: EdgeInsets.zero,
@@ -119,7 +135,7 @@ class _Body extends StatelessWidget {
                   },
                 ),
                 AppTextField(
-                  controller: locationCtrl,
+                  controller: model.locationCtrl,
                   hintText: 'Enter location',
                   label: 'Location',
                   padding: EdgeInsets.zero,
@@ -131,7 +147,7 @@ class _Body extends StatelessWidget {
                   children: [
                     Expanded(
                       child: AppTextField(
-                        controller: ageCtrl,
+                        controller: model.ageCtrl,
                         hintText: 'Enter years',
                         label: 'Age',
                         textInputType: TextInputType.phone,
@@ -144,7 +160,7 @@ class _Body extends StatelessWidget {
                     HorizontalSpacing(14),
                     Expanded(
                       child: AppTextField(
-                        controller: weightCtrl,
+                        controller: model.weightCtrl,
                         hintText: 'Enter weight',
                         // textInputType: TextInputType.phone,
                         label: 'Weight',
@@ -157,7 +173,7 @@ class _Body extends StatelessWidget {
                   ],
                 ),
                 AppTextField(
-                  controller: breedCtrl,
+                  controller: model.breedCtrl,
                   hintText: 'Enter breed',
                   label: 'Breed',
                   padding: EdgeInsets.zero,
@@ -166,7 +182,7 @@ class _Body extends StatelessWidget {
                   children: [
                     Expanded(
                       child: AppTextField(
-                        controller: fromDateCtrl,
+                        controller: model.fromDateCtrl,
                         hintText: 'YYYY-MM-DD',
                         label: 'From',
                         padding: EdgeInsets.zero,
@@ -177,7 +193,7 @@ class _Body extends StatelessWidget {
                             context,
                             showTitleActions: true,
                             onChanged: (date) {
-                              fromDateCtrl.text = DateFormat("yyyy-MM-dd")
+                              model.fromDateCtrl.text = DateFormat("yyyy-MM-dd")
                                   .format(date)
                                   .toString();
                               print('change $date in time zone ' +
@@ -194,7 +210,7 @@ class _Body extends StatelessWidget {
                     HorizontalSpacing(14),
                     Expanded(
                       child: AppTextField(
-                        controller: toDateCtrl,
+                        controller: model.toDateCtrl,
                         hintText: 'YYYY-MM-DD',
                         label: 'To',
                         padding: EdgeInsets.zero,
@@ -205,7 +221,7 @@ class _Body extends StatelessWidget {
                             context,
                             showTitleActions: true,
                             onChanged: (date) {
-                              toDateCtrl.text = DateFormat("yyyy-MM-dd")
+                              model.toDateCtrl.text = DateFormat("yyyy-MM-dd")
                                   .format(date)
                                   .toString();
                               print('change $date in time zone ' +
@@ -223,7 +239,7 @@ class _Body extends StatelessWidget {
                   ],
                 ),
                 AppTextField(
-                  controller: descriptionCtrl,
+                  controller: model.descriptionCtrl,
                   hintText: 'Enter description',
                   label: 'Description',
                   padding: EdgeInsets.zero,
@@ -256,33 +272,37 @@ class _Body extends StatelessWidget {
   }
 
   Future<void> onSubmit(ctx) async {
+    model.consolelog();
     print('from date');
-    print(fromDateCtrl);
+    print(model.fromDateCtrl.text.trim());
     print('to date');
-    print(toDateCtrl);
+    print(model.toDateCtrl.text.trim());
+    print('name');
+    print(model.petCtrl.text.trim());
     try {
-      await model.sendPetRequest({
-        "pet_name": petCtrl.text.trim(),
-        "location": locationCtrl.text.trim(),
-        "age": ageCtrl.text.trim(),
-        "weight": weightCtrl.text.trim(),
-        "from_date": fromDateCtrl.text.trim(),
-        "to_date": toDateCtrl.text.trim(),
-        "breed": breedCtrl.text.trim(),
-        "description": descriptionCtrl.text.trim(),
+      await model.sendEditSubmitRequest({
+        "job_id": request.id,
+        "pet_name": model.petCtrl.text.trim(),
+        "location": model.locationCtrl.text.trim(),
+        "age": model.ageCtrl.text.trim(),
+        "weight": model.weightCtrl.text.trim(),
+        "from_date": model.fromDateCtrl.text.trim(),
+        "to_date": model.toDateCtrl.text.trim(),
+        "breed": model.breedCtrl.text.trim(),
+        "description": model.descriptionCtrl.text.trim(),
         "sittingat": model.selectedIndex,
       }, ctx);
     } catch (e) {
-      /* Timer(Duration(seconds: 1), () {
-        model.showErrorAlert(e);
-      }); */
+      // Timer(Duration(seconds: 1), () {
+      //   model.showErrorAlert(e);
+      // });
     }
   }
 }
 
-class PetSittingPlace extends ViewModelWidget<RequestSubmitViewModel> {
+class PetSittingPlace extends ViewModelWidget<EditSubmittedRequestViewModel> {
   @override
-  Widget build(BuildContext context, RequestSubmitViewModel model) {
+  Widget build(BuildContext context, EditSubmittedRequestViewModel model) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -345,9 +365,10 @@ class PetSittingPlace extends ViewModelWidget<RequestSubmitViewModel> {
   }
 }
 
-class ImageUploadOptions extends ViewModelWidget<RequestSubmitViewModel> {
+class ImageUploadOptions
+    extends ViewModelWidget<EditSubmittedRequestViewModel> {
   @override
-  Widget build(BuildContext context, RequestSubmitViewModel model) {
+  Widget build(BuildContext context, EditSubmittedRequestViewModel model) {
     return Container(
         //duration: Duration(milliseconds: 250),
         child: Container(

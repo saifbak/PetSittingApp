@@ -21,6 +21,7 @@ import 'package:whiskers_away_app/src/views/payment/payment_view.dart';
 import 'package:whiskers_away_app/src/views/per_details/pet_details_view.dart';
 import 'package:whiskers_away_app/src/views/profile/profile_view.dart';
 import 'package:whiskers_away_app/src/views/request_submit/request_submit_view.dart';
+import 'package:whiskers_away_app/src/views/edit_submitted_request/edit_submitted_request_view.dart';
 import 'package:whiskers_away_app/src/views/splash/splash_view.dart';
 import 'package:whiskers_away_app/src/views/terms_conditions/terms_conditions_view.dart';
 import 'package:whiskers_away_app/src/views/user_profile/user_profile_view.dart';
@@ -37,6 +38,7 @@ import 'package:whiskers_away_app/src/views/user_review/user_review_view.dart';
     MaterialRoute(page: HomeView),
     MaterialRoute(page: ExploreView),
     MaterialRoute(page: RequestSubmitView),
+    MaterialRoute(page: EditSubmittedRequestViewModel),
     MaterialRoute(page: TermsConditionsView),
     MaterialRoute(page: PaymentView),
     MaterialRoute(page: ProfileView),

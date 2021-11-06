@@ -87,6 +87,19 @@ class ApiService {
     }
   }
 
+  Future<ApiResult<dynamic>> updateJobImage(Map<String, dynamic> data) async {
+    try {
+      var response = await _apiClient.postReq(
+        "job/editjobimage",
+        data: DIO.FormData.fromMap(data),
+      );
+      return ApiResult.success(data: response.data);
+    } catch (e) {
+      print(e.toString());
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
+
   Future<ApiResult<dynamic>> uploadProfileImage(
       Map<String, dynamic> data) async {
     try {
@@ -174,6 +187,20 @@ class ApiService {
     try {
       ResponseWrapper response =
           await _apiClient.postReq("/createjob", data: request);
+
+      return ApiResult.success(data: response.data);
+    } catch (e) {
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
+    }
+  }
+
+  Future<ApiResult<dynamic>> sendEditSubmitPetRequest(
+      Map<String, dynamic> request) async {
+    try {
+      ResponseWrapper response =
+          await _apiClient.postReq("job/editjobdetails", data: request);
 
       return ApiResult.success(data: response.data);
     } catch (e) {
@@ -291,13 +318,24 @@ class ApiService {
     }
   }
 
+  Future<ApiResult<dynamic>> deleteJob(data) async {
+    try {
+      ResponseWrapper response =
+          await _apiClient.postReq("/job/delete", data: data);
+      return ApiResult.success(data: response.data);
+    } catch (e) {
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
+    }
+  }
+
   Future<ApiResult<List<Map<String, dynamic>>>> getJobResponses(jobID) async {
     try {
       //print(request);
       print(jobID.toString());
       ResponseWrapper response =
           await _apiClient.getReq("/job/seeproposals/${jobID.toString()}");
-
       List<Map<String, dynamic>> jobResp =
           List<Map<String, dynamic>>.from(response.data);
       print(jobResp);
