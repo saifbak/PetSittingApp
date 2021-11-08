@@ -32,7 +32,7 @@ class EditSubmittedRequestViewModel extends BaseViewModel {
 
   bool _imageUploadDisplay = false;
   bool imageUploadLoading = false;
-  late File? _selectedImageFile;
+  File? _selectedImageFile;
 
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
@@ -44,8 +44,6 @@ class EditSubmittedRequestViewModel extends BaseViewModel {
   Future<void> sendEditSubmitRequest(Map<String, dynamic> payload, ctx) async {
     setBusy(true);
     try {
-      print('Payloadd');
-      print(payload);
       dialogService.showCustomDialog(
           variant: 'spinner', barrierDismissible: true);
 
@@ -53,8 +51,6 @@ class EditSubmittedRequestViewModel extends BaseViewModel {
       ApiResult apiResult = await _apiService.sendEditSubmitPetRequest(payload);
 
       apiResult.when(success: (data) async {
-        print("WHEN EDIT REQUEST SUBMIT");
-        print(selectedImageFile);
         if (selectedImageFile != null) {
           await updateImage(selectedImageFile!, data['id']);
         }
@@ -142,19 +138,16 @@ class EditSubmittedRequestViewModel extends BaseViewModel {
     }
   }
 
-  void init() {
-    fromDateCtrl = TextEditingController(
-        text: DateFormat("yyyy-MM-dd").format(selectedDate).toString());
-    toDateCtrl = TextEditingController(
-        text: DateFormat("yyyy-MM-dd").format(selectedDate).toString());
-    petCtrl = TextEditingController();
-    locationCtrl = TextEditingController();
-    ageCtrl = TextEditingController();
-    weightCtrl = TextEditingController();
-    breedCtrl = TextEditingController();
-    descriptionCtrl = TextEditingController();
-    print('description');
-    print(job?.breed);
+  void init(Job job) {
+    fromDateCtrl = TextEditingController(text: job.fromDate ?? '');
+    toDateCtrl = TextEditingController(text: job.toDate ?? '');
+    petCtrl = TextEditingController(text: job.petName);
+    locationCtrl = TextEditingController(text: job.location ?? '');
+    ageCtrl =
+        TextEditingController(text: job.age != null ? job.age.toString() : '');
+    weightCtrl = TextEditingController(text: job.weight ?? '');
+    breedCtrl = TextEditingController(text: job.breed ?? '');
+    descriptionCtrl = TextEditingController(text: job.description ?? '');
   }
 
   consolelog() {

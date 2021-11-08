@@ -15,9 +15,8 @@ import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
-import 'package:whiskers_away_app/src/views/edit_submitted_request/edit_submitted_request_view.dart';
+import 'package:whiskers_away_app/src/views/edit_submitted_request/edit_submitted_request_view_model.dart';
 import 'package:whiskers_away_app/src/views/options_select/options_select_view_model.dart';
-import 'package:whiskers_away_app/src/views/request_submit/request_submit_view_model.dart';
 // import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class EditSubmittedRequestView extends StatelessWidget {
@@ -32,7 +31,7 @@ class EditSubmittedRequestView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<EditSubmittedRequestViewModel>.reactive(
       viewModelBuilder: () => EditSubmittedRequestViewModel(),
-      onModelReady: (model) => model.init(),
+      onModelReady: (model) => model.init(request),
       builder: (_, model, __) {
         return Scaffold(
           body: _Body(model, request, role),
@@ -99,25 +98,30 @@ class _Body extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(12)),
                     child: model.imageUploadDisplay == false ||
                             model.selectedImageFile == null
-                        ? Container(
-                            padding: EdgeInsets.symmetric(vertical: 16),
-                            width: double.infinity,
-                            color: AppColors.primaryColor.withOpacity(.15),
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'assets/images/icons/add_img.png',
-                                  width: 50,
+                        ? (request.publicImage == null ||
+                                request.publicImage == '')
+                            ? Container(
+                                padding: EdgeInsets.symmetric(vertical: 16),
+                                width: double.infinity,
+                                color: AppColors.primaryColor.withOpacity(.15),
+                                child: Column(
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/icons/add_img.png',
+                                      width: 50,
+                                    ),
+                                    VerticalSpacing(),
+                                    Text(
+                                      'Add image',
+                                      style: AppTextStyles.xxLarge(
+                                          color: AppColors.primaryColor),
+                                    )
+                                  ],
                                 ),
-                                VerticalSpacing(),
-                                Text(
-                                  'Add image',
-                                  style: AppTextStyles.xxLarge(
-                                      color: AppColors.primaryColor),
-                                )
-                              ],
-                            ),
-                          )
+                              )
+                            : Image.network(
+                                request.publicImage!,
+                              )
                         : Image.file(model.selectedImageFile!),
                   ),
                 ),
@@ -192,6 +196,9 @@ class _Body extends StatelessWidget {
                           DatePicker.showDatePicker(
                             context,
                             showTitleActions: true,
+                            currentTime: request.fromDate != null
+                                ? DateTime.parse(request.fromDate!)
+                                : null,
                             onChanged: (date) {
                               model.fromDateCtrl.text = DateFormat("yyyy-MM-dd")
                                   .format(date)
@@ -220,6 +227,9 @@ class _Body extends StatelessWidget {
                           DatePicker.showDatePicker(
                             context,
                             showTitleActions: true,
+                            currentTime: request.toDate != null
+                                ? DateTime.parse(request.toDate!)
+                                : null,
                             onChanged: (date) {
                               model.toDateCtrl.text = DateFormat("yyyy-MM-dd")
                                   .format(date)

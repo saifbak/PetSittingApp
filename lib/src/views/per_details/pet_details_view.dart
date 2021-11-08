@@ -340,55 +340,55 @@ class _Body extends StatelessWidget {
           ))
         ],
         VerticalSpacing(16),
-        // model.isOwner()
-        //     ? request.isedit == 0
-        //         ? Row(
-        //             mainAxisAlignment: MainAxisAlignment.center,
-        //             children: [
-        //               // request.jobStatus != 'NEW'
-        //               //     ? AppButton(
-        //               //         text: 'Delete',
-        //               //         horizontalPadding: 30,
-        //               //         onPressed: NavService.requestSubmit,
-        //               //         dangerColor: true,
-        //               //       )
-        //               //     : Container(),
-        //               // HorizontalSpacing(16),
-        //               AppButton(
-        //                 text: 'Edit',
-        //                 horizontalPadding: 30,
-        //                 onPressed: () {
-        //                   NavService.editsubmittedrequest(
-        //                       arguments: EditRequestArguments(
-        //                           request: request, role: Roles.petOwner));
-        //                 },
-        //               ),
-        //             ],
-        //           )
-        //         : Row(
-        //             mainAxisAlignment: MainAxisAlignment.center,
-        //             children: [
-        //               request.isedit == 1
-        //                   ? AppButton(
-        //                       text: 'Delete',
-        //                       horizontalPadding: 30,
-        //                       onPressed: () {
-        //                         onDelete(context);
-        //                       },
-        //                       dangerColor: true,
-        //                     )
-        //                   : Container(),
-        //               // HorizontalSpacing(16),
-        //               //     AppButton(
-        //               //         text: 'Edit',
-        //               //         horizontalPadding: 30,
-        //               //         onPressed: NavService.requestSubmit,
-        //               //       )
-        //               //    ,
-        //             ],
-        //           )
-        //     : Container(),
-        // AppSpacing(context).bottomSpacing,
+        true //model.isOwner()
+            ? true //request.isedit == 0
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // request.jobStatus != 'NEW'
+                      //     ? AppButton(
+                      //         text: 'Delete',
+                      //         horizontalPadding: 30,
+                      //         onPressed: NavService.requestSubmit,
+                      //         dangerColor: true,
+                      //       )
+                      //     : Container(),
+                      // HorizontalSpacing(16),
+                      AppButton(
+                        text: 'Edit',
+                        horizontalPadding: 30,
+                        onPressed: () {
+                          NavService.editsubmittedrequest(
+                              arguments: EditRequestArguments(
+                                  request: request, role: Roles.petOwner));
+                        },
+                      ),
+                    ],
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      request.isedit == 1
+                          ? AppButton(
+                              text: 'Delete',
+                              horizontalPadding: 30,
+                              onPressed: () {
+                                onDelete(context);
+                              },
+                              dangerColor: true,
+                            )
+                          : Container(),
+                      // HorizontalSpacing(16),
+                      //     AppButton(
+                      //         text: 'Edit',
+                      //         horizontalPadding: 30,
+                      //         onPressed: NavService.requestSubmit,
+                      //       )
+                      //    ,
+                    ],
+                  )
+            : Container(),
+        AppSpacing(context).bottomSpacing,
         AppSpacing(context).bottomSpacing,
       ],
     );

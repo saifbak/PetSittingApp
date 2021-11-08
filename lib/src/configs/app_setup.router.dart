@@ -9,7 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
-import 'package:whiskers_away_app/src/views/edit_submitted_request/edit_sunmitted_request_view_modal.dart';
+import 'package:whiskers_away_app/src/views/edit_submitted_request/edit_sunmitted_request_view.dart';
 import 'package:whiskers_away_app/src/views/user_review/user_review_view.dart';
 
 import '../models/Job.dart';
@@ -28,7 +28,6 @@ import '../views/payment/payment_view.dart';
 import '../views/per_details/pet_details_view.dart';
 import '../views/profile/profile_view.dart';
 import '../views/request_submit/request_submit_view.dart';
-import '../views/edit_submitted_request/edit_submitted_request_view.dart';
 import '../views/splash/splash_view.dart';
 import '../views/terms_conditions/terms_conditions_view.dart';
 import '../views/user_profile/user_profile_view.dart';
