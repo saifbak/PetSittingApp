@@ -340,8 +340,8 @@ class _Body extends StatelessWidget {
           ))
         ],
         VerticalSpacing(16),
-        true //model.isOwner()
-            ? true //request.isedit == 0
+        model.isOwner()
+            ? request.isedit == 0
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
