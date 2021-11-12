@@ -4,6 +4,15 @@ import 'package:whiskers_away_app/src/models/User.dart';
 import 'package:whiskers_away_app/src/services/local/auth_service.dart';
 import 'package:whiskers_away_app/src/services/remote/api_service.dart';
 import 'package:whiskers_away_app/src/services/local/job_service.dart';
+import 'package:stacked/stacked.dart';
+import 'package:whiskers_away_app/src/base/utils/utils.dart';
+import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
+import 'package:whiskers_away_app/src/services/remote/api_service.dart';
+import 'package:whiskers_away_app/src/services/local/auth_service.dart';
+import 'package:stacked_services/stacked_services.dart';
+import 'package:whiskers_away_app/src/services/remote/api_result.dart';
+import 'package:whiskers_away_app/src/services/remote/network_exceptions.dart';
+import 'package:whiskers_away_app/src/styles/app_colors.dart';
 
 class Review {
   final String authorName;
@@ -16,6 +25,8 @@ class Review {
 
 class ProfileViewModel extends BaseViewModel {
   final _jobService = locator<JobService>();
+  final dialogService = locator<DialogService>();
+
   bool _fullReviewsDisplay = false;
   bool get fullReviewsDisplay => _fullReviewsDisplay;
   set fullReviewsDisplay(bool val) {
@@ -39,6 +50,40 @@ class ProfileViewModel extends BaseViewModel {
   final _apiService = locator<ApiService>();
 
   // List<Review> _reviews = [];
+
+  Future<dynamic> sentEmail(data, ctx) async {
+    setBusy(true);
+    try {
+      dialogService.showCustomDialog(
+          variant: 'spinner', barrierDismissible: true);
+
+      // payload['petowner_id'] = _authService.user!.id;
+      ApiResult apiResult = await _apiService.sentEmail(data);
+
+      apiResult.when(success: (data) {
+        print(data);
+        AppUtils.toastShow(data);
+      }, failure: (NetworkExceptions error) {
+        AppUtils.toastShow("Email not sent!");
+        showErrorAlert(error);
+        //NetworkExceptions.getErrorMessage(error);
+      });
+
+      setBusy(false);
+    } catch (e) {
+      print(e.toString());
+      setBusy(false);
+    }
+  }
+
+  showErrorAlert(e) {
+    dialogService.showDialog(
+      title: 'Error Occured',
+      description: NetworkExceptions.getErrorMessage(e),
+      buttonTitle: 'Cancel',
+      buttonTitleColor: AppColors.primaryColor,
+    );
+  }
 
   List<Review> get reviewsList => [
         Review(

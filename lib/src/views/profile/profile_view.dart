@@ -250,7 +250,7 @@ class _Body extends StatelessWidget {
             AppButton(
               text: 'Approve',
               fullWidth: true,
-              onPressed: () => {NavService.payment()},
+              onPressed: () => {sentEmail(context)},
             ),
             HorizontalSpacing(18),
             AppButton(
@@ -401,5 +401,17 @@ class _Body extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // sentEmail
+  Future<void> sentEmail(ctx) async {
+    try {
+      await model.sentEmail({"petsitter_id": model.petUser.id}, ctx);
+      // _authService.navigateHomeScreen();
+    } catch (e) {
+      /* Timer(Duration(seconds: 1), () {
+        model.showErrorAlert(e);
+      }); */
+    }
   }
 }

@@ -61,6 +61,7 @@ class _Body extends StatelessWidget {
   _Body(this.model, this.request, this.role);
   final replyCtrl = TextEditingController();
   final priceCtrl = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     print('request params ==>');
@@ -318,11 +319,16 @@ class _Body extends StatelessWidget {
                   children: [
                     AppButton(
                       horizontalPadding: 10,
-                      child: Icon(
-                        Icons.favorite,
-                        size: 20,
-                        color: Colors.white,
-                      ),
+                      child: GestureDetector(
+                          child: Icon(
+                            Icons.favorite,
+                            size: 20,
+                            color: Colors.white,
+                          ),
+                          onTap: () {
+                            handleFavourite(context);
+                            // print("favorite");
+                          }),
                       text: '',
                     ),
                     HorizontalSpacing(16),
@@ -449,6 +455,17 @@ class _Body extends StatelessWidget {
             "price": double.parse(priceCtrl.text.trim()),
           },
           ctx);
+      _authService.navigateHomeScreen();
+    } catch (e) {
+      /* Timer(Duration(seconds: 1), () {
+        model.showErrorAlert(e);
+      }); */
+    }
+  }
+
+  Future<void> handleFavourite(ctx) async {
+    try {
+      await model.addToFavourite({"petowner_id": request.petownerId}, ctx);
       _authService.navigateHomeScreen();
     } catch (e) {
       /* Timer(Duration(seconds: 1), () {

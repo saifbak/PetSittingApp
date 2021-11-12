@@ -30,9 +30,34 @@ class PetDetailsViewModel extends BaseViewModel {
       ApiResult apiResult = await _apiService.requestToPetSit(payload, data);
 
       apiResult.when(success: (data) {
-        AppUtils.toastShow("Yor Proposal has been submitted");
+        AppUtils.toastShow("Your Proposal has been submitted");
       }, failure: (NetworkExceptions error) {
-        AppUtils.toastShow("Yor Proposal has not been submitted !");
+        AppUtils.toastShow("Your Proposal has not been submitted !");
+        showErrorAlert(error);
+        //NetworkExceptions.getErrorMessage(error);
+      });
+
+      setBusy(false);
+    } catch (e) {
+      print(e.toString());
+      setBusy(false);
+    }
+  }
+
+  Future<dynamic> addToFavourite(data, ctx) async {
+    setBusy(true);
+    try {
+      dialogService.showCustomDialog(
+          variant: 'spinner', barrierDismissible: true);
+
+      // payload['petowner_id'] = _authService.user!.id;
+      ApiResult apiResult = await _apiService.addToFavourite(data);
+
+      apiResult.when(success: (data) {
+        print(data);
+        AppUtils.toastShow(data);
+      }, failure: (NetworkExceptions error) {
+        AppUtils.toastShow("Add to favourite unsuccessfully !");
         showErrorAlert(error);
         //NetworkExceptions.getErrorMessage(error);
       });

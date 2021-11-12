@@ -182,6 +182,36 @@ class ApiService {
     }
   }
 
+  Future<ApiResult<dynamic>> addToFavourite(userData) async {
+    try {
+      ResponseWrapper response =
+          await _apiClient.postReq("/addtofavourite", data: userData);
+      print('addToFavourite');
+      print(response.message);
+      return ApiResult.success(data: response.data);
+    } catch (e) {
+      print(e.toString());
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
+    }
+  }
+
+  Future<ApiResult<dynamic>> sentEmail(userData) async {
+    try {
+      ResponseWrapper response =
+          await _apiClient.postReq("/approve", data: userData);
+      // print('addToFavourite');
+      // print(response.message);
+      return ApiResult.success(data: response.data);
+    } catch (e) {
+      print(e.toString());
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
+    }
+  }
+
   Future<ApiResult<dynamic>> sendPetRequest(
       Map<String, dynamic> request) async {
     try {
