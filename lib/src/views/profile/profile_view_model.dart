@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
 import 'package:whiskers_away_app/src/models/User.dart';
 import 'package:whiskers_away_app/src/services/local/auth_service.dart';
+import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/services/remote/api_service.dart';
 import 'package:whiskers_away_app/src/services/local/job_service.dart';
 import 'package:stacked/stacked.dart';
@@ -61,9 +63,14 @@ class ProfileViewModel extends BaseViewModel {
       ApiResult apiResult = await _apiService.sentEmail(data);
 
       apiResult.when(success: (data) {
+        print('data===>');
         print(data);
-        AppUtils.toastShow(data);
+        // AlertDialog();
+        showAlert(data);
+        AppUtils.toastShow('Email Sent');
+        NavService.home();
       }, failure: (NetworkExceptions error) {
+        print(error);
         AppUtils.toastShow("Email not sent!");
         showErrorAlert(error);
         //NetworkExceptions.getErrorMessage(error);
@@ -74,6 +81,15 @@ class ProfileViewModel extends BaseViewModel {
       print(e.toString());
       setBusy(false);
     }
+  }
+
+  showAlert(e) {
+    dialogService.showDialog(
+      title: 'Email Sent',
+      description: 'Email has been successfully sent to the desired petsitter',
+      buttonTitle: 'Cancel',
+      buttonTitleColor: AppColors.primaryColor,
+    );
   }
 
   showErrorAlert(e) {

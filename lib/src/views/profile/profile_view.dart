@@ -2,6 +2,8 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
+import 'package:whiskers_away_app/src/services/local/auth_service.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_divider.dart';
@@ -14,6 +16,8 @@ import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/profile/profile_view_model.dart';
+
+final _authService = locator<AuthService>();
 
 class ProfileView extends StatelessWidget {
   final dynamic user;
@@ -250,7 +254,15 @@ class _Body extends StatelessWidget {
             AppButton(
               text: 'Approve',
               fullWidth: true,
-              onPressed: () => {sentEmail(context)},
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => CustomDialog(
+                        "Confirmation",
+                        "Upon accepting a sitter’s proposal, you will be provided with the sitter’s contact information and given the opportunity to talk further and arrange a meet and greet. Once it is confirmed that you are comfortable with your sitter, you will need to mark the job as confirmed and submit payment within the app. This will lock in your sitter and confirm that they are officially scheduled for your job. (Sitters will not be paid until completing the job)",
+                        'Confirm',
+                        model));
+              },
             ),
             HorizontalSpacing(18),
             AppButton(
@@ -404,7 +416,91 @@ class _Body extends StatelessWidget {
   }
 
   // sentEmail
+
+}
+
+class CustomDialog extends StatelessWidget {
+  final model;
+  final String title, description, buttonText;
+
+  CustomDialog(
+    this.title,
+    this.description,
+    this.buttonText,
+    this.model,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      child: dialogContent(context),
+    );
+  }
+
+  dialogContent(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.only(
+            top: 50,
+            bottom: 16,
+            left: 16,
+            right: 16,
+          ),
+          margin: EdgeInsets.only(top: 16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(17),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 10.0,
+                offset: Offset(0.0, 10.0),
+              )
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                description,
+                style: TextStyle(
+                  fontSize: 16.0,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 24.0),
+              Align(
+                alignment: Alignment.bottomRight,
+                // ignore: deprecated_member_use
+                child: FlatButton(
+                  onPressed: () {
+                    sentEmail(context);
+                    Navigator.pop(context);
+                  },
+                  child: Text(buttonText),
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   Future<void> sentEmail(ctx) async {
+    Navigator.pop(ctx);
     try {
       await model.sentEmail({"petsitter_id": model.petUser.id}, ctx);
       // _authService.navigateHomeScreen();
