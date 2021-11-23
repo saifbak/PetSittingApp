@@ -27,6 +27,7 @@ import 'package:whiskers_away_app/src/views/splash/splash_view.dart';
 import 'package:whiskers_away_app/src/views/terms_conditions/terms_conditions_view.dart';
 import 'package:whiskers_away_app/src/views/user_profile/user_profile_view.dart';
 import 'package:whiskers_away_app/src/views/user_review/user_review_view.dart';
+import 'package:whiskers_away_app/src/views/notifications/notifications_view.dart';
 
 @StackedApp(
   routes: [
@@ -49,6 +50,7 @@ import 'package:whiskers_away_app/src/views/user_review/user_review_view.dart';
     MaterialRoute(page: EmployeeDetailsView),
     MaterialRoute(page: UserProfileView),
     MaterialRoute(page: UserReviewView),
+    MaterialRoute(page: NotificationsView),
   ],
   dependencies: [
     // Lazy singletons

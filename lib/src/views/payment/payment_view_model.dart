@@ -23,13 +23,13 @@ class PaymentViewModel extends BaseViewModel {
 
   late TextEditingController nameCtrl, cardCtrl, dateCtrl, cvcCtrl;
 
-  get jobProposal {
-    return _jobService.selectedaApprovedJobProposal;
-  }
+  // get jobProposal {
+  //   return _jobService.selectedaApprovedJobProposal;
+  // }
 
-  User get petUser {
-    return User.fromJson(_jobService.selectedaApprovedJobProposal['petsitter']);
-  }
+  // User get petUser {
+  //   return User.fromJson(_jobService.selectedaApprovedJobProposal['petsitter']);
+  // }
 
   void init() {
     nameCtrl = TextEditingController();
@@ -38,22 +38,22 @@ class PaymentViewModel extends BaseViewModel {
     cvcCtrl = TextEditingController();
   }
 
-  Future<dynamic> makePayment() async {
+  Future<dynamic> makePayment(data) async {
     if (!formKey.currentState!.validate()) {
       autoValidate = AutovalidateMode.onUserInteraction;
       return;
     }
 
-    dynamic parsedDate = dateCtrl.text.split('/');
-    Map<String, dynamic> paymentDetails = {
-      'amount': jobProposal['price'],
-      'number': cardCtrl.text,
-      'exp_month': parsedDate[0],
-      'exp_year': parsedDate[1],
-      'cvc': cvcCtrl.text,
-      'petsitter_id': jobProposal['petsitter_id'],
-      'job_id': jobProposal['job_id'],
-    };
+    // dynamic parsedDate = dateCtrl.text.split('/');
+    // Map<String, dynamic> paymentDetails = {
+    //   'amount': jobProposal['price'],
+    //   'number': cardCtrl.text,
+    //   'exp_month': parsedDate[0],
+    //   'exp_year': parsedDate[1],
+    //   'cvc': cvcCtrl.text,
+    //   'petsitter_id': jobProposal['petsitter_id'],
+    //   'job_id': jobProposal['job_id'],
+    // };
     /* print(paymentDetails);
     return; */
     setBusy(true);
@@ -61,7 +61,7 @@ class PaymentViewModel extends BaseViewModel {
     //   variant: 'payment',
     //   barrierDismissible: true,
     // );
-    ApiResult apiResult = await _apiService.createPayment(paymentDetails);
+    ApiResult apiResult = await _apiService.createPayment(data);
     apiResult.when(success: (data) async {
       NavService.popOut;
       /* _authService.user!.name = data['name'];

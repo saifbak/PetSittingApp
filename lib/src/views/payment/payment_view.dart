@@ -4,10 +4,12 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:stacked/stacked.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/core/validators/default_validator.dart';
+import 'package:whiskers_away_app/src/models/User.dart';
 import 'package:whiskers_away_app/src/shared/app_button.dart';
 import 'package:whiskers_away_app/src/shared/app_divider.dart';
 import 'package:whiskers_away_app/src/shared/app_status_visibility_tag.dart';
 import 'package:whiskers_away_app/src/shared/app_textfield.dart';
+import 'package:whiskers_away_app/src/shared/base_payment_view.dart';
 import 'package:whiskers_away_app/src/shared/base_profile_view.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
@@ -17,6 +19,11 @@ import 'package:whiskers_away_app/src/views/payment/widgets/label_with_content.d
 import 'package:intl/intl.dart';
 
 class PaymentView extends StatelessWidget {
+  final user;
+
+  const PaymentView({
+    required this.user,
+  });
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PaymentViewModel>.nonReactive(
@@ -27,7 +34,7 @@ class PaymentView extends StatelessWidget {
       builder: (_, model, __) {
         return Scaffold(
           resizeToAvoidBottomInset: true,
-          body: _Body(model),
+          body: _Body(model, user),
         );
       },
     );
@@ -36,18 +43,20 @@ class PaymentView extends StatelessWidget {
 
 class _Body extends StatelessWidget {
   final PaymentViewModel model;
-  const _Body(this.model);
+  final user;
+
+  const _Body(this.model, this.user);
 
   @override
   Widget build(BuildContext context) {
     final screenSize = context.screenSize();
-    print('Model');
-    print(model.petUser);
+    print('user');
+    print(user['petsitter']['profile_img']);
 
     return SingleChildScrollView(
-      child: BaseProfileView(
-        networkImage: model.petUser != null ? model.petUser.profileImg : '',
-        user: model.petUser,
+      child: BasePaymentView(
+        networkImage: user['petsitter']['profile_img'] ?? '',
+        user: user,
         bottomContent: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -55,7 +64,7 @@ class _Body extends StatelessWidget {
               child: AppButton(
                 text: 'Make Payment',
                 onPressed: () {
-                  model.makePayment();
+                  makePayment(context);
                 },
               ),
             ),
@@ -74,68 +83,68 @@ class _Body extends StatelessWidget {
                       // LabelWithContent(
                       //   labelText: 'Location',
                       //   contentIcon: IconlyLight.location,
-                      //   content: model.jobProposal['job']['location'],
+                      //   content: user['job']['location'],
                       // ),
                       VerticalSpacing(16),
                       LabelWithContent(
                         labelText: 'Payment Summary',
                         content: Column(
                           children: [
-                            /* Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '\$35 per day x 5',
-                                        style: AppTextStyles.xxMedium(
-                                          color: AppColors.darkGray,
-                                          weight: FontWeight.w500,
-                                        ),
-                                      ),
-                                      VerticalSpacing(2),
-                                      Text(
-                                        'Rewards',
-                                        style: AppTextStyles.xxMedium(
-                                          color: AppColors.gray,
-                                          weight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  HorizontalSpacing(),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        '= \$' + model.jobProposal['price'],
-                                        style: AppTextStyles.xxMedium(
-                                          color: AppColors.darkGray,
-                                        ),
-                                      ),
-                                      VerticalSpacing(2),
-                                      Text(
-                                        '= \$10',
-                                        style: AppTextStyles.xxMedium(
-                                          color: AppColors.darkGray,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              VerticalSpacing(),
-                              Container(
-                                width: 125,
-                                child: Column(
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    AppDivider(),
-                                    AppDivider(),
+                                    Text(
+                                      '\$35 per day x 5',
+                                      style: AppTextStyles.xxMedium(
+                                        color: AppColors.darkGray,
+                                        weight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    VerticalSpacing(2),
+                                    Text(
+                                      'Rewards',
+                                      style: AppTextStyles.xxMedium(
+                                        color: AppColors.gray,
+                                        weight: FontWeight.w500,
+                                      ),
+                                    ),
                                   ],
                                 ),
+                                HorizontalSpacing(),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      '= \$' + '0',
+                                      style: AppTextStyles.xxMedium(
+                                        color: AppColors.darkGray,
+                                      ),
+                                    ),
+                                    VerticalSpacing(2),
+                                    Text(
+                                      '= \$10',
+                                      style: AppTextStyles.xxMedium(
+                                        color: AppColors.darkGray,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            VerticalSpacing(),
+                            Container(
+                              width: 125,
+                              child: Column(
+                                children: [
+                                  AppDivider(),
+                                  AppDivider(),
+                                ],
                               ),
-                              VerticalSpacing(), */
+                            ),
+                            VerticalSpacing(),
                             Row(
                               children: [
                                 Text(
@@ -147,8 +156,8 @@ class _Body extends StatelessWidget {
                                 ),
                                 HorizontalSpacing(60),
                                 Text(
-                                  '= \$' + model.jobProposal['price'] != null
-                                      ? model.jobProposal['price']
+                                  '= \$' + user['price'] != null
+                                      ? user['price']
                                       : '0',
                                   style: AppTextStyles.xxMedium(
                                     color: AppColors.darkGray,
@@ -276,5 +285,25 @@ class _Body extends StatelessWidget {
         appTopBarText: 'Payment',
       ),
     );
+  }
+
+  Future<void> makePayment(ctx) async {
+    try {
+      dynamic parsedDate = model.dateCtrl.text.split('/');
+      await model.makePayment({
+        'amount': user['price'],
+        'number': model.cardCtrl.text,
+        'exp_month': parsedDate[0],
+        'exp_year': parsedDate[1],
+        'cvc': model.cvcCtrl.text,
+        'petsitter_id': user['petsitter']['petsitter_id'],
+        'job_id': user['job']['job_id'],
+        // 'rewardused':
+      });
+    } catch (e) {
+      /* Timer(Duration(seconds: 1), () {
+        model.showErrorAlert(e);
+      }); */
+    }
   }
 }

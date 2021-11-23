@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:dio/dio.dart' as DIO;
 import 'package:stacked_services/stacked_services.dart';
@@ -386,9 +388,26 @@ class ApiService {
       ResponseWrapper response =
           await _apiClient.getReq("/approvepetsitterlist");
       List<Map<String, dynamic>> jobResp =
-          List<Map<String, dynamic>>.from(response.data);
+          List<Map<String, dynamic>>.from(response.data['approvepetsitter']);
       print(jobResp);
       return ApiResult.success(data: jobResp);
+    } catch (e) {
+      print(e);
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
+    }
+  }
+
+  Future<ApiResult<List<Map<String, dynamic>>>> getNotifications() async {
+    try {
+      //print(request);
+      // print(jobID.toString());
+      ResponseWrapper response = await _apiClient.getReq("/notifications");
+      List<Map<String, dynamic>> notifications =
+          List<Map<String, dynamic>>.from(response.data);
+      print(notifications);
+      return ApiResult.success(data: notifications);
     } catch (e) {
       print(e);
       return ApiResult.failure(

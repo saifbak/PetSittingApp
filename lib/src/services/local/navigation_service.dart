@@ -45,6 +45,10 @@ class NavService {
       _navigationService!
           .navigateTo(Routes.requestSubmitView, arguments: arguments);
 
+  static Future<dynamic>? notifications({dynamic arguments}) =>
+      _navigationService!
+          .navigateTo(Routes.notificationsView, arguments: arguments);
+
   static Future<dynamic>? editsubmittedrequest({dynamic arguments}) =>
       _navigationService!
           .navigateTo(Routes.editsubmittedrequestview, arguments: arguments);

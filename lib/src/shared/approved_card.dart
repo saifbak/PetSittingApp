@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:whiskers_away_app/src/configs/app_setup.router.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
 import 'package:whiskers_away_app/src/shared/app_base_card.dart';
 import 'package:whiskers_away_app/src/shared/app_status_visibility_tag.dart';
@@ -16,8 +17,7 @@ class ApprovedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-    //print(petSitter.hourlyRates);
+    print(petSitter['job']);
     return AppBaseCard(
       padding: const EdgeInsets.all(10),
       child: Row(
@@ -40,7 +40,7 @@ class ApprovedCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          petSitter['petsitter']['name'],
+                          petSitter['job']['pet_name'] ?? '',
                           style: AppTextStyles.xLarge(
                             weight: FontWeight.w500,
                           ),
@@ -63,7 +63,10 @@ class ApprovedCard extends StatelessWidget {
                         GestureDetector(
                             child: AppStatusVisibilityTag(text: 'Pay now'),
                             onTap: () {
-                              NavService.payment();
+                              NavService.payment(
+                                  arguments: PaymentViewArguments(
+                                user: petSitter,
+                              ));
                             })
                       ],
                     ),
@@ -73,18 +76,18 @@ class ApprovedCard extends StatelessWidget {
                 VerticalSpacing(12),
                 Row(
                   children: [
-                    /* Icon(
-                      IconlyBold.bookmark,
+                    Icon(
+                      IconlyBold.profile,
                       size: 16,
                       color: AppColors.primaryColor,
                     ),
                     HorizontalSpacing(4),
                     Text(
-                      '${5}',
+                      petSitter['petsitter']['name'] ?? '',
                       style: AppTextStyles.xxMedium(
                         color: AppColors.darkGray,
                       ),
-                    ), */
+                    ),
                     Spacer(),
                     petSitter['petsitter']['address'] != null
                         ? Icon(

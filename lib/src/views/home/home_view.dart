@@ -63,15 +63,61 @@ class _Body extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              WelcomeHeading(name: model.user?.name ?? ''),
-              GestureDetector(
-                onTap: NavService.userProfile,
-                child: ImageDisplayBox(
-                  size: 50,
-                  imgUrl: model.user!.profileImg,
-                  assetDefaultImage: "profile.png",
-                ),
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: NavService.userProfile,
+                    child: ImageDisplayBox(
+                      size: 50,
+                      imgUrl: model.user!.profileImg,
+                      assetDefaultImage: "profile.png",
+                    ),
+                  ),
+                  HorizontalSpacing(6),
+                  WelcomeHeading(name: model.user?.name ?? ''),
+                ],
               ),
+              HorizontalSpacing(6),
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: NavService.notifications,
+                    child: Row(
+                      children: [
+                        Icon(
+                          IconlyBold.notification,
+                          size: 30,
+                          color: AppColors.primaryColor,
+                        ),
+                        // Positioned(
+                        //   top: 0.0,
+                        //   right: 0.0,
+                        //   child: new Container(
+                        //     padding: EdgeInsets.all(1),
+                        //     decoration: new BoxDecoration(
+                        //       color: Colors.red,
+                        //       borderRadius: BorderRadius.circular(6),
+                        //     ),
+                        //     constraints: BoxConstraints(
+                        //       minWidth: 12,
+                        //       minHeight: 12,
+                        //     ),
+                        //   ),
+                        // ),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+
+              // GestureDetector(
+              //   onTap: NavService.userProfile,
+              //   child: ImageDisplayBox(
+              //     size: 50,
+              //     imgUrl: model.user!.profileImg,
+              //     assetDefaultImage: "profile.png",
+              //   ),
+              // ),
             ],
           ),
         ),

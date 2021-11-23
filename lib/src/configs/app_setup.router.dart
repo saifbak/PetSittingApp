@@ -31,6 +31,7 @@ import '../views/request_submit/request_submit_view.dart';
 import '../views/splash/splash_view.dart';
 import '../views/terms_conditions/terms_conditions_view.dart';
 import '../views/user_profile/user_profile_view.dart';
+import '../views/notifications/notifications_view.dart';
 
 class Routes {
   static const String splashView = '/';
@@ -52,6 +53,7 @@ class Routes {
   static const String myEmployeesView = '/my-employees-view';
   static const String employeeDetailsView = '/employee-details-view';
   static const String userProfileView = '/user-profile-view';
+  static const String notificationsView = '/notifications-view';
   static const all = <String>{
     splashView,
     onBoardingView,
@@ -71,7 +73,8 @@ class Routes {
     employeeDetailsView,
     userProfileView,
     userReviewView,
-    editsubmittedrequestview
+    editsubmittedrequestview,
+    notificationsView
   };
 }
 
@@ -98,6 +101,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.employeeDetailsView, page: EmployeeDetailsView),
     RouteDef(Routes.userProfileView, page: UserProfileView),
     RouteDef(Routes.userReviewView, page: UserReviewView),
+    RouteDef(Routes.notificationsView, page: NotificationsView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -156,6 +160,12 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    NotificationsView: (data) {
+      return MaterialPageRoute<MaterialRoute<dynamic>>(
+        builder: (context) => NotificationsView(),
+        settings: data,
+      );
+    },
     EditSubmittedRequestView: (data) {
       var args = data.getArgs<EditRequestArguments>(nullOk: false);
       return MaterialPageRoute<MaterialRoute<dynamic>>(
@@ -173,8 +183,11 @@ class StackedRouter extends RouterBase {
       );
     },
     PaymentView: (data) {
+      var args = data.getArgs<PaymentViewArguments>(nullOk: false);
       return MaterialPageRoute<MaterialRoute<dynamic>>(
-        builder: (context) => PaymentView(),
+        builder: (context) => PaymentView(
+          user: args.user,
+        ),
         settings: data,
       );
     },
@@ -235,11 +248,15 @@ class StackedRouter extends RouterBase {
 /// ************************************************************************
 /// Arguments holder classes
 /// *************************************************************************
-
 /// ProfileView arguments holder class
 class ProfileViewArguments {
   final dynamic user;
   ProfileViewArguments({required this.user});
+}
+
+class PaymentViewArguments {
+  final dynamic user;
+  PaymentViewArguments({required this.user});
 }
 
 /// PetDetailsView arguments holder class
