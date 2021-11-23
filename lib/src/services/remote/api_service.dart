@@ -378,6 +378,25 @@ class ApiService {
     }
   }
 
+  Future<ApiResult<List<Map<String, dynamic>>>>
+      getAprrovedJobResponses() async {
+    try {
+      //print(request);
+      // print(jobID.toString());
+      ResponseWrapper response =
+          await _apiClient.getReq("/approvepetsitterlist");
+      List<Map<String, dynamic>> jobResp =
+          List<Map<String, dynamic>>.from(response.data);
+      print(jobResp);
+      return ApiResult.success(data: jobResp);
+    } catch (e) {
+      print(e);
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
+    }
+  }
+
   // Future<ApiResult<List<Review>>> reviewResponses() async {
   //   try {
   //     ResponseWrapper response = await _apiClient.getReq("/job/viewreview/6");

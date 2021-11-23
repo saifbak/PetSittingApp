@@ -26,7 +26,6 @@ class PetDetailsViewModel extends BaseViewModel {
       dialogService.showCustomDialog(
           variant: 'spinner', barrierDismissible: true);
 
-      // payload['petowner_id'] = _authService.user!.id;
       ApiResult apiResult = await _apiService.requestToPetSit(payload, data);
 
       apiResult.when(success: (data) {

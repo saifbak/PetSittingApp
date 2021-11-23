@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -22,11 +24,11 @@ class PaymentViewModel extends BaseViewModel {
   late TextEditingController nameCtrl, cardCtrl, dateCtrl, cvcCtrl;
 
   get jobProposal {
-    return _jobService.selectedJobProposal;
+    return _jobService.selectedaApprovedJobProposal;
   }
 
   User get petUser {
-    return User.fromJson(_jobService.selectedJobProposal['petsitter']);
+    return User.fromJson(_jobService.selectedaApprovedJobProposal['petsitter']);
   }
 
   void init() {

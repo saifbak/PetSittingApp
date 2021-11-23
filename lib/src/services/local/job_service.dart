@@ -7,6 +7,10 @@ class JobService with ReactiveServiceMixin {
       ReactiveValue<Map<String, dynamic>>(
     {'petsitter': {}, 'job': {}, 'price': null, 'description': null},
   );
+  ReactiveValue<Map<String, dynamic>> _selectedAprrovedJobProposal =
+      ReactiveValue<Map<String, dynamic>>(
+    {'petsitter': {}, 'job': {}, 'price': null, 'description': null},
+  );
 
   set jobs(List<Job> jobList) {
     _jobs.value = jobList;
@@ -24,7 +28,16 @@ class JobService with ReactiveServiceMixin {
     _selectedJobProposal.value = val;
   }
 
+  set selectedaApprovedJobProposal(Map<String, dynamic> val) {
+    _selectedAprrovedJobProposal.value = val;
+  }
+
   Map<String, dynamic> get selectedJobProposal {
     return _selectedJobProposal.value;
+  }
+
+  Map<String, dynamic> get selectedaApprovedJobProposal {
+    print(_selectedAprrovedJobProposal.value);
+    return _selectedAprrovedJobProposal.value;
   }
 }

@@ -60,12 +60,20 @@ class HomeViewModel extends BaseViewModel {
   List<Job> _newJobsFiltered = [];
   List<Job> _jobHistory = [];
   List<Job> _jobHistoryFiltered = [];
+  // List<Job> _approvedJobs = [];
+  // List<Job> _approvedJobsFiltered = [];
   List<Map<String, dynamic>> _jobResponses = [];
+  List<Map<String, dynamic>> _approvedJobs = [];
 
   TextEditingController openJobSearchController = TextEditingController();
   TextEditingController historyJobSearchController = TextEditingController();
+  TextEditingController approvedJobSearchController = TextEditingController();
 
-  Map<String, dynamic> loading = {'open': false, 'history': false};
+  Map<String, dynamic> loading = {
+    'open': false,
+    'history': false,
+    'approved': false
+  };
 
   List<PetSitter> get petSittersList => [
         PetSitter(
@@ -138,7 +146,11 @@ class HomeViewModel extends BaseViewModel {
         ),
       ];
 
-  List<String> get ownerRequests => ['Open Jobs', "Job History"];
+  List<String> get ownerRequests => [
+        'Open Jobs',
+        "Approved Jobs",
+        "Job History",
+      ];
 
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
@@ -239,7 +251,31 @@ class HomeViewModel extends BaseViewModel {
     apiResult.when(success: (data) {
       jobResponses = data;
       print(jobResponses);
+      setLoading('history', false);
+
       setBusy(false);
+    }, failure: (NetworkExceptions error) {
+      setBusy(false);
+      //print(error.toString());
+      /* _snackService.showSnackbar(
+          message: NetworkExceptions.getErrorMessage(error)); */
+      //print(err);
+      //print("[FAILUER] _authService.user");
+    });
+  }
+
+  Future<List<Map<String, dynamic>>?> getAprrovedJobResponse() async {
+    setLoading('approved', true);
+
+    setBusy(true);
+
+    ApiResult<dynamic> apiResult = await _apiService.getAprrovedJobResponses();
+    apiResult.when(success: (data) {
+      approvedJobs = data;
+      print('approvedJobs===>');
+      print(approvedJobs);
+      setLoading('approved', false);
+      // setBusy(false);
     }, failure: (NetworkExceptions error) {
       setBusy(false);
       //print(error.toString());
@@ -262,6 +298,10 @@ class HomeViewModel extends BaseViewModel {
     return _jobResponses;
   }
 
+  List<Map<String, dynamic>> get approvedJobs {
+    return _approvedJobs;
+  }
+
   set newJobs(List<Job> val) {
     _newJobs = val;
     _jobService.jobs = val;
@@ -280,6 +320,11 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  set approvedJobs(List<Map<String, dynamic>> val) {
+    _approvedJobs = val;
+    notifyListeners();
+  }
+
   bool isOwner() {
     return _authService.isOwner();
   }
@@ -295,6 +340,10 @@ class HomeViewModel extends BaseViewModel {
 
   get isHistoryJobLoading {
     return this.loading['history'];
+  }
+
+  get isApprovedJobLoading {
+    return this.loading['approved'];
   }
 
   List<Job> get jobHistory {

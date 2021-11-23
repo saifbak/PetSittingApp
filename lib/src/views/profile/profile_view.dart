@@ -53,6 +53,7 @@ class _Body extends StatelessWidget {
     };
     print('Review modal data =>');
     print(model.petUser.reviews.length > 0 ? 'full' : 'empty');
+    print(model.userDetails['job_id']);
 
     return BaseProfileView(
         networkImage: model.petUser.profileImg,
@@ -502,7 +503,10 @@ class CustomDialog extends StatelessWidget {
   Future<void> sentEmail(ctx) async {
     Navigator.pop(ctx);
     try {
-      await model.sentEmail({"petsitter_id": model.petUser.id}, ctx);
+      await model.sentEmail({
+        "petsitter_id": model.petUser.id,
+        "job_id": model.userDetails['job_id'],
+      }, ctx);
       // _authService.navigateHomeScreen();
     } catch (e) {
       /* Timer(Duration(seconds: 1), () {

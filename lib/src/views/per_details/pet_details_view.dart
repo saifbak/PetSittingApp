@@ -65,7 +65,7 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('request params ==>');
-    print(request);
+    print(request.owner?['id']);
     final screenSize = context.screenSize();
 
     return Column(
@@ -335,7 +335,16 @@ class _Body extends StatelessWidget {
                     Expanded(
                         child: AppButton(
                             onPressed: () {
-                              onSubmit(context);
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => CustomDialog(
+                                      "Attention",
+                                      "Owners will review all available pet sitters' proposals and  make a selection based on those sitters who respond to their open booking. When  setting your rate, please factor in the 15% that will be withheld by the app. If a pet  owner accepts your proposal, you will be notified and provided with their contact  information to arrange a meet and greet. Pet sitters are paid by Whiskers Away  within 1 day of completing the confirmed job.",
+                                      'Confirm',
+                                      model,
+                                      request,
+                                      replyCtrl,
+                                      priceCtrl));
                             },
                             text: 'Request to pet sit')),
                   ],
@@ -479,6 +488,111 @@ class _Body extends StatelessWidget {
       await model.deleteJob({
         "job_id": request.id,
       }, ctx);
+      _authService.navigateHomeScreen();
+    } catch (e) {
+      /* Timer(Duration(seconds: 1), () {
+        model.showErrorAlert(e);
+      }); */
+    }
+  }
+}
+
+class CustomDialog extends StatelessWidget {
+  final model;
+  final request;
+  final String title, description, buttonText;
+  final replyCtrl;
+  final priceCtrl;
+
+  CustomDialog(
+    this.title,
+    this.description,
+    this.buttonText,
+    this.model,
+    this.request,
+    this.replyCtrl,
+    this.priceCtrl,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      child: dialogContent(context),
+    );
+  }
+
+  dialogContent(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.only(
+            top: 50,
+            bottom: 16,
+            left: 16,
+            right: 16,
+          ),
+          margin: EdgeInsets.only(top: 16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(17),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 10.0,
+                offset: Offset(0.0, 10.0),
+              )
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                description,
+                style: TextStyle(
+                  fontSize: 16.0,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 24.0),
+              Align(
+                alignment: Alignment.bottomRight,
+                // ignore: deprecated_member_use
+                child: FlatButton(
+                  onPressed: () {
+                    onSubmit(context);
+                    Navigator.pop(context);
+                  },
+                  child: Text(buttonText),
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Future<void> onSubmit(ctx) async {
+    try {
+      await model.requestToPetSit(
+          request.id,
+          {
+            "description": replyCtrl.text.trim(),
+            "price": double.parse(priceCtrl.text.trim()),
+            "petowner_id": request.owner?['id'],
+          },
+          ctx);
       _authService.navigateHomeScreen();
     } catch (e) {
       /* Timer(Duration(seconds: 1), () {

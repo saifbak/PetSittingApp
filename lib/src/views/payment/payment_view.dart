@@ -41,10 +41,12 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = context.screenSize();
+    print('Model');
+    print(model.petUser);
 
     return SingleChildScrollView(
       child: BaseProfileView(
-        networkImage: model.petUser.profileImg,
+        networkImage: model.petUser != null ? model.petUser.profileImg : '',
         user: model.petUser,
         bottomContent: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -69,11 +71,11 @@ class _Body extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      LabelWithContent(
-                        labelText: 'Location',
-                        contentIcon: IconlyLight.location,
-                        content: model.jobProposal['job']['location'],
-                      ),
+                      // LabelWithContent(
+                      //   labelText: 'Location',
+                      //   contentIcon: IconlyLight.location,
+                      //   content: model.jobProposal['job']['location'],
+                      // ),
                       VerticalSpacing(16),
                       LabelWithContent(
                         labelText: 'Payment Summary',
@@ -145,7 +147,9 @@ class _Body extends StatelessWidget {
                                 ),
                                 HorizontalSpacing(60),
                                 Text(
-                                  '= \$' + model.jobProposal['price'],
+                                  '= \$' + model.jobProposal['price'] != null
+                                      ? model.jobProposal['price']
+                                      : '0',
                                   style: AppTextStyles.xxMedium(
                                     color: AppColors.darkGray,
                                   ),
@@ -160,11 +164,11 @@ class _Body extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      LabelWithContent(
-                        labelText: 'Date',
-                        contentIcon: IconlyLight.calendar,
-                        content: model.jobProposal['job']['period'],
-                      ),
+                      // LabelWithContent(
+                      //   labelText: 'Date',
+                      //   contentIcon: IconlyLight.calendar,
+                      //   content: model.jobProposal['job']['period'],
+                      // ),
                       VerticalSpacing(16),
                     ],
                   ),
