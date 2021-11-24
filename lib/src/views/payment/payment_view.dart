@@ -26,7 +26,7 @@ class PaymentView extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<PaymentViewModel>.nonReactive(
+    return ViewModelBuilder<PaymentViewModel>.reactive(
       viewModelBuilder: () => PaymentViewModel(),
       onModelReady: (model) {
         model.getRewards();
@@ -53,12 +53,6 @@ class _Body extends StatelessWidget {
     final screenSize = context.screenSize();
     print(model.totalRewards);
     dynamic value = 0;
-
-    applyRewards() {
-      model.rewardsCtrl.text;
-      value = model.rewardsCtrl.text;
-      print('Input value $value');
-    }
 
     return SingleChildScrollView(
       child: BasePaymentView(
@@ -104,7 +98,7 @@ class _Body extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Rate',
+                                      'Price',
                                       style: AppTextStyles.xxMedium(
                                         color: AppColors.darkGray,
                                         weight: FontWeight.w500,
@@ -134,7 +128,8 @@ class _Body extends StatelessWidget {
                                     ),
                                     VerticalSpacing(2),
                                     Text(
-                                      '-\$' + '${model.rewardsCtrl.text}',
+                                      '-\$' +
+                                          '${model.currentReward.toString()}',
                                       style: AppTextStyles.xxMedium(
                                         color: AppColors.darkGray,
                                       ),
@@ -165,8 +160,8 @@ class _Body extends StatelessWidget {
                                 ),
                                 HorizontalSpacing(60),
                                 Text(
-                                  '= \$' + user['price'] != null
-                                      ? user['price']
+                                  '= \$' + user['base_price'] != null
+                                      ? user['base_price']
                                       : '0',
                                   style: AppTextStyles.xxMedium(
                                     color: AppColors.darkGray,
@@ -227,7 +222,7 @@ class _Body extends StatelessWidget {
                                         child: AppStatusVisibilityTag(
                                             text: 'Apply Rewards'),
                                         onTap: () {
-                                          applyRewards();
+                                          model.applyRewards(user);
                                         }),
                                     VerticalSpacing(6),
                                   ],
@@ -359,7 +354,7 @@ class _Body extends StatelessWidget {
     try {
       dynamic parsedDate = model.dateCtrl.text.split('/');
       await model.makePayment({
-        'amount': user['price'],
+        'amount': user['base_price'],
         'number': model.cardCtrl.text,
         'exp_month': parsedDate[0],
         'exp_year': parsedDate[1],

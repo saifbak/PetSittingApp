@@ -272,6 +272,9 @@ class HomeViewModel extends BaseViewModel {
     ApiResult<dynamic> apiResult = await _apiService.getAprrovedJobResponses();
     apiResult.when(success: (data) {
       approvedJobs = data;
+      // approvedJobs = approvedJobs.map((item)=>{
+      //   return item;
+      //   }}).toList();
       print('approvedJobs===>');
       print(approvedJobs);
       setLoading('approved', false);
@@ -321,7 +324,11 @@ class HomeViewModel extends BaseViewModel {
   }
 
   set approvedJobs(List<Map<String, dynamic>> val) {
-    _approvedJobs = val;
+    _approvedJobs = val.map<Map<String, dynamic>>((e) {
+      e['base_price'] = e['price'];
+      return e;
+    }).toList();
+
     notifyListeners();
   }
 

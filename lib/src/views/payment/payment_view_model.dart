@@ -31,14 +31,37 @@ class PaymentViewModel extends BaseViewModel {
     rewardsCtrl = TextEditingController();
   }
 
+  double _currentReward = 0;
   int _totalrewards = 0;
+  double total = 0;
+
+  set currentReward(double val) {
+    _currentReward = val;
+    notifyListeners();
+  }
+
+  double get currentReward => _currentReward;
 
   set totalRewards(int val) {
-    this._totalrewards = val;
+    _totalrewards = val;
     notifyListeners();
   }
 
   int get totalRewards => _totalrewards;
+
+  applyRewards(user) {
+    // model.rewardsCtrl.text;
+    if (double.parse(rewardsCtrl.text) <= totalRewards) {
+      currentReward = double.parse(rewardsCtrl.text);
+      total = double.parse(user['price']) - currentReward;
+      user['base_price'] = total.toString();
+      notifyListeners();
+    } else {
+      showErrorAlert("Don't have sufficient rewards");
+    }
+
+    // print('Input value ${rewardsCtrl.text}');
+  }
 
   Future<dynamic> getRewards() async {
     setBusy(true);
@@ -103,12 +126,12 @@ class PaymentViewModel extends BaseViewModel {
     });
   }
 
-  // showErrorAlert(e) {
-  //   dialogService.showCustomDialog(
-  //     title: 'Payment Fail',
-  //     description: NetworkExceptions.getErrorMessage(e),
-  //     // buttonTitle: 'Cancel',
-  //     // buttonTitleColor: AppColors.primaryColor,
-  //   );
-  // }
+  showErrorAlert(e) {
+    dialogService.showCustomDialog(
+      title: 'Payment Fail',
+      description: NetworkExceptions.getErrorMessage(e),
+      // buttonTitle: 'Cancel',
+      // buttonTitleColor: AppColors.primaryColor,
+    );
+  }
 }
