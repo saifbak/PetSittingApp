@@ -21,21 +21,35 @@ class PaymentViewModel extends BaseViewModel {
   final formKey = GlobalKey<FormState>();
   AutovalidateMode autoValidate = AutovalidateMode.disabled;
 
-  late TextEditingController nameCtrl, cardCtrl, dateCtrl, cvcCtrl;
-
-  // get jobProposal {
-  //   return _jobService.selectedaApprovedJobProposal;
-  // }
-
-  // User get petUser {
-  //   return User.fromJson(_jobService.selectedaApprovedJobProposal['petsitter']);
-  // }
+  late TextEditingController nameCtrl, cardCtrl, dateCtrl, cvcCtrl, rewardsCtrl;
 
   void init() {
     nameCtrl = TextEditingController();
     cardCtrl = TextEditingController();
     dateCtrl = TextEditingController();
     cvcCtrl = TextEditingController();
+    rewardsCtrl = TextEditingController();
+  }
+
+  int _totalrewards = 0;
+
+  set totalRewards(int val) {
+    this._totalrewards = val;
+    notifyListeners();
+  }
+
+  int get totalRewards => _totalrewards;
+
+  Future<dynamic> getRewards() async {
+    setBusy(true);
+    ApiResult<dynamic> apiResult = await _apiService.getRewrads();
+    apiResult.when(success: (data) {
+      totalRewards = data;
+      print('totalRewards===> $totalRewards');
+      setBusy(false);
+    }, failure: (NetworkExceptions error) {
+      setBusy(false);
+    });
   }
 
   Future<dynamic> makePayment(data) async {

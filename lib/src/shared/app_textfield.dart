@@ -7,25 +7,24 @@ import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 
 class AppTextField extends StatefulWidget {
-  const AppTextField({
-    required this.hintText,
-    required this.label,
-    this.prefixIcon,
-    this.suffixIcon,
-    this.hasPasswordEye = false,
-    this.textInputType = TextInputType.text,
-    this.padding,
-    this.maxLines = 1,
-    this.readOnlyField = false,
-    this.onTap,
-    this.labelIcon,
-    this.endLabel,
-    this.controller,
-    this.validators,
-    this.validator,
-    this.bottomSpacing = true,
-    this.initialValue
-  });
+  const AppTextField(
+      {required this.hintText,
+      required this.label,
+      this.prefixIcon,
+      this.suffixIcon,
+      this.hasPasswordEye = false,
+      this.textInputType = TextInputType.text,
+      this.padding,
+      this.maxLines = 1,
+      this.readOnlyField = false,
+      this.onTap,
+      this.labelIcon,
+      this.endLabel,
+      this.controller,
+      this.validators,
+      this.validator,
+      this.bottomSpacing = true,
+      this.initialValue});
   final String? initialValue;
   final String hintText;
   final String label;
@@ -111,7 +110,6 @@ class _AppTextFieldState extends State<AppTextField> {
                   }, */
                   controller: widget.controller,
                   decoration: InputDecoration(
-                    
                     filled: true,
                     fillColor: Colors.white,
                     hintText: widget.hintText,

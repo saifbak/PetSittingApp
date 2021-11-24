@@ -29,6 +29,7 @@ class PaymentView extends StatelessWidget {
     return ViewModelBuilder<PaymentViewModel>.nonReactive(
       viewModelBuilder: () => PaymentViewModel(),
       onModelReady: (model) {
+        model.getRewards();
         model.init();
       },
       builder: (_, model, __) {
@@ -50,8 +51,14 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = context.screenSize();
-    print('user');
-    print(user['petsitter']['profile_img']);
+    print(model.totalRewards);
+    dynamic value = 0;
+
+    applyRewards() {
+      model.rewardsCtrl.text;
+      value = model.rewardsCtrl.text;
+      print('Input value $value');
+    }
 
     return SingleChildScrollView(
       child: BasePaymentView(
@@ -80,11 +87,11 @@ class _Body extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // LabelWithContent(
-                      //   labelText: 'Location',
-                      //   contentIcon: IconlyLight.location,
-                      //   content: user['job']['location'],
-                      // ),
+                      LabelWithContent(
+                        labelText: 'Location',
+                        contentIcon: IconlyLight.location,
+                        content: user['job']['location'] ?? '',
+                      ),
                       VerticalSpacing(16),
                       LabelWithContent(
                         labelText: 'Payment Summary',
@@ -97,7 +104,7 @@ class _Body extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      '\$35 per day x 5',
+                                      'Rate',
                                       style: AppTextStyles.xxMedium(
                                         color: AppColors.darkGray,
                                         weight: FontWeight.w500,
@@ -118,14 +125,16 @@ class _Body extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      '= \$' + '0',
+                                      user['price'] != null
+                                          ? '\$' + user['price']
+                                          : '',
                                       style: AppTextStyles.xxMedium(
                                         color: AppColors.darkGray,
                                       ),
                                     ),
                                     VerticalSpacing(2),
                                     Text(
-                                      '= \$10',
+                                      '-\$' + '${model.rewardsCtrl.text}',
                                       style: AppTextStyles.xxMedium(
                                         color: AppColors.darkGray,
                                       ),
@@ -165,6 +174,65 @@ class _Body extends StatelessWidget {
                                 ),
                               ],
                             )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // LabelWithContent(
+                      //   labelText: 'Date',
+                      //   contentIcon: IconlyLight.calendar,
+                      //   content: model.jobProposal['job']['period'],
+                      // ),
+                      VerticalSpacing(16),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // LabelWithContent(
+                      //   labelText: 'Location',
+                      //   contentIcon: IconlyLight.location,
+                      //   content: user['job']['location'] ?? '',
+                      // ),
+                      // VerticalSpacing(16),
+                      LabelWithContent(
+                        labelText: 'Rewards',
+                        content: Column(
+                          children: [
+                            VerticalSpacing(),
+                            Container(
+                                width: 125,
+                                child: Column(
+                                  children: [
+                                    AppTextField(
+                                      controller: model.rewardsCtrl,
+                                      hintText: '\$10',
+                                      label: model.totalRewards != null
+                                          ? model.totalRewards.toString()
+                                          : '0',
+                                      padding: EdgeInsets.zero,
+                                      textInputType: TextInputType.phone,
+                                      // labelIcon: IconlyLight.wallet,
+                                      // bottomSpacing: false,
+                                      // validator: (val) {
+                                      //   return DefaultValidator.required(
+                                      //       val, "Card CVV");
+                                      // },
+                                    ),
+                                    GestureDetector(
+                                        child: AppStatusVisibilityTag(
+                                            text: 'Apply Rewards'),
+                                        onTap: () {
+                                          applyRewards();
+                                        }),
+                                    VerticalSpacing(6),
+                                  ],
+                                )),
+                            VerticalSpacing(),
                           ],
                         ),
                       ),
@@ -298,7 +366,7 @@ class _Body extends StatelessWidget {
         'cvc': model.cvcCtrl.text,
         'petsitter_id': user['petsitter']['petsitter_id'],
         'job_id': user['job']['job_id'],
-        // 'rewardused':
+        'rewardused': model.rewardsCtrl.text,
       });
     } catch (e) {
       /* Timer(Duration(seconds: 1), () {
