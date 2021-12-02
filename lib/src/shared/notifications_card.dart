@@ -1,3 +1,5 @@
+// import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:whiskers_away_app/src/services/local/navigation_service.dart';
@@ -17,11 +19,11 @@ class NotificationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('Card===>Notification');
-    print(notification!['message']);
+    print(notification['created_at'].split('T')[0]);
     return AppBaseCard(
       padding: const EdgeInsets.all(10),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Icon(
             IconlyBold.notification,
@@ -72,6 +74,13 @@ class NotificationCard extends StatelessWidget {
                     //         })
                     //   ],
                     // ),
+                  ],
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(notification['created_at'].split('T')[0] ?? ''),
                   ],
                 ),
                 // Text('Total Bookings'),

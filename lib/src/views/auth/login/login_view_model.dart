@@ -36,11 +36,12 @@ class LoginViewModel extends BaseViewModel {
       }, failure: (NetworkExceptions error) {
         AppUtils.toastShow("Login Unsuccessful !");
         showErrorAlert(error);
+        print(error);
       });
 
       setBusy(false);
     } catch (e) {
-      setBusy(false); 
+      setBusy(false);
     }
   }
 

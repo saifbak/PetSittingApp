@@ -487,10 +487,127 @@ class CustomDialog extends StatelessWidget {
                 // ignore: deprecated_member_use
                 child: FlatButton(
                   onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) => CustomDialogtwo(model));
+                    // Navigator.pop(context);
+                  },
+                  //  () {
+                  //   CustomDialogtwo(model);
+                  // },
+                  child: Text(buttonText),
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  // Future<void> sentEmail(ctx) async {
+  //   Navigator.pop(ctx);
+  //   try {
+  //     await model.sentEmail({
+  //       "petsitter_id": model.petUser.id,
+  //       "job_id": model.userDetails['job_id'],
+  //     }, ctx);
+  //     // _authService.navigateHomeScreen();
+  //   } catch (e) {
+  //     /* Timer(Duration(seconds: 1), () {
+  //       model.showErrorAlert(e);
+  //     }); */
+  //   }
+  // }
+}
+
+class CustomDialogtwo extends StatelessWidget {
+  final model;
+  // final String title, description, buttonText;
+
+  CustomDialogtwo(
+    // this.title,
+    // this.description,
+    // this.buttonText,
+    this.model,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      child: dialogContent(context),
+    );
+  }
+
+  dialogContent(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.only(
+            top: 50,
+            bottom: 16,
+            left: 16,
+            right: 16,
+          ),
+          margin: EdgeInsets.only(top: 16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(17),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 10.0,
+                offset: Offset(0.0, 10.0),
+              )
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                'Sitter Details',
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                'Sitter name: ${model.petUser?.name ?? ''}',
+                style: TextStyle(
+                  fontSize: 16.0,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 13.0),
+              Text(
+                'Sitter email: ${model.petUser?.email ?? ''}',
+                style: TextStyle(
+                  fontSize: 16.0,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 13.0),
+              Text(
+                'Sitter contact no: ${model.petUser?.phone ?? ''}',
+                style: TextStyle(
+                  fontSize: 16.0,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 24.0),
+              Align(
+                alignment: Alignment.bottomRight,
+                // ignore: deprecated_member_use
+                child: FlatButton(
+                  onPressed: () {
                     sentEmail(context);
                     Navigator.pop(context);
                   },
-                  child: Text(buttonText),
+                  child: Text('Ok'),
                 ),
               )
             ],

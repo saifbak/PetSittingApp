@@ -205,7 +205,7 @@ class _Body extends StatelessWidget {
                                   children: [
                                     AppTextField(
                                       controller: model.rewardsCtrl,
-                                      hintText: '\$10',
+                                      hintText: '\$ 0',
                                       label: model.totalRewards != null
                                           ? model.totalRewards.toString()
                                           : '0',

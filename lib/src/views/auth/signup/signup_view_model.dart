@@ -97,6 +97,7 @@ class SignUpViewModel extends BaseViewModel {
         print(data);
       }, failure: (NetworkExceptions error) {
         AppUtils.toastShow("Unsuccessful Registration !");
+        print('Error =>$error');
         showErrorAlert(error);
       });
 
@@ -108,6 +109,7 @@ class SignUpViewModel extends BaseViewModel {
   }
 
   showErrorAlert(e) {
+    print(e);
     dialogService.showDialog(
       title: 'Error Occurred',
       description: NetworkExceptions.getErrorMessage(e),
