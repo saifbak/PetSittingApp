@@ -17,7 +17,7 @@ class ApprovedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(petSitter['job']);
+    print(petSitter['job']['period']);
     return AppBaseCard(
       padding: const EdgeInsets.all(10),
       child: Row(
@@ -25,7 +25,8 @@ class ApprovedCard extends StatelessWidget {
         children: [
           ImageDisplayBox(
             size: 60,
-            imgUrl: petSitter['petsitter']['profile_img'],
+            imgUrl: petSitter['images'][0]['image_url'],
+            assetDefaultImage: 'pet.jpg',
           ),
           HorizontalSpacing(10),
           Expanded(
@@ -73,14 +74,16 @@ class ApprovedCard extends StatelessWidget {
                   ],
                 ),
                 // Text('Total Bookings'),
-                VerticalSpacing(12),
+                // VerticalSpacing(12),
                 Row(
                   children: [
-                    Icon(
-                      IconlyBold.profile,
-                      size: 16,
-                      color: AppColors.primaryColor,
-                    ),
+                    petSitter['petsitter']['name'] != null
+                        ? Icon(
+                            IconlyBold.profile,
+                            size: 16,
+                            color: AppColors.primaryColor,
+                          )
+                        : Container(),
                     HorizontalSpacing(4),
                     Text(
                       petSitter['petsitter']['name'] ?? '',
@@ -89,19 +92,31 @@ class ApprovedCard extends StatelessWidget {
                       ),
                     ),
                     Spacer(),
-                    petSitter['petsitter']['address'] != null
-                        ? Icon(
-                            IconlyBold.location,
-                            size: 16,
+                    Row(
+                      children: [
+                        // petSitter['petsitter']['address'] != null
+                        //     ? Icon(
+                        //         IconlyBold.location,
+                        //         size: 16,
+                        //         color: AppColors.primaryColor,
+                        //       )
+                        //     : Container(),
+                        // HorizontalSpacing(4),
+                        // Text(
+                        //   petSitter['petsitter']['address'] ?? '',
+                        //   style: AppTextStyles.xxMedium(
+                        //     color: AppColors.darkGray,
+                        //   ),
+                        // ),
+                        // HorizontalSpacing(4),
+                        Text(
+                          petSitter['job']['period'] ?? '',
+                          style: AppTextStyles.xMedium(
+                            weight: FontWeight.w500,
                             color: AppColors.primaryColor,
-                          )
-                        : Container(),
-                    HorizontalSpacing(4),
-                    Text(
-                      petSitter['petsitter']['address'] ?? '',
-                      style: AppTextStyles.xxMedium(
-                        color: AppColors.darkGray,
-                      ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

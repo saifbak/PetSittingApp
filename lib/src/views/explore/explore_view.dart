@@ -42,15 +42,6 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenSize = context.screenSize();
 
-    // contains(obj, query) {
-    //   var check = query.toLowerCase();
-    //   var name = obj.name;
-    //   if (name.toLowerCase().includes(check)) {
-    //     return true;
-    //   }
-    //   return false;
-    // }
-
     return Column(
       children: [
         VerticalSpacing(context.topSpace() + screenSize.height * .05),
@@ -80,26 +71,13 @@ class _Body extends StatelessWidget {
                     onTap: NavService.notifications,
                     child: Row(
                       children: [
-                        Icon(
-                          IconlyBold.notification,
-                          size: 30,
-                          color: AppColors.primaryColor,
+                        Image(
+                          image: AssetImage(
+                            'assets/images/notification.png',
+                          ),
+                          width: 25,
+                          height: 25,
                         ),
-                        // Positioned(
-                        //   top: 0.0,
-                        //   right: 0.0,
-                        //   child: new Container(
-                        //     padding: EdgeInsets.all(1),
-                        //     decoration: new BoxDecoration(
-                        //       color: Colors.red,
-                        //       borderRadius: BorderRadius.circular(6),
-                        //     ),
-                        //     constraints: BoxConstraints(
-                        //       minWidth: 12,
-                        //       minHeight: 12,
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
@@ -191,15 +169,4 @@ class _Body extends StatelessWidget {
     model.filteredJobs.clear();
     model.searchResult(text);
   }
-
-  // Widget noRecord(String text) {
-  //   return Expanded(
-  //     child: Center(
-  //       child: Text(
-  //         text,
-  //         style: AppTextStyles.xLarge(color: AppColors.primaryColor),
-  //       ),
-  //     ),
-  //   );
-  // }
 }

@@ -77,7 +77,8 @@ class _Body extends StatelessWidget {
                               weight: FontWeight.w500),
                         ),
                         VerticalSpacing(5),
-                        Text(model.userDetails['petsitter']['description']),
+                        Text(model.userDetails['petsitter']['description'] ??
+                            ''),
                       ],
                     ),
                   ),
@@ -94,28 +95,12 @@ class _Body extends StatelessWidget {
                               weight: FontWeight.w500),
                         ),
                         VerticalSpacing(5),
-                        Text(model.userDetails['description']),
+                        Text(model.userDetails['description'] ?? ''),
                       ],
                     ),
                   ),
                   VerticalSpacing(20),
-                  /* Row(
-                    children: [
-                      LabelWithContent(
-                        labelText: 'Experience',
-                        content: '10 years',
-                        contentIcon: IconlyLight.work,
-                      ),
-                      Spacer(),
-                      LabelWithContent(
-                        labelText: 'Prefers',
-                        content: 'Dogs 10-24',
-                        contentIcon: IconlyLight.category,
-                      ),
-                      Spacer(),
-                    ],
-                  ),
-                  VerticalSpacing(12), */
+                  VerticalSpacing(12),
                   AppDivider(),
                   VerticalSpacing(12),
                 ],
@@ -504,21 +489,6 @@ class CustomDialog extends StatelessWidget {
       ],
     );
   }
-
-  // Future<void> sentEmail(ctx) async {
-  //   Navigator.pop(ctx);
-  //   try {
-  //     await model.sentEmail({
-  //       "petsitter_id": model.petUser.id,
-  //       "job_id": model.userDetails['job_id'],
-  //     }, ctx);
-  //     // _authService.navigateHomeScreen();
-  //   } catch (e) {
-  //     /* Timer(Duration(seconds: 1), () {
-  //       model.showErrorAlert(e);
-  //     }); */
-  //   }
-  // }
 }
 
 class CustomDialogtwo extends StatelessWidget {
@@ -526,9 +496,6 @@ class CustomDialogtwo extends StatelessWidget {
   // final String title, description, buttonText;
 
   CustomDialogtwo(
-    // this.title,
-    // this.description,
-    // this.buttonText,
     this.model,
   );
 

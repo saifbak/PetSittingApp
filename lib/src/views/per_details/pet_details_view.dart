@@ -135,23 +135,10 @@ class _Body extends StatelessWidget {
                               weight: FontWeight.w500,
                             ),
                           ),
-                          // VerticalSpacing(4),
-                          // Text(
-                          //   '${request.weight} lbs',
-                          //   style: AppTextStyles.xxLarge(
-                          //     color: Colors.white,
-                          //     weight: FontWeight.w500,
-                          //   ),
-                          // ),
+                        
                           VerticalSpacing(6),
                           Row(
                             children: [
-                              // Icon(
-                              //   IconlyBold.location,
-                              //   size: 16,
-                              //   color: Colors.white,
-                              // ),
-                              // HorizontalSpacing(4),
                               Text(
                                 '${request.weight} lbs',
                                 style: AppTextStyles.xxLarge(
@@ -291,9 +278,6 @@ class _Body extends StatelessWidget {
                   label: '',
                   maxLines: 4,
                   padding: EdgeInsets.zero,
-                  // validator: (val) {
-                  //   return DefaultValidator.required(val, "your reply");
-                  // },
                 ),
               ),
               Container(
@@ -304,10 +288,6 @@ class _Body extends StatelessWidget {
                   label: '',
                   maxLines: 1,
                   padding: EdgeInsets.zero,
-                  // textInputType: TextInputType.numberWithOptions(),
-                  // validator: (val) {
-                  //   return DefaultValidator.required(val, "price");
-                  // },
                 ),
               ),
               // AppSpacing(context).bottomSpacing,
@@ -359,15 +339,6 @@ class _Body extends StatelessWidget {
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // request.jobStatus != 'NEW'
-                      //     ? AppButton(
-                      //         text: 'Delete',
-                      //         horizontalPadding: 30,
-                      //         onPressed: NavService.requestSubmit,
-                      //         dangerColor: true,
-                      //       )
-                      //     : Container(),
-                      // HorizontalSpacing(16),
                       AppButton(
                         text: 'Edit',
                         horizontalPadding: 30,
@@ -392,13 +363,6 @@ class _Body extends StatelessWidget {
                               dangerColor: true,
                             )
                           : Container(),
-                      // HorizontalSpacing(16),
-                      //     AppButton(
-                      //         text: 'Edit',
-                      //         horizontalPadding: 30,
-                      //         onPressed: NavService.requestSubmit,
-                      //       )
-                      //    ,
                     ],
                   )
             : Container(),
@@ -407,52 +371,6 @@ class _Body extends StatelessWidget {
       ],
     );
   }
-
-// && request.isedit == 0 && request.jobStatus == 'NEW'
-//   ? Row(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   // request.jobStatus != 'NEW'
-//                   //     ? AppButton(
-//                   //         text: 'Delete',
-//                   //         horizontalPadding: 30,
-//                   //         onPressed: NavService.requestSubmit,
-//                   //         dangerColor: true,
-//                   //       )
-//                   //     : Container(),
-//                   // HorizontalSpacing(16),
-//                   AppButton(
-//                     text: 'Edit',
-//                     horizontalPadding: 30,
-//                     onPressed: NavService.requestSubmit,
-//                   ),
-//                 ],
-//               )
-//             : model.isOwner() &&
-//                     request.isedit == 1 &&
-//                     request.jobStatus != 'NEW'
-//                 ? Row(
-//                     mainAxisAlignment: MainAxisAlignment.center,
-//                     children: [
-//                       request.jobStatus != 'NEW'
-//                           ? AppButton(
-//                               text: 'Delete',
-//                               horizontalPadding: 30,
-//                               onPressed: () {
-//                                 onDelete(context);
-//                               },
-//                               dangerColor: true,
-//                             )
-//                           : Container(),
-//                       // HorizontalSpacing(16),
-//                       //     AppButton(
-//                       //         text: 'Edit',
-//                       //         horizontalPadding: 30,
-//                       //         onPressed: NavService.requestSubmit,
-//                       //       )
-//                       //    ,
-//                     ],
-//                   )
 
   Future<void> onSubmit(ctx) async {
     try {

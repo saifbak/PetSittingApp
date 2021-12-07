@@ -28,6 +28,7 @@ class HomeView extends StatelessWidget {
       viewModelBuilder: () => HomeViewModel(),
       onModelReady: (model) {
         model.getOpenJobs();
+        model.getAprrovedJobResponse();
         // model.getFilteredJobs();
       },
       builder: (_, model, __) {
@@ -84,40 +85,18 @@ class _Body extends StatelessWidget {
                     onTap: NavService.notifications,
                     child: Row(
                       children: [
-                        Icon(
-                          IconlyBold.notification,
-                          size: 30,
-                          color: AppColors.primaryColor,
+                        Image(
+                          image: AssetImage(
+                            'assets/images/notification.png',
+                          ),
+                          width: 25,
+                          height: 25,
                         ),
-                        // Positioned(
-                        //   top: 0.0,
-                        //   right: 0.0,
-                        //   child: new Container(
-                        //     padding: EdgeInsets.all(1),
-                        //     decoration: new BoxDecoration(
-                        //       color: Colors.red,
-                        //       borderRadius: BorderRadius.circular(6),
-                        //     ),
-                        //     constraints: BoxConstraints(
-                        //       minWidth: 12,
-                        //       minHeight: 12,
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
                 ],
               )
-
-              // GestureDetector(
-              //   onTap: NavService.userProfile,
-              //   child: ImageDisplayBox(
-              //     size: 50,
-              //     imgUrl: model.user!.profileImg,
-              //     assetDefaultImage: "profile.png",
-              //   ),
-              // ),
             ],
           ),
         ),
@@ -151,38 +130,8 @@ class _Body extends StatelessWidget {
                             VerticalSpacing(12),
                             Container(
                               margin: AppBaseStyles.horizontalPadding,
-                              // height: 40,
-                              // decoration: BoxDecoration(
-                              //   borderRadius: BorderRadius.circular(8),
-                              //   color: Colors.white,
-                              // ),
-                              // child: TextField(
-                              //   controller: model.approvedJobSearchController,
-                              //   onChanged: (val) =>
-                              //       model.searchResult('open', val),
-                              //   decoration: InputDecoration(
-                              //     contentPadding: EdgeInsets.only(left: 16),
-                              //     suffixIcon: Icon(
-                              //       IconlyLight.filter,
-                              //       color: AppColors.primaryColor,
-                              //     ),
-                              //     hintText: 'Search ...',
-                              //     hintStyle: AppTextStyles.xMedium(
-                              //         color: Color(0xFF858585)),
-                              //     enabledBorder: OutlineInputBorder(
-                              //       borderRadius: BorderRadius.circular(8),
-                              //       borderSide:
-                              //           BorderSide(color: Color(0xFFE7E7E7)),
-                              //     ),
-                              //     focusedBorder: OutlineInputBorder(
-                              //       borderRadius: BorderRadius.circular(8),
-                              //       borderSide:
-                              //           BorderSide(color: Color(0xFFE7E7E7)),
-                              //     ),
-                              //   ),
-                              // ),
                             ),
-                            model.newJobsFiltered.length > 0
+                            model.approvedJobs.length > 0
                                 ? Expanded(
                                     child: ListView.separated(
                                       padding: AppBaseStyles.horizontalPadding
@@ -191,13 +140,7 @@ class _Body extends StatelessWidget {
                                         final request =
                                             model.approvedJobs[index];
                                         return GestureDetector(
-                                          onTap: () async {
-                                            //  NavService.petDetails(
-                                            //      arguments: PetDetailsViewArguments(
-                                            //   request: request,
-                                            //    role: Roles.petOwner,
-                                            //   ));
-                                          },
+                                          onTap: () async {},
                                           child: ApprovedCard(
                                             petSitter: request,
                                           ),
@@ -364,13 +307,7 @@ class _Body extends StatelessWidget {
                         itemBuilder: (_, index) {
                           final request = model.newJobsFiltered[index];
                           return GestureDetector(
-                            onTap: () async {
-                              //  NavService.petDetails(
-                              //      arguments: PetDetailsViewArguments(
-                              //   request: request,
-                              //    role: Roles.petOwner,
-                              //   ));
-                            },
+                            onTap: () async {},
                             child: AppListingCard(
                               model,
                               request: request,
@@ -410,31 +347,6 @@ class _Body extends StatelessWidget {
                       ),
                     )
                   : ListingSheet(list: model.jobResponses);
-              //return Text('sdsdsdds');
-              //await model.getJobResponse(request.id);
-              //return ListingSheet(list: model.petSittersList);
-              /* return FutureBuilder<dynamic>(
-                                  future: model.getJobResponse(request
-                                      .id), // function where you call your api
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<dynamic> snapshot) {
-                                    // AsyncSnapshot<Your object type>
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return Text('sdsd');
-                                    } else {
-                                      print("-------->coming");
-                                      print(snapshot.data);
-                                      if (snapshot.hasError)
-                                        return Center(
-                                            child: Text(
-                                                'Error: ${snapshot.error}'));
-                                      else
-                                        return Center(
-                                            child: new Text('saddsa')); // s
-                                    }
-                                  },
-                                ); */
             });
       }
     };
