@@ -134,7 +134,7 @@ class _Body extends StatelessWidget {
                         controller: ageCtrl,
                         hintText: 'Enter years',
                         label: 'Age',
-                        textInputType: TextInputType.phone,
+                        textInputType: TextInputType.number,
                         padding: EdgeInsets.zero,
                         validator: (val) {
                           return DefaultValidator.required(val, "Age");
@@ -146,6 +146,8 @@ class _Body extends StatelessWidget {
                       child: AppTextField(
                         controller: weightCtrl,
                         hintText: 'Enter weight',
+                        textInputType: TextInputType.number,
+
                         // textInputType: TextInputType.phone,
                         label: 'Weight',
                         padding: EdgeInsets.zero,

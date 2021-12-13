@@ -135,7 +135,6 @@ class _Body extends StatelessWidget {
                               weight: FontWeight.w500,
                             ),
                           ),
-                        
                           VerticalSpacing(6),
                           Row(
                             children: [
@@ -261,7 +260,7 @@ class _Body extends StatelessWidget {
               Text(request.description != null
                   ? request.description.toString()
                   : ''),
-              VerticalSpacing(42),
+              VerticalSpacing(10),
             ],
           ),
         ),
@@ -283,12 +282,12 @@ class _Body extends StatelessWidget {
               Container(
                 padding: AppBaseStyles.horizontalPadding,
                 child: AppTextField(
-                  controller: priceCtrl,
-                  hintText: 'Price',
-                  label: '',
-                  maxLines: 1,
-                  padding: EdgeInsets.zero,
-                ),
+                    controller: priceCtrl,
+                    hintText: 'Price',
+                    label: '',
+                    maxLines: 1,
+                    padding: EdgeInsets.zero,
+                    textInputType: TextInputType.number),
               ),
               // AppSpacing(context).bottomSpacing,
               // VerticalSpacing(12),
@@ -329,11 +328,11 @@ class _Body extends StatelessWidget {
                   ],
                 ),
               ),
-              VerticalSpacing(),
+              // VerticalSpacing(),
             ],
           ))
         ],
-        VerticalSpacing(16),
+        // VerticalSpacing(5),
         model.isOwner()
             ? request.isedit == 0
                 ? Row(

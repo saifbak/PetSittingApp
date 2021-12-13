@@ -154,7 +154,7 @@ class _Body extends StatelessWidget {
                         controller: model.ageCtrl,
                         hintText: 'Enter years',
                         label: 'Age',
-                        textInputType: TextInputType.phone,
+                        textInputType: TextInputType.number,
                         padding: EdgeInsets.zero,
                         validator: (val) {
                           return DefaultValidator.required(val, "Age");

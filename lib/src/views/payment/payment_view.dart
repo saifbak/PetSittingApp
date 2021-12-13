@@ -205,12 +205,12 @@ class _Body extends StatelessWidget {
                                   children: [
                                     AppTextField(
                                       controller: model.rewardsCtrl,
-                                      hintText: '\$ 0',
+                                      hintText: '\$0',
                                       label: model.totalRewards != null
-                                          ? model.totalRewards.toString()
+                                          ? '\$${model.totalRewards.toString()}'
                                           : '0',
                                       padding: EdgeInsets.zero,
-                                      textInputType: TextInputType.phone,
+                                      textInputType: TextInputType.number,
                                       // labelIcon: IconlyLight.wallet,
                                       // bottomSpacing: false,
                                       // validator: (val) {
@@ -284,6 +284,7 @@ class _Body extends StatelessWidget {
                         label: 'Card Number',
                         padding: EdgeInsets.zero,
                         labelIcon: IconlyLight.wallet,
+                        textInputType: TextInputType.number,
                         validator: (val) {
                           return DefaultValidator.required(val, "Card Number");
                         },
@@ -329,6 +330,7 @@ class _Body extends StatelessWidget {
                               label: 'CVV',
                               padding: EdgeInsets.zero,
                               labelIcon: IconlyLight.wallet,
+                              textInputType: TextInputType.number,
                               bottomSpacing: false,
                               validator: (val) {
                                 return DefaultValidator.required(
