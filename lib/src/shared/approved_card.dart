@@ -25,7 +25,9 @@ class ApprovedCard extends StatelessWidget {
         children: [
           ImageDisplayBox(
             size: 60,
-            imgUrl: petSitter['images'][0]['image_url'],
+            imgUrl: petSitter['images'].length > 0
+                ? petSitter['images'][0]['image_url']
+                : '',
             assetDefaultImage: 'pet.jpg',
           ),
           HorizontalSpacing(10),
