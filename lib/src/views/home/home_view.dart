@@ -55,7 +55,7 @@ class _Body extends StatelessWidget {
     final screenSize = context.screenSize();
 
     print('approvedJobs home ===>');
-    print(model.approvedJobs);
+    print(model.approvedJobs.length);
     return Column(
       children: [
         VerticalSpacing(context.topSpace() + screenSize.height * .05),
