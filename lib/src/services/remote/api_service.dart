@@ -37,11 +37,11 @@ class ApiService {
 
   Future<ApiResult<User>> login(Map<String, dynamic> userLoginRequest) async {
     try {
+      print('Api Hit for login');
       ResponseWrapper response =
           await _apiClient.postReq("/login", data: userLoginRequest);
-
       LocalStorage.saveSP('token', 'Bearer ' + response.data['token']);
-
+      print('Response \n $response');
       final User userDetails = User(
         email: response.data['email'],
         name: response.data['name'],
@@ -253,10 +253,12 @@ class ApiService {
       );
     }
   }
+
   Future<ApiResult<dynamic>> getRewrads() async {
     try {
-      ResponseWrapper response =
-          await _apiClient.getReq("/reward",);
+      ResponseWrapper response = await _apiClient.getReq(
+        "/reward",
+      );
 
       return ApiResult.success(data: response.data);
     } catch (e) {

@@ -29,14 +29,15 @@ class LoginViewModel extends BaseViewModel {
       // SnackbarService().showSnackbar(message: "Successful Login");
 
       apiResult.when(success: (data) {
+        print('Success===>');
         print(data);
-        _authService.user = data;
-        _authService.navigateHomeScreen();
+        // _authService.user = data;
+        // _authService.navigateHomeScreen();
         AppUtils.toastShow("Successful Login");
       }, failure: (NetworkExceptions error) {
         AppUtils.toastShow("Login Unsuccessful !");
         showErrorAlert(error);
-        print(error);
+        print('Error===>$error');
       });
 
       setBusy(false);
