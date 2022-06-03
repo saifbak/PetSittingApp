@@ -10,6 +10,7 @@ import 'package:whiskers_away_app/src/services/local/local_storage_service.dart'
 import 'package:whiskers_away_app/src/services/remote/api_client.dart';
 import 'package:whiskers_away_app/src/services/remote/api_result.dart';
 import 'package:whiskers_away_app/src/services/remote/network_exceptions.dart';
+import 'package:retrofit/retrofit.dart';
 
 class ApiService {
   late ApiClient _apiClient;
@@ -38,10 +39,12 @@ class ApiService {
   Future<ApiResult<User>> login(Map<String, dynamic> userLoginRequest) async {
     try {
       print('Api Hit for login');
+      // final responses = await _apiClient.getReq('https://google.com');
+      // print('dio testing ${responses.data}');
       ResponseWrapper response =
           await _apiClient.postReq("/login", data: userLoginRequest);
       LocalStorage.saveSP('token', 'Bearer ' + response.data['token']);
-      print('Response \n $response');
+      // print('Response \n ${response.data}');
       final User userDetails = User(
         email: response.data['email'],
         name: response.data['name'],
@@ -276,6 +279,7 @@ class ApiService {
       List<Job> jobs = response.data.map<Job>((item) {
         return new Job.fromJson(item);
       }).toList();
+      print(response);
       return ApiResult.success(data: jobs);
     } catch (e) {
       print(e);
@@ -290,10 +294,10 @@ class ApiService {
       ResponseWrapper response =
           await _apiClient.postReq("/job/list", data: params);
       List<Job> jobs = response.data.map<Job>((item) {
-        print("item");
-        print(item);
         return new Job.fromJson(item);
       }).toList();
+      print("Get open jobs items response");
+      print(response.data);
       return ApiResult.success(data: jobs);
     } catch (e) {
       print(e);

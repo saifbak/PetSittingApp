@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whiskers_away_app/src/base/utils/utils.dart';
 import 'package:whiskers_away_app/src/shared/spacing.dart';
+import 'package:whiskers_away_app/src/styles/app_colors.dart';
 
 class AppLogo extends StatelessWidget {
   const AppLogo({this.width});
@@ -16,11 +17,18 @@ class AppLogo extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset('assets/images/logo_img.png'),
+          Image.asset('assets/images/image.png'),
           VerticalSpacing(screenSize.height * .025),
           Hero(
             tag: 'logo_text',
-            child: Image.asset('assets/images/logo_text.png'),
+            child: Text(
+              'Pet Sitting',
+              style: TextStyle(
+                  fontSize: screenSize.height * 0.03,
+                  color: Colors.blueGrey,
+                  fontWeight: FontWeight.w600),
+            ),
+            // Image.asset('assets/images/logo_text.png'),
           ),
         ],
       ),

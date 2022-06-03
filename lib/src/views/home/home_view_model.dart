@@ -219,18 +219,19 @@ class HomeViewModel extends BaseViewModel {
 
   Future<ApiResult<List<Job>>> getJobs(params) async {
     ApiResult<List<Job>> apiResult = await _apiService.getJobList(params);
+    print('Get All Open Jobs');
+    print(apiResult);
     return apiResult;
   }
 
   Future<List<Map<String, dynamic>>?> getJobResponse(jobID) async {
     setBusy(true);
-
     ApiResult<dynamic> apiResult = await _apiService.getJobResponses(jobID);
     apiResult.when(success: (data) {
       jobResponses = data;
+      print("jobResponses");
       print(jobResponses);
       setLoading('history', false);
-
       setBusy(false);
     }, failure: (NetworkExceptions error) {
       setBusy(false);
@@ -253,8 +254,8 @@ class HomeViewModel extends BaseViewModel {
       // approvedJobs = approvedJobs.map((item)=>{
       //   return item;
       //   }}).toList();
-      print('approvedJobs===>');
-      print(approvedJobs);
+      // print('approvedJobs===>');
+      // print(approvedJobs);
       setLoading('approved', false);
       // setBusy(false);
     }, failure: (NetworkExceptions error) {

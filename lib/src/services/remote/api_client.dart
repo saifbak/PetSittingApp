@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:whiskers_away_app/src/models/wrappers/response_wrapper.dart';
 import 'package:whiskers_away_app/src/services/local/flavor_service.dart';
 import 'package:whiskers_away_app/src/services/local/local_storage_service.dart';
+import 'package:retrofit/retrofit.dart';
 
 const _defaultConnectTimeout = Duration.millisecondsPerMinute;
 const _defaultReceiveTimeout = Duration.millisecondsPerMinute;

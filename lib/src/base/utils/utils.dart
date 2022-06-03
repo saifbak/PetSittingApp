@@ -47,7 +47,7 @@ class AppUtils {
 
   static void toastShow(String message) {
     Fluttertoast.showToast(msg: message, backgroundColor: Colors.tealAccent);
-    print("toast called");
+    // print("toast called");
   }
 
   static String getRoleStr(Roles role) =>

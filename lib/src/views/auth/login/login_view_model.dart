@@ -31,8 +31,8 @@ class LoginViewModel extends BaseViewModel {
       apiResult.when(success: (data) {
         print('Success===>');
         print(data);
-        // _authService.user = data;
-        // _authService.navigateHomeScreen();
+        _authService.user = data;
+        _authService.navigateHomeScreen();
         AppUtils.toastShow("Successful Login");
       }, failure: (NetworkExceptions error) {
         AppUtils.toastShow("Login Unsuccessful !");
