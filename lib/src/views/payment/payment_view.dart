@@ -152,14 +152,15 @@ class _Body extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  'Total',
+                                  'Total \$',
                                   style: AppTextStyles.xxMedium(
                                     color: AppColors.darkGray,
                                     weight: FontWeight.w500,
                                   ),
                                 ),
-                                HorizontalSpacing(60),
+                                HorizontalSpacing(40),
                                 Text(
+                                  // ignore: unnecessary_null_comparison
                                   '= \$' + user['base_price'] != null
                                       ? user['base_price']
                                       : '0',
@@ -272,7 +273,7 @@ class _Body extends StatelessWidget {
                             ),
                             HorizontalSpacing(4),
                             Image.asset(
-                              'assets/images/autorizedotnet.png',
+                              'assets/images/stripelogo.png',
                               width: 40,
                             ),
                           ],
@@ -361,8 +362,8 @@ class _Body extends StatelessWidget {
         'exp_month': parsedDate[0],
         'exp_year': parsedDate[1],
         'cvc': model.cvcCtrl.text,
-        'petsitter_id': user['petsitter']['petsitter_id'],
-        'job_id': user['job']['job_id'],
+        'petsitter_id': user['petsitter_id'],
+        'job_id': user['job_id'],
         'rewardused': model.rewardsCtrl.text,
       });
     } catch (e) {

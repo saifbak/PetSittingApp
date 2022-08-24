@@ -55,12 +55,21 @@ class _Body extends StatelessWidget {
             Spacer(),
             Container(
               width: screenSize.width / 2.25,
-              child: Hero(
-                tag: 'logo_text',
-                child: Image.asset(
-                  'assets/images/logo_text.png',
+              child: Text(
+                'Pet Sitting App',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: screenSize.height * 0.03,
+                  color: Colors.blueGrey,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
+              // child: Hero(
+              //   tag: 'logo_text',
+              //   child: Image.asset(
+              //     'assets/images/logo_text.png',
+              //   ),
+              // ),
             ),
             HorizontalSpacing(50),
             Spacer(),

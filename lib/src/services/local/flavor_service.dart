@@ -1,4 +1,5 @@
 import 'package:package_info/package_info.dart';
+import 'package:whiskers_away_app/src/views/explore/explore_view_model.dart';
 
 enum Env {
   prod,
@@ -22,9 +23,9 @@ class FlavorService {
   static String get getBaseApi {
     // return prod url
     if (env == Env.prod) {
-      return "https://whiskersaway.enorness.com/api/";
+      return "https://petsittingapp.enorness.com/api";
     }
     // return url other than prod one
-    return "http://192.168.0.103:8002/api/";
+    return "https://petsittingapp.enorness.com/api";
   }
 }

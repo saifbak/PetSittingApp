@@ -110,7 +110,7 @@ class _Body extends StatelessWidget {
                   return DefaultValidator.required(val, "Phone");
                 },
               ),
-              buildRadioButton(),
+              //buildRadioButton(),
               // DropDown(),
               // AppTextField(
               //   controller: addressCtrl,
@@ -270,51 +270,51 @@ class _Body extends StatelessWidget {
     NavService.termsConditions();
   }
 
-  Widget buildRadioButton() {
-    return Column(
-      children: <Widget>[
-        Container(
-          alignment: Alignment.topLeft,
-          padding: EdgeInsets.only(left: 22),
-          child: Text('Live in New Jersey?',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
-              textAlign: TextAlign.left),
-        ),
-        Container(
-          padding: EdgeInsets.only(left: 10),
-          child: Row(
-            children: <Widget>[
-              Radio<String>(
-                  activeColor: AppColors.primaryColor,
-                  value: "1",
-                  groupValue: model.locationCtrl.text,
-                  onChanged: model.handleLocationChange),
-              Text(
-                'Yes',
-                style: new TextStyle(fontSize: 17.0),
-              ),
-              Radio<String>(
-                activeColor: AppColors.primaryColor,
-                value: "0",
-                groupValue: model.locationCtrl.text,
-                onChanged: model.handleLocationChange,
-              ),
-              Text(
-                'No',
-                style: new TextStyle(
-                  fontSize: 17.0,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget buildRadioButton() {
+  //   return Column(
+  //     children: <Widget>[
+  //       Container(
+  //         alignment: Alignment.topLeft,
+  //         padding: EdgeInsets.only(left: 22),
+  //         child: Text('Live in New Jersey?',
+  //             style: TextStyle(
+  //               fontSize: 14,
+  //               fontWeight: FontWeight.w500,
+  //               color: Colors.black,
+  //             ),
+  //             textAlign: TextAlign.left),
+  //       ),
+  //       Container(
+  //         padding: EdgeInsets.only(left: 10),
+  //         child: Row(
+  //           children: <Widget>[
+  //             Radio<String>(
+  //                 activeColor: AppColors.primaryColor,
+  //                 value: "1",
+  //                 groupValue: model.locationCtrl.text,
+  //                 onChanged: model.handleLocationChange),
+  //             Text(
+  //               'Yes',
+  //               style: new TextStyle(fontSize: 17.0),
+  //             ),
+  //             Radio<String>(
+  //               activeColor: AppColors.primaryColor,
+  //               value: "0",
+  //               groupValue: model.locationCtrl.text,
+  //               onChanged: model.handleLocationChange,
+  //             ),
+  //             Text(
+  //               'No',
+  //               style: new TextStyle(
+  //                 fontSize: 17.0,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 }
 
 class ImageUploadOptions extends ViewModelWidget<SignUpViewModel> {

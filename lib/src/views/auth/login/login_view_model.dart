@@ -48,7 +48,7 @@ class LoginViewModel extends BaseViewModel {
 
   showErrorAlert(e) {
     dialogService.showDialog(
-      title: 'Error Occured',
+      //title: 'Error Occured',
       description: NetworkExceptions.getErrorMessage(e),
       buttonTitle: 'Cancel',
       buttonTitleColor: AppColors.primaryColor,

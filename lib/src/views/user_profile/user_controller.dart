@@ -7,7 +7,7 @@ import 'package:whiskers_away_app/src/views/user_profile/user_profile_view_model
 
 class UserController {
   var url =
-      Uri.parse('http://whiskersaway.enorness.com/api/user/updatedetails');
+      Uri.parse('https://petsittingapp.enorness.com/api/user/updatedetails');
   //http://whiskersaway.enorness.com/api/user/updatedetails
 
   User model = User(name: "ABc", email: "ABC");

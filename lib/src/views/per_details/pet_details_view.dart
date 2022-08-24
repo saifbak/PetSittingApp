@@ -317,7 +317,7 @@ class _Body extends StatelessWidget {
                                   context: context,
                                   builder: (context) => CustomDialog(
                                       "Attention",
-                                      "Owners will review all available pet sitters' proposals and  make a selection based on those sitters who respond to their open booking. When  setting your rate, please factor in the 15% that will be withheld by the app. If a pet  owner accepts your proposal, you will be notified and provided with their contact  information to arrange a meet and greet. Pet sitters are paid by Whiskers Away  within 1 day of completing the confirmed job.",
+                                      "Owners will review all available pet sitters' proposals and  make a selection based on those sitters who respond to their open booking. When  setting your rate, please factor in the 15% that will be withheld by the app. If a pet  owner accepts your proposal, you will be notified and provided with their contact  information to arrange a meet and greet. Pet sitters are paid by Pet Sitting App  within 1 day of completing the confirmed job.",
                                       'Confirm',
                                       model,
                                       request,
@@ -483,7 +483,7 @@ class CustomDialog extends StatelessWidget {
               SizedBox(height: 24.0),
               Align(
                 alignment: Alignment.bottomRight,
-                // ignore: deprecated_member_use
+                //ignore: deprecated_member_use
                 child: FlatButton(
                   onPressed: () {
                     onSubmit(context);

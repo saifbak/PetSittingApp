@@ -20,22 +20,27 @@ import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/home/home_view_model.dart';
 import 'package:whiskers_away_app/src/views/home/widgets/listing_sheet.dart';
 import 'package:whiskers_away_app/src/views/options_select/options_select_view_model.dart';
+import 'package:provider/provider.dart';
+import '../../../provider/job_provider.dart';
 
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<HomeViewModel>.reactive(
-      viewModelBuilder: () => HomeViewModel(),
-      onModelReady: (model) {
-        model.getOpenJobs();
-        model.getAprrovedJobResponse();
-        // model.getFilteredJobs();
-      },
-      builder: (_, model, __) {
-        return Scaffold(
-          body: _Body(model),
-        );
-      },
+    return ChangeNotifierProvider(
+      create: (context) => Jobs(),
+      child: ViewModelBuilder<HomeViewModel>.reactive(
+        viewModelBuilder: () => HomeViewModel(),
+        onModelReady: (model) {
+          model.getOpenJobs();
+          model.getAprrovedJobResponse();
+          // model.getFilteredJobs();
+        },
+        builder: (_, model, __) {
+          return Scaffold(
+            body: _Body(model),
+          );
+        },
+      ),
     );
   }
 }
@@ -53,7 +58,8 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = context.screenSize();
-
+    final jobsAppData = Provider.of<Jobs>(context);
+    //final comingJobs = jobsAppData.getAprrovedJobResponse();
     print('newJobsFiltered home ===>');
     print(model.newJobsFiltered);
     return Column(
@@ -137,6 +143,7 @@ class _Body extends StatelessWidget {
                                       padding: AppBaseStyles.horizontalPadding
                                           .copyWith(bottom: 16, top: 16),
                                       itemBuilder: (_, index) {
+                                        //final newRequest = comingJobs[index];
                                         final request =
                                             model.approvedJobs[index];
                                         return GestureDetector(

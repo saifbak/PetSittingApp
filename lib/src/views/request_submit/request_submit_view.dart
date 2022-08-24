@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -15,6 +17,8 @@ import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/request_submit/request_submit_view_model.dart';
+import '../home/widgets/location_input.dart';
+import '../../models/place.dart';
 // import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class RequestSubmitView extends StatelessWidget {
@@ -53,6 +57,11 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = context.screenSize();
+    PlaceLocation _pickedLocation;
+
+    void _selectPlace(double lat, double lang) {
+      _pickedLocation = PlaceLocation(latitude: lat, longitude: lang);
+    }
 
     print('model.selectedIndex');
     print(model.selectedIndex);
@@ -118,15 +127,29 @@ class _Body extends StatelessWidget {
                     return DefaultValidator.required(val, "Pet Name");
                   },
                 ),
-                AppTextField(
-                  controller: locationCtrl,
-                  hintText: 'Enter location',
-                  label: 'Location',
-                  padding: EdgeInsets.zero,
-                  validator: (val) {
-                    return DefaultValidator.required(val, "Location");
-                  },
+                SizedBox(
+                  height: 10,
                 ),
+                Text(
+                  'Enter Location',
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                LocationInput(_selectPlace),
+                SizedBox(
+                  height: 10,
+                ),
+                // AppTextField(
+                //   controller: locationCtrl,
+                //   hintText: 'Enter location',
+                //   label: 'Location',
+                //   padding: EdgeInsets.zero,
+                //   validator: (val) {
+                //     return DefaultValidator.required(val, "Location");
+                //   },
+                // ),
                 Row(
                   children: [
                     Expanded(

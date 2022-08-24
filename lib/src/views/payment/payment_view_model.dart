@@ -77,10 +77,11 @@ class PaymentViewModel extends BaseViewModel {
 
   Future<dynamic> makePayment(data) async {
     if (!formKey.currentState!.validate()) {
+      print(data);
       autoValidate = AutovalidateMode.onUserInteraction;
       return;
     }
-
+    print("my data");
     // dynamic parsedDate = dateCtrl.text.split('/');
     // Map<String, dynamic> paymentDetails = {
     //   'amount': jobProposal['price'],
@@ -99,6 +100,7 @@ class PaymentViewModel extends BaseViewModel {
     //   barrierDismissible: true,
     // );
     ApiResult apiResult = await _apiService.createPayment(data);
+    print(data);
     apiResult.when(success: (data) async {
       NavService.popOut;
       /* _authService.user!.name = data['name'];
@@ -110,7 +112,7 @@ class PaymentViewModel extends BaseViewModel {
       } */
       setBusy(false);
       dialogService.showCustomDialog(variant: 'payment');
-
+      print("my data");
       print('Data');
       print(data);
 

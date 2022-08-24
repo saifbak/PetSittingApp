@@ -39,12 +39,14 @@ class ApiService {
   Future<ApiResult<User>> login(Map<String, dynamic> userLoginRequest) async {
     try {
       print('Api Hit for login');
+      print(userLoginRequest);
       // final responses = await _apiClient.getReq('https://google.com');
       // print('dio testing ${responses.data}');
       ResponseWrapper response =
           await _apiClient.postReq("/login", data: userLoginRequest);
       LocalStorage.saveSP('token', 'Bearer ' + response.data['token']);
-      // print('Response \n ${response.data}');
+      print(response);
+      //print('Response \n ${response.data}');
       final User userDetails = User(
         email: response.data['email'],
         name: response.data['name'],
@@ -58,6 +60,7 @@ class ApiService {
       );
       return ApiResult.success(data: userDetails);
     } catch (e) {
+      print(e);
       return ApiResult.failure(
         error: NetworkExceptions.getDioException(e),
       );
@@ -80,7 +83,7 @@ class ApiService {
   Future<ApiResult<dynamic>> uploadJobImage(Map<String, dynamic> data) async {
     try {
       var response = await _apiClient.postReq(
-        "job/upload/image",
+        "/job/upload/image",
         data: DIO.FormData.fromMap(data),
       );
       return ApiResult.success(data: response.data);
@@ -93,7 +96,7 @@ class ApiService {
   Future<ApiResult<dynamic>> updateJobImage(Map<String, dynamic> data) async {
     try {
       var response = await _apiClient.postReq(
-        "job/editjobimage",
+        "/job/editjobimage",
         data: DIO.FormData.fromMap(data),
       );
       return ApiResult.success(data: response.data);
@@ -106,10 +109,13 @@ class ApiService {
   Future<ApiResult<dynamic>> uploadProfileImage(
       Map<String, dynamic> data) async {
     try {
+      print(data);
       var response = await _apiClient.postReq(
-        "user/upload/profileimage",
+        "/user/upload/profileimage",
         data: DIO.FormData.fromMap(data),
       );
+      print('response.data===>');
+      print(response.data);
       return ApiResult.success(data: response.data);
     } catch (e) {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
@@ -233,7 +239,7 @@ class ApiService {
       Map<String, dynamic> request) async {
     try {
       ResponseWrapper response =
-          await _apiClient.postReq("job/editjobdetails", data: request);
+          await _apiClient.postReq("/job/editjobdetails", data: request);
 
       return ApiResult.success(data: response.data);
     } catch (e) {
@@ -247,7 +253,7 @@ class ApiService {
     try {
       ResponseWrapper response =
           await _apiClient.postReq("/payment", data: payload);
-
+      print(response);
       return ApiResult.success(data: response.data);
     } catch (e) {
       print(e.toString());

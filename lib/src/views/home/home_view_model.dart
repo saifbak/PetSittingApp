@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -9,6 +10,8 @@ import 'package:whiskers_away_app/src/services/local/job_service.dart';
 import 'package:whiskers_away_app/src/services/remote/api_result.dart';
 import 'package:whiskers_away_app/src/services/remote/api_service.dart';
 import 'package:whiskers_away_app/src/services/remote/network_exceptions.dart';
+import 'package:provider/provider.dart';
+import '../../../provider/job_provider.dart';
 
 class Request {
   final String dogName;
@@ -244,6 +247,8 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<List<Map<String, dynamic>>?> getAprrovedJobResponse() async {
+    //final postModel = Provider.of<Jobs>(context);
+    //final jobModel = postModel.getAprrovedJobResponse();
     setLoading('approved', true);
 
     setBusy(true);

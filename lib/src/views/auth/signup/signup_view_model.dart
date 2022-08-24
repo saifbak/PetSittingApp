@@ -97,7 +97,7 @@ class SignUpViewModel extends BaseViewModel {
         print(data);
       }, failure: (NetworkExceptions error) {
         AppUtils.toastShow("Unsuccessful Registration !");
-        print('Error =>$error');
+        //print('Error =>$error');
         showErrorAlert(error);
       });
 

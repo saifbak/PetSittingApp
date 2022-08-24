@@ -1,5 +1,5 @@
 class Constants {
   Constants._();
 
-  static const String appTitle = "Whiskers Away App";
+  static const String appTitle = "Pet Sitting App";
 }
