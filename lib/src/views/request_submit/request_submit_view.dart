@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -36,35 +37,61 @@ class RequestSubmitView extends StatelessWidget {
   }
 }
 
-class _Body extends StatelessWidget {
+class _Body extends StatefulWidget {
   final RequestSubmitViewModel model;
 
+  _Body(this.model);
+
+  @override
+  State<_Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<_Body> {
   final formKey = GlobalKey<FormState>();
+
   AutovalidateMode autoValidate = AutovalidateMode.disabled;
+
   final GlobalKey<State> keyLoader = new GlobalKey<State>();
 
   //Controllers
   final petCtrl = TextEditingController();
+
   final locationCtrl = TextEditingController();
+
   final ageCtrl = TextEditingController();
+
   final weightCtrl = TextEditingController();
+
   final breedCtrl = TextEditingController();
+
   final fromDateCtrl = TextEditingController();
+
   final toDateCtrl = TextEditingController();
+
   final descriptionCtrl = TextEditingController();
 
-  _Body(this.model);
+  double? latitude;
+  double? longtitude;
+
+  PlaceLocation? _pickedLocation;
+  void _selectPlace(double lat, double lang) {
+    _pickedLocation = PlaceLocation(latitude: lat, longitude: lang);
+    // print('picked location on tap');
+    // print(_pickedLocation?.latitude);
+    setState(() {
+      latitude = _pickedLocation?.latitude;
+      longtitude = _pickedLocation?.longitude;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenSize = context.screenSize();
-    PlaceLocation _pickedLocation;
-
-    void _selectPlace(double lat, double lang) {
-      _pickedLocation = PlaceLocation(latitude: lat, longitude: lang);
-    }
 
     print('model.selectedIndex');
-    print(model.selectedIndex);
+    print(widget.model.selectedIndex);
+    print('latitude');
+    print(latitude);
 
     return Column(
       children: [
@@ -90,8 +117,8 @@ class _Body extends StatelessWidget {
                   color: AppColors.primaryColor,
                   child: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(12)),
-                    child: model.imageUploadDisplay == false ||
-                            model.selectedImageFile == null
+                    child: widget.model.imageUploadDisplay == false ||
+                            widget.model.selectedImageFile == null
                         ? Container(
                             padding: EdgeInsets.symmetric(vertical: 16),
                             width: double.infinity,
@@ -111,7 +138,7 @@ class _Body extends StatelessWidget {
                               ],
                             ),
                           )
-                        : Image.file(model.selectedImageFile!),
+                        : Image.file(widget.model.selectedImageFile!),
                   ),
                 ),
                 ImageUploadOptions(),
@@ -127,29 +154,11 @@ class _Body extends StatelessWidget {
                     return DefaultValidator.required(val, "Pet Name");
                   },
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Enter Location',
-                  style: TextStyle(fontWeight: FontWeight.w500),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                LocationInput(_selectPlace),
-                SizedBox(
-                  height: 10,
-                ),
-                // AppTextField(
-                //   controller: locationCtrl,
-                //   hintText: 'Enter location',
-                //   label: 'Location',
-                //   padding: EdgeInsets.zero,
-                //   validator: (val) {
-                //     return DefaultValidator.required(val, "Location");
-                //   },
-                // ),
+                widget.model.selectedIndex == 0
+                    ? LocationInput(_selectPlace)
+                    : SizedBox(
+                        height: 0,
+                      ),
                 Row(
                   children: [
                     Expanded(
@@ -286,16 +295,18 @@ class _Body extends StatelessWidget {
     print('to date');
     print(toDateCtrl);
     try {
-      await model.sendPetRequest({
+      await widget.model.sendPetRequest({
         "pet_name": petCtrl.text.trim(),
         "location": locationCtrl.text.trim(),
         "age": ageCtrl.text.trim(),
         "weight": weightCtrl.text.trim(),
         "from_date": fromDateCtrl.text.trim(),
+        "longitude": _pickedLocation?.longitude,
+        "latitude": _pickedLocation?.latitude,
         "to_date": toDateCtrl.text.trim(),
         "breed": breedCtrl.text.trim(),
         "description": descriptionCtrl.text.trim(),
-        "sittingat": model.selectedIndex,
+        "sittingat": widget.model.selectedIndex,
       }, ctx);
     } catch (e) {
       /* Timer(Duration(seconds: 1), () {

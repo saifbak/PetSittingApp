@@ -44,17 +44,22 @@ class _LocationInputState extends State<LocationInput> {
         ),
       ),
     );
-    print(selectedLocation?.latitude);
-    print(selectedLocation?.longitude);
-    widget.onSelectPlace(
-        selectedLocation?.latitude, selectedLocation?.longitude);
     _showPrieview(selectedLocation!.latitude, selectedLocation.longitude);
+    widget.onSelectPlace(selectedLocation.latitude, selectedLocation.longitude);
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        Text(
+          'Enter Location',
+          textAlign: TextAlign.left,
+          style: TextStyle(fontWeight: FontWeight.w500),
+        ),
+        SizedBox(
+          height: 10,
+        ),
         Container(
           height: 170,
           width: double.infinity,
@@ -97,6 +102,9 @@ class _LocationInputState extends State<LocationInput> {
               onPressed: _selectOnMap,
             ),
           ],
+        ),
+        SizedBox(
+          height: 10,
         ),
       ],
     );
