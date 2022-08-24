@@ -42,32 +42,42 @@ class PaymentView extends StatelessWidget {
   }
 }
 
-class _Body extends StatelessWidget {
+class _Body extends StatefulWidget {
   final PaymentViewModel model;
   final user;
 
   const _Body(this.model, this.user);
 
   @override
+  State<_Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<_Body> {
+  bool _isPressed = true;
+  void _myCallback() {
+    setState(() {
+      _isPressed = false;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final screenSize = context.screenSize();
-    print(model.totalRewards);
+    print(widget.model.totalRewards);
     dynamic value = 0;
 
     return SingleChildScrollView(
       child: BasePaymentView(
-        networkImage: user['petsitter']['profile_img'] ?? '',
-        user: user,
+        networkImage: widget.user['petsitter']['profile_img'] ?? '',
+        user: widget.user,
         bottomContent: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Center(
               child: AppButton(
-                text: 'Make Payment',
-                onPressed: () {
-                  makePayment(context);
-                },
-              ),
+                  text: 'Make Payment',
+                  onPressed:
+                      _isPressed == true ? () => makePayment(context) : null),
             ),
           ],
         ),
@@ -84,7 +94,7 @@ class _Body extends StatelessWidget {
                       LabelWithContent(
                         labelText: 'Location',
                         contentIcon: IconlyLight.location,
-                        content: user['job']['location'] ?? '',
+                        content: widget.user['job']['location'] ?? '',
                       ),
                       VerticalSpacing(16),
                       LabelWithContent(
@@ -119,8 +129,8 @@ class _Body extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      user['price'] != null
-                                          ? '\$' + user['price']
+                                      widget.user['price'] != null
+                                          ? '\$' + widget.user['price']
                                           : '',
                                       style: AppTextStyles.xxMedium(
                                         color: AppColors.darkGray,
@@ -129,7 +139,7 @@ class _Body extends StatelessWidget {
                                     VerticalSpacing(2),
                                     Text(
                                       '-\$' +
-                                          '${model.currentReward.toString()}',
+                                          '${widget.model.currentReward.toString()}',
                                       style: AppTextStyles.xxMedium(
                                         color: AppColors.darkGray,
                                       ),
@@ -161,8 +171,8 @@ class _Body extends StatelessWidget {
                                 HorizontalSpacing(40),
                                 Text(
                                   // ignore: unnecessary_null_comparison
-                                  '= \$' + user['base_price'] != null
-                                      ? user['base_price']
+                                  '= \$' + widget.user['base_price'] != null
+                                      ? widget.user['base_price']
                                       : '0',
                                   style: AppTextStyles.xxMedium(
                                     color: AppColors.darkGray,
@@ -205,10 +215,10 @@ class _Body extends StatelessWidget {
                                 child: Column(
                                   children: [
                                     AppTextField(
-                                      controller: model.rewardsCtrl,
+                                      controller: widget.model.rewardsCtrl,
                                       hintText: '\$0',
-                                      label: model.totalRewards != null
-                                          ? '\$${model.totalRewards.toString()}'
+                                      label: widget.model.totalRewards != null
+                                          ? '\$${widget.model.totalRewards.toString()}'
                                           : '0',
                                       padding: EdgeInsets.zero,
                                       textInputType: TextInputType.number,
@@ -223,7 +233,8 @@ class _Body extends StatelessWidget {
                                         child: AppStatusVisibilityTag(
                                             text: 'Apply Rewards'),
                                         onTap: () {
-                                          model.applyRewards(user);
+                                          widget.model
+                                              .applyRewards(widget.user);
                                         }),
                                     VerticalSpacing(6),
                                   ],
@@ -252,14 +263,14 @@ class _Body extends StatelessWidget {
               VerticalSpacing(20),
               Container(
                 child: Form(
-                  key: model.formKey,
+                  key: widget.model.formKey,
                   child: Column(
                     children: [
                       AppTextField(
                         validator: (val) {
                           return DefaultValidator.required(val, "Card Name");
                         },
-                        controller: model.nameCtrl,
+                        controller: widget.model.nameCtrl,
                         hintText: 'Enter name',
                         label: 'Card Holder Name',
                         padding: EdgeInsets.zero,
@@ -280,7 +291,7 @@ class _Body extends StatelessWidget {
                         ),
                       ),
                       AppTextField(
-                        controller: model.cardCtrl,
+                        controller: widget.model.cardCtrl,
                         hintText: 'Enter number',
                         label: 'Card Number',
                         padding: EdgeInsets.zero,
@@ -294,7 +305,7 @@ class _Body extends StatelessWidget {
                         children: [
                           Expanded(
                             child: AppTextField(
-                              controller: model.dateCtrl,
+                              controller: widget.model.dateCtrl,
                               hintText: 'MM/YYYY',
                               label: 'Exp. Date',
                               padding: EdgeInsets.zero,
@@ -309,9 +320,10 @@ class _Body extends StatelessWidget {
                                   context,
                                   showTitleActions: true,
                                   onChanged: (date) {
-                                    model.dateCtrl.text = DateFormat("MM/yyyy")
-                                        .format(date)
-                                        .toString();
+                                    widget.model.dateCtrl.text =
+                                        DateFormat("MM/yyyy")
+                                            .format(date)
+                                            .toString();
                                     print(
                                         'change ${DateFormat("MM/yyyy").format(date).toString()}');
                                   },
@@ -326,7 +338,7 @@ class _Body extends StatelessWidget {
                           HorizontalSpacing(16),
                           Expanded(
                             child: AppTextField(
-                              controller: model.cvcCtrl,
+                              controller: widget.model.cvcCtrl,
                               hintText: 'XXX',
                               label: 'CVV',
                               padding: EdgeInsets.zero,
@@ -354,17 +366,18 @@ class _Body extends StatelessWidget {
   }
 
   Future<void> makePayment(ctx) async {
+    _myCallback();
     try {
-      dynamic parsedDate = model.dateCtrl.text.split('/');
-      await model.makePayment({
-        'amount': user['base_price'],
-        'number': model.cardCtrl.text,
+      dynamic parsedDate = widget.model.dateCtrl.text.split('/');
+      await widget.model.makePayment({
+        'amount': widget.user['base_price'],
+        'number': widget.model.cardCtrl.text,
         'exp_month': parsedDate[0],
         'exp_year': parsedDate[1],
-        'cvc': model.cvcCtrl.text,
-        'petsitter_id': user['petsitter_id'],
-        'job_id': user['job_id'],
-        'rewardused': model.rewardsCtrl.text,
+        'cvc': widget.model.cvcCtrl.text,
+        'petsitter_id': widget.user['petsitter_id'],
+        'job_id': widget.user['job_id'],
+        'rewardused': widget.model.rewardsCtrl.text,
       });
     } catch (e) {
       /* Timer(Duration(seconds: 1), () {
