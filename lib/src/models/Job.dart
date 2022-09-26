@@ -15,6 +15,9 @@ class Job {
   String? publicImage;
   int? sittingat;
   int? isedit;
+  String? latitude;
+  String? longitude;
+
   Map<String, dynamic>? owner;
   Map<String, dynamic>? assigned;
   List<Map<String, dynamic>>? proposals;
@@ -33,7 +36,9 @@ class Job {
       this.jobStatus,
       this.status,
       this.sittingat,
-      this.isedit});
+      this.isedit,
+      this.latitude,
+      this.longitude});
 
   Job.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -55,6 +60,8 @@ class Job {
     isedit = json['isedit'];
     proposals = json['proposals'];
     publicImage = json['public_image'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
   }
 
   Map<String, dynamic> toJson() {

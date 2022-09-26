@@ -470,7 +470,7 @@ class CustomDialog extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomRight,
                 // ignore: deprecated_member_use
-                child: FlatButton(
+                child: ElevatedButton(
                   onPressed: () {
                     showDialog(
                         context: context,
@@ -569,7 +569,7 @@ class CustomDialogtwo extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomRight,
                 // ignore: deprecated_member_use
-                child: FlatButton(
+                child: ElevatedButton(
                   onPressed: () {
                     sentEmail(context);
                     Navigator.pop(context);

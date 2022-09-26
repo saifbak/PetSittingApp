@@ -76,18 +76,18 @@ class SignUpViewModel extends BaseViewModel {
       dialogService.showCustomDialog(
           variant: 'spinner', barrierDismissible: true);
       User user = new User(
-        name: payload['name'],
-        email: payload['email'],
-        password: payload['password'],
-        phone: payload['phone'],
-        address: payload['address'],
-        username: payload['username'],
-        licenseImg: payload['licenseImg'],
-        description:
-            payload['description'] != null ? payload['description'] : "",
-        roleId: _authService.getRoleById(),
-        location: locationCtrl.text.trim(),
-      );
+          name: payload['name'],
+          email: payload['email'],
+          password: payload['password'],
+          phone: payload['phone'],
+          address: payload['address'],
+          username: payload['username'],
+          licenseImg: payload['licenseImg'],
+          description:
+              payload['description'] != null ? payload['description'] : "",
+          roleId: _authService.getRoleById(),
+          location: locationCtrl.text.trim(),
+          devicetoken: null);
 
       ApiResult apiResult = await _apiService.register(user);
 

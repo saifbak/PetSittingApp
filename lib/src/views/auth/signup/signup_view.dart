@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:dio/dio.dart' as Dio;
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,6 +23,7 @@ import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/auth/signup/signup_view_model.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:whiskers_away_app/src/views/explore/explore_view.dart';
 import 'package:whiskers_away_app/src/views/landing/landing_view.dart';
 import 'package:whiskers_away_app/src/views/my_availability/my_availability_view.dart';
@@ -44,15 +44,32 @@ class SignUpView extends StatelessWidget {
   }
 }
 
-class _Body extends StatelessWidget {
+class _Body extends StatefulWidget {
   final SignUpViewModel model;
-  final formKey = GlobalKey<FormState>();
-  AutovalidateMode autoValidate = AutovalidateMode.disabled;
-  final GlobalKey<State> keyLoader = new GlobalKey<State>();
-
-  //Controllers
 
   _Body(this.model);
+
+  @override
+  State<_Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<_Body> {
+  String? dtoken;
+  @override
+  void initState() {
+    super.initState();
+    FirebaseMessaging.instance.getToken().then((value) {
+      setState(() {
+        dtoken = value;
+      });
+    });
+  }
+
+  final formKey = GlobalKey<FormState>();
+
+  AutovalidateMode autoValidate = AutovalidateMode.disabled;
+
+  final GlobalKey<State> keyLoader = new GlobalKey<State>();
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +85,7 @@ class _Body extends StatelessWidget {
           child: Column(
             children: [
               AppTextField(
-                controller: model.nameCtrl,
+                controller: widget.model.nameCtrl,
                 hintText: 'Enter your full name',
                 label: 'Full Name',
                 prefixIcon: IconlyLight.profile,
@@ -77,7 +94,7 @@ class _Body extends StatelessWidget {
                 },
               ),
               AppTextField(
-                controller: model.usernameCtrl,
+                controller: widget.model.usernameCtrl,
                 hintText: 'Enter your username',
                 label: 'Username',
                 prefixIcon: IconlyLight.profile,
@@ -86,7 +103,7 @@ class _Body extends StatelessWidget {
                 },
               ),
               AppTextField(
-                controller: model.emailCtrl,
+                controller: widget.model.emailCtrl,
                 hintText: 'Enter your email address',
                 label: 'Email',
                 prefixIcon: IconlyLight.message,
@@ -101,7 +118,7 @@ class _Body extends StatelessWidget {
                 },
               ),
               AppTextField(
-                controller: model.phoneCtrl,
+                controller: widget.model.phoneCtrl,
                 hintText: 'Enter your phone number',
                 label: 'Phone Number',
                 prefixIcon: IconlyLight.call,
@@ -122,7 +139,7 @@ class _Body extends StatelessWidget {
               //   },
               // ),
               AppTextField(
-                controller: model.passwordCtrl,
+                controller: widget.model.passwordCtrl,
                 hintText: 'Enter your password',
                 label: 'Password',
                 prefixIcon: IconlyLight.lock,
@@ -131,14 +148,14 @@ class _Body extends StatelessWidget {
                   return DefaultValidator.minLength(val, 6, "Password")();
                 },
               ),
-              model.isPetSitter()
+              widget.model.isPetSitter()
                   ? Container(
                       padding: AppBaseStyles.horizontalPadding,
                       child: Column(children: [
                         // HorizontalSpacing(16),
                         AppTextField(
                           padding: EdgeInsets.zero,
-                          controller: model.descriptionCtrl,
+                          controller: widget.model.descriptionCtrl,
                           hintText: 'Profile Description',
                           label: 'Profile Description',
                           textInputType: TextInputType.text,
@@ -156,8 +173,8 @@ class _Body extends StatelessWidget {
                           color: AppColors.primaryColor,
                           child: ClipRRect(
                             borderRadius: BorderRadius.all(Radius.circular(12)),
-                            child: model.imageUploadDisplay == false ||
-                                    model.selectedImageFile == null
+                            child: widget.model.imageUploadDisplay == false ||
+                                    widget.model.selectedImageFile == null
                                 ? Container(
                                     padding: EdgeInsets.symmetric(vertical: 16),
                                     width: double.infinity,
@@ -178,7 +195,7 @@ class _Body extends StatelessWidget {
                                       ],
                                     ),
                                   )
-                                : Image.file(model.selectedImageFile!),
+                                : Image.file(widget.model.selectedImageFile!),
                           ),
                         ),
                         ImageUploadOptions(),
@@ -251,70 +268,28 @@ class _Body extends StatelessWidget {
   }
 
   Future<void> onSubmit(ctx) async {
-    model.setSignUser({
-      "email": model.emailCtrl.text.trim(),
-      "password": model.passwordCtrl.text.trim(),
-      "username": model.usernameCtrl.text.trim(),
-      "name": model.nameCtrl.text.trim(),
-      "address": model.addressCtrl.text.trim(),
-      "description":
-          model.isPetSitter() ? model.descriptionCtrl.text.trim() : null,
-      "phone": model.phoneCtrl.text.trim(),
-      "location": model.locationCtrl.text,
-      "license_img": model.isPetSitter() ? model.selectedImageFile! : null,
-      "is_active": model.isPetSitter() ? 0 : 1,
+    widget.model.setSignUser({
+      "email": widget.model.emailCtrl.text.trim(),
+      "password": widget.model.passwordCtrl.text.trim(),
+      "username": widget.model.usernameCtrl.text.trim(),
+      "name": widget.model.nameCtrl.text.trim(),
+      "address": dtoken,
+      "description": widget.model.isPetSitter()
+          ? widget.model.descriptionCtrl.text.trim()
+          : null,
+      "phone": widget.model.phoneCtrl.text.trim(),
+      "location": widget.model.locationCtrl.text,
+      "devicetoken": dtoken,
+      "license_img":
+          widget.model.isPetSitter() ? widget.model.selectedImageFile! : null,
+      "is_active": widget.model.isPetSitter() ? 0 : 1,
+      //"devicetoken": dtoken
     });
     // is_active: pet sitter 0 wrna 1
     // model.uploadImage(model.selectedImageFile!);
 
     NavService.termsConditions();
   }
-
-  // Widget buildRadioButton() {
-  //   return Column(
-  //     children: <Widget>[
-  //       Container(
-  //         alignment: Alignment.topLeft,
-  //         padding: EdgeInsets.only(left: 22),
-  //         child: Text('Live in New Jersey?',
-  //             style: TextStyle(
-  //               fontSize: 14,
-  //               fontWeight: FontWeight.w500,
-  //               color: Colors.black,
-  //             ),
-  //             textAlign: TextAlign.left),
-  //       ),
-  //       Container(
-  //         padding: EdgeInsets.only(left: 10),
-  //         child: Row(
-  //           children: <Widget>[
-  //             Radio<String>(
-  //                 activeColor: AppColors.primaryColor,
-  //                 value: "1",
-  //                 groupValue: model.locationCtrl.text,
-  //                 onChanged: model.handleLocationChange),
-  //             Text(
-  //               'Yes',
-  //               style: new TextStyle(fontSize: 17.0),
-  //             ),
-  //             Radio<String>(
-  //               activeColor: AppColors.primaryColor,
-  //               value: "0",
-  //               groupValue: model.locationCtrl.text,
-  //               onChanged: model.handleLocationChange,
-  //             ),
-  //             Text(
-  //               'No',
-  //               style: new TextStyle(
-  //                 fontSize: 17.0,
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
 }
 
 class ImageUploadOptions extends ViewModelWidget<SignUpViewModel> {

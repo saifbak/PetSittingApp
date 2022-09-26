@@ -151,7 +151,9 @@ class HomeViewModel extends BaseViewModel {
 
     if (_authService.isOwner()) {
       payload = {
-        'status': ['NEW', 'IN_PROGRESS'],
+        'status': [
+          'NEW',
+        ],
         'role_id': 3,
         'user_id': _authService.user!.id,
         'relations': ['owner', 'images', 'reviews']

@@ -17,7 +17,9 @@ class ApprovedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(petSitter['job']['period']);
+    //print(petSitter['job']['period']);
+    print('approve card details');
+    print(petSitter['job']['status']);
     return AppBaseCard(
       padding: const EdgeInsets.all(10),
       child: Row(
@@ -53,24 +55,36 @@ class ApprovedCard extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Text(
-                          petSitter['price'] != null
-                              ? '\$' + petSitter['price']
-                              : '',
-                          style: AppTextStyles.xLarge(
-                            weight: FontWeight.w500,
-                            color: AppColors.primaryColor,
-                          ),
-                        ),
+                        petSitter['job']['status'] == 'PENDING'
+                            ? Text(
+                                petSitter['price'] != null
+                                    ? '\$' + petSitter['price']
+                                    : '',
+                                style: AppTextStyles.xLarge(
+                                  weight: FontWeight.w500,
+                                  color: AppColors.primaryColor,
+                                ),
+                              )
+                            : Text(" "),
                         HorizontalSpacing(4),
-                        GestureDetector(
-                            child: AppStatusVisibilityTag(text: 'Pay now'),
-                            onTap: () {
-                              NavService.payment(
-                                  arguments: PaymentViewArguments(
-                                user: petSitter,
-                              ));
-                            })
+                        petSitter['job']['status'] == 'PENDING'
+                            ? GestureDetector(
+                                child: AppStatusVisibilityTag(
+                                  text: 'Pay now',
+                                ),
+                                onTap: () {
+                                  NavService.payment(
+                                      arguments: PaymentViewArguments(
+                                    user: petSitter,
+                                  ));
+                                })
+                            : petSitter['job']['status'] == 'IN_PROGRESS'
+                                ? Container(
+                                    child: AppStatusVisibilityTag(
+                                      text: 'In Progress',
+                                    ),
+                                  )
+                                : Text('')
                       ],
                     ),
                   ],

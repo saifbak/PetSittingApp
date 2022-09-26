@@ -170,9 +170,8 @@ class _BodyState extends State<_Body> {
                                 ),
                                 HorizontalSpacing(40),
                                 Text(
-                                  // ignore: unnecessary_null_comparison
-                                  '= \$' + widget.user['base_price'] != null
-                                      ? widget.user['base_price']
+                                  '= \$' + widget.user['price'] != null
+                                      ? widget.user['price']
                                       : '0',
                                   style: AppTextStyles.xxMedium(
                                     color: AppColors.darkGray,

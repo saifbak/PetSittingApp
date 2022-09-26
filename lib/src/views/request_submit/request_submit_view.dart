@@ -300,12 +300,14 @@ class _BodyState extends State<_Body> {
     try {
       await widget.model.sendPetRequest({
         "pet_name": petCtrl.text.trim(),
-        "location": locationCtrl.text.trim(),
+        "location": widget.model.selectedIndex == 0
+            ? locationCtrl.text.trim()
+            : 'Sitter Home',
         "age": ageCtrl.text.trim(),
         "weight": weightCtrl.text.trim(),
         "from_date": fromDateCtrl.text.trim(),
-        "longitude": longtitude,
-        "latitude": latitude,
+        "longitude": widget.model.selectedIndex == 0 ? longtitude : 0,
+        "latitude": widget.model.selectedIndex == 0 ? latitude : 0,
         "to_date": toDateCtrl.text.trim(),
         "breed": breedCtrl.text.trim(),
         "description": descriptionCtrl.text.trim(),

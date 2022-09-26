@@ -48,16 +48,16 @@ class ApiService {
       print(response);
       //print('Response \n ${response.data}');
       final User userDetails = User(
-        email: response.data['email'],
-        name: response.data['name'],
-        password: response.data['password'],
-        address: response.data['address'],
-        phone: response.data['phone'],
-        id: response.data['id'],
-        description: response.data['description'],
-        roleId: response.data['role_id'],
-        profileImg: response.data['profile_img'],
-      );
+          email: response.data['email'],
+          name: response.data['name'],
+          password: response.data['password'],
+          address: response.data['address'],
+          phone: response.data['phone'],
+          id: response.data['id'],
+          description: response.data['description'],
+          roleId: response.data['role_id'],
+          profileImg: response.data['profile_img'],
+          devicetoken: response.data['devicetoken']);
       return ApiResult.success(data: userDetails);
     } catch (e) {
       print(e);

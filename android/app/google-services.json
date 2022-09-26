@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "592762865734",
+    "project_id": "sittersapp-4eace",
+    "storage_bucket": "sittersapp-4eace.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592762865734:android:496985f7e9105b1f086247",
+        "android_client_info": {
+          "package_name": "com.example.whiskers_away_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592762865734-rdjv0qkflmqo11jo24r5jlh1joag04nn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATbAefu5q5Hae84NcTUq4-q0bZIx4gKgo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "592762865734-rdjv0qkflmqo11jo24r5jlh1joag04nn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

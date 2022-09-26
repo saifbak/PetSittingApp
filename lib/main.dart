@@ -6,6 +6,7 @@ import 'package:whiskers_away_app/src/configs/app_setup.locator.dart';
 import 'package:whiskers_away_app/src/services/local/flavor_service.dart';
 import 'package:package_info/package_info.dart';
 import 'package:whiskers_away_app/src/services/local/local_storage_service.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +18,10 @@ void main() async {
 
   // setup dialog builders
   AppUtils.setupCustomDialogBuilders();
+
+  // firebase Init
+
+  await Firebase.initializeApp();
 
   // app flavor init
   FlavorService.init(package);

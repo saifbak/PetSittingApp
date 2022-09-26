@@ -16,22 +16,25 @@ class User {
   String? licenseImg;
   int? isActive;
   dynamic? location;
+  String? devicetoken;
 
-  User(
-      {this.id,
-      required this.name,
-      this.username,
-      required this.email,
-      this.password,
-      this.address,
-      this.phone,
-      this.hourlyRate,
-      this.roleId,
-      this.description,
-      this.profileImg,
-      this.licenseImg,
-      this.location,
-      this.isActive});
+  User({
+    this.id,
+    required this.name,
+    this.username,
+    required this.email,
+    this.password,
+    this.address,
+    this.phone,
+    this.hourlyRate,
+    this.roleId,
+    this.description,
+    this.profileImg,
+    this.licenseImg,
+    this.location,
+    this.isActive,
+    this.devicetoken,
+  });
 
   dynamic toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -48,6 +51,7 @@ class User {
     data['license_img'] = this.licenseImg;
     data['location'] = this.location;
     data['is_active'] = this.isActive;
+    data['devicetoken'] = this.devicetoken;
     return data;
   }
 
@@ -62,6 +66,7 @@ class User {
     phone = json['phone'];
     location = json['location'];
     address = json['address'];
+    devicetoken = json['devicetoken'];
     roleId = json['role_id'];
     overallRating = json['overall_rating'];
     ratingFormatted = json['rating_formatted'];

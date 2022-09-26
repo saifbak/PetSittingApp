@@ -15,6 +15,7 @@ import 'package:whiskers_away_app/src/styles/app_base_styles.dart';
 import 'package:whiskers_away_app/src/styles/app_colors.dart';
 import 'package:whiskers_away_app/src/styles/app_text_styles.dart';
 import 'package:whiskers_away_app/src/views/auth/login/login_view_model.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class LoginView extends StatelessWidget {
   @override
@@ -30,18 +31,37 @@ class LoginView extends StatelessWidget {
   }
 }
 
-class _Body extends StatelessWidget {
+class _Body extends StatefulWidget {
   final LoginViewModel model;
 
+  _Body(this.model);
+
+  @override
+  State<_Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<_Body> {
+  String? dtoken;
+  @override
+  void initState() {
+    super.initState();
+    FirebaseMessaging.instance.getToken().then((value) {
+      setState(() {
+        dtoken = value;
+      });
+    });
+  }
+
   final formKey = GlobalKey<FormState>();
+
   AutovalidateMode autoValidate = AutovalidateMode.disabled;
+
   final GlobalKey<State> keyLoader = new GlobalKey<State>();
 
   //Controllers
   final emailCtrl = TextEditingController();
-  final passwordCtrl = TextEditingController();
 
-  _Body(this.model);
+  final passwordCtrl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -151,9 +171,10 @@ class _Body extends StatelessWidget {
 
   Future<void> onSubmit(ctx) async {
     try {
-      await model.login({
+      await widget.model.login({
         "username": emailCtrl.text.trim(),
         "password": passwordCtrl.text.trim(),
+        "devicetoken": dtoken
       }, ctx);
     } catch (e) {
       /* Timer(Duration(seconds: 1), () {
